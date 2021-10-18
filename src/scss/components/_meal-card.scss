@@ -1,0 +1,179 @@
+@import '../base/variables';
+@import '../base/mixin';
+%checklist-checkbox {
+    min-width: 29%;
+    vertical-align: top;
+    margin: 0;
+    padding-left: 0;
+    text-align: center;
+    input {
+        float: none;
+    }
+    &:last-child {
+        min-width: unset;
+        padding-left: 0;
+    }
+    @media screen and (max-width:992px) and (min-width:767px) {
+        min-width: 30%;
+    }
+    @media screen and (max-width:575px) {
+        text-align: left;
+    }
+}
+%checklist-5-width {
+    min-width: 17%;
+    @media screen and (max-width:660px) and (min-width:576px) {
+        min-width: 14%;
+    }
+    @media screen and (max-width:455px) {
+        min-width: 25%;
+    }
+}
+%radioList-text {
+    min-width: 27%;
+}
+%radioList-3 {
+    min-width: 33%;
+    @media screen and (max-width:1007px) and (min-width:401px) {
+        min-width: 30%;
+    }
+    @media screen and (max-width:400px) {
+        min-width: 27%;
+    }
+}
+%radio-second-text {
+    min-width: 45%;
+}
+.mw-100 {
+    min-width: 100px;
+    width: 100px;
+}
+.card {
+    &.inner-card {
+        .meal-card {
+            .checklist-schedule {
+                li {
+                    @extend %checklist-checkbox;
+                }
+                &.checklist-schedule-5 {
+                    li {
+                        @extend %checklist-5-width;
+                        @media screen and (max-width:455px) {
+                            &:last-child {
+                                display: none !important;
+                            }
+                        }
+                    }
+                }
+                &.radio-schedule-long-3 {
+                    li {
+                        @extend %radioList-text;
+                        &:last-child {
+                            @extend %radioList-text;
+                        }
+                    }
+                }
+                &.radio-schedule-3 {
+                    li {
+                        @extend %radioList-3;
+                        &:last-child {
+                            @extend %radioList-3;
+                        }
+                    }
+                }
+                &.radio-second-long {
+                    li {
+                        &:nth-child(2) {
+                            min-width: 45%;
+                            @media screen and (max-width:430px) {
+                                min-width: 70%;
+                            }
+                        }
+                        &:last-child {
+                            @media screen and (max-width:430px) {
+                                display: none !important;
+                            }
+                        }
+                    }
+                }
+            }
+            .checklist-schedule-checkbox {
+                .form-check {
+                    @extend %checklist-checkbox;
+                }
+                &.checklist-schedule-5 {
+                    .form-check {
+                        @extend %checklist-5-width;
+                    }
+                }
+                &.radio-schedule-long-3 {
+                    .form-check {
+                        @extend %radioList-text;
+                    }
+                }
+                &.radio-schedule-3 {
+                    .form-check {
+                        @extend %radioList-3;
+                    }
+                }
+                &.radio-second-long {
+                    .form-check {
+                        &:nth-child(3) {
+                           @extend %radio-second-text;
+                           @media screen and (max-width:430px) {
+                                min-width: 70%;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+            .inner-heading {
+                font-size: 14px;
+            }
+            .checklist-schedule, .checklist-schedule-checkbox {
+                .text-custom-center {
+                    @media screen and (max-width:575px) and (min-width:431px) {
+                        text-align: center;
+                    }
+                }
+            }
+            .d-xs-430 {
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+                @media screen and (min-width:431px) {
+                    display: none;
+                }
+            }
+            .checkbox-xss-5 {
+                display: none;
+                @media screen and (max-width:455px) {
+                    display: block;
+                }
+            }
+            .custom-col-7, .custom-col-5 {
+                @media screen and (max-width:1342px) and (min-width:1145px) {
+                    width: 50%;
+                }
+                @media screen and (max-width:1144px) and (min-width:991px) {
+                    width: 40%;
+                }
+                @media screen and (max-width:810px) and (min-width:768px) {
+                    width: 45%;
+                }
+            }
+            .custom-col-5 {
+                @media screen and (max-width:1144px) and (min-width:991px) {
+                    width: 60%;
+                }
+                @media screen and (max-width:810px) and (min-width:768px) {
+                    width: 55%;
+                }
+            }
+            @media screen and (max-width:575px) {
+                padding: 12px;
+            }
+        }
+    }
+}

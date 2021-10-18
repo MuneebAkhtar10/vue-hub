@@ -1,0 +1,362 @@
+@import '../base/variables';
+@import '../base/mixin';
+%card-padding {
+    padding: 15px 20px;
+}
+%shadow {
+ box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+}
+.card {
+    border-radius: 6px;
+    margin-bottom: 15px;
+    color: #333333;
+    width: 100%;
+    @extend %shadow;
+    .card-header {
+        margin:0 ;
+        @extend %card-padding;
+        border-radius: 6px 6px 0 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        &:first-child {
+            h4 {
+                &.card-title {
+                    margin-bottom: 2px;
+                    font-size: 26px;
+                    font-weight: 500;
+                    color: color(black-color);
+                    a {
+                        color: inherit;
+                        &:hover {
+                            color: color(primary-color);
+                        }
+                    }
+                    &.small-font {
+                        .patient-name {
+                            width: calc(100% - 30px);
+                        }
+                        i, i:before {
+                            font-size: 12px;
+                            line-height: 11px;
+                        }
+                        .small-circle {
+                            @media screen and (max-width:575px) {
+                                width: 22px;
+                                height: 22px;
+                                line-height: 22px;
+                            }
+                        }
+                    }
+                    .xs-small {
+                        @media screen and (max-width:575px){
+                            font-size: 14px;
+                        }
+                        @media screen and (max-width:370px){
+                            font-size: 13px;
+                        }
+                        @media screen and (max-width:336px){
+                            font-size: 12px;
+                        }
+                    }
+                    &.card-18 {
+                        font-size: 18px;
+                        @media screen and (max-width:575px) {
+                            font-size: 14px;
+                        }
+                    }
+                    @media screen and (max-width:575px) {
+                        font-size: 16px;
+                        margin-bottom: 0;
+                    }
+                }
+                &.small-font {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                &.border-custom {
+                    position: relative;
+                    font-weight: 400;
+                    &:after {
+                        @include pseudo_function ('', absolute, 100%, 2px, null, null,  -1px, 0, linear-gradient(to left, #fff, color(primary-color) ) );
+                    }
+                }
+            }
+            p {
+                &.card-category {
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: color(label-color);
+                    @media screen and (max-width:575px) {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+        a {
+            @media screen and (max-width:575px) {
+                width: 30px;
+                height: 30px;
+                line-height: 26px;
+            }
+        }
+        .card-header-circle {
+            width: 30px;
+            height: 30px;
+        }
+        .icon-text {
+            i:before {
+                vertical-align: middle;
+                font-size: 19px;
+            }
+        }
+    }
+    .card-body {
+        @extend %card-padding;
+        border-radius: 0 0 6px 6px;
+        &.custom-padding {
+            padding: 0;
+            transition: .5s linear; 
+            &.height-content {
+                .collapse {
+                    height: 0;
+                }
+                &.show {
+                    .collapse {
+                        height: auto;
+                    }
+                }
+            }
+        }
+        .collapse {
+            overflow: hidden;
+            max-height: 0;
+            transition: all .3s ease-in-out;
+        }
+        &.show {
+            padding: 15px 20px;
+            transition: .1s ease-in-out;
+            .collapse {
+                overflow-y: auto;
+                max-height: 700px;
+                transition: all .3s ease-in-out;
+                &::-webkit-scrollbar {
+                    width: 6px;
+                    height: 10px;
+                    background-color:lighten(color(primary-color), $amount: 20);
+                    border-radius: 30px;
+                }
+                &::-webkit-scrollbar-track{
+                    -webkit-border-radius:30px;
+                    border-radius:30px;
+                    background:transparent;
+                    border:none;
+                    box-shadow:none;
+                }
+                &::-webkit-scrollbar-thumb{
+                    -webkit-border-radius:5px;
+                    border-radius:5px;
+                    background: darken(color(primary-color), $amount: 4);
+                }
+            }
+            @media screen and (max-width:575px) {
+                padding: 15px 4px;
+            }
+        } 
+        @media screen and (max-width:575px) {
+            padding: 15px 14px;
+        }
+        &.px-xs-0 {
+            @media screen and (max-width:575px) {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+    }
+    .card-content {
+        h2 {
+            font-size: 14px;
+            font-weight: 400;
+            color: color(nav-search);
+        }
+        p {
+            font-size: 25px;
+            font-weight: 300;
+            padding-top: 2px;
+            color: color(htable-td);
+        }
+    }
+    .table-footer {
+        padding-top: 16px;
+        p {
+            &.text-secondary {
+                font-size: 16px;
+                font-weight: 400;
+                padding-top: 3px;
+                color: color(black-color);
+                @media screen and (max-width:575px) {
+                    width: 100%;
+                    text-align: center;
+                    padding-top: 0;
+                    font-size: 14px;
+                }
+            }
+        }
+        .btn {
+            &.btn-theme {
+                @include btn-theme(color(primary-color), #fff);
+                padding: 8px 30px;
+            }
+            .spinner-border {
+                width: 18px;
+                height: 18px;
+                margin-right: 1px;
+            }
+        }
+    }
+    ~ .submit-footer {
+            border-radius: 4px;
+            bottom: 10px;
+            background-color: lighten(color(sidebar-bg), $amount: 5);
+            @extend %card-padding;
+            @extend %shadow;
+            z-index: 1;
+            .btn-submit {
+                @include 
+                btn-theme(darken(color(profile-blue), $amount:2),#fff);
+                background-color:darken(color(profile-blue), $amount:2);
+                &:after {
+                    content: none;
+                }
+                &:hover {
+                    background-color:lighten(color(profile-blue), $amount:2);
+                    color: #fff;
+                }
+            }
+            @media screen and (max-width:576px) {
+                bottom: 2px;
+            }
+    }  
+    &.inner-card {
+        margin-bottom: 0;
+        .card-header {
+            padding:10px 10px 6px;
+            h4 {
+                &.card-title {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+        .card-body {
+            padding: 12px 10px;
+            p {
+                &.heading {
+                    font-size: 15px;
+                    font-weight: 400;
+                    line-height: 22px;
+                    color: darken(color(placeholder), $amount: 20);
+                    @media screen and (max-width:575px) {
+                        font-size: 14px;
+                        line-height: 19px;
+                    }
+                }
+            }
+        }
+        .inner-heading {
+            margin: 0 0 12px;
+            padding: 14px 10px 8px;
+            font-weight: 500;
+            font-size: 16px;
+            color: color(black-color);
+            @media screen and (max-width:575px) {
+                font-size: 14px;
+            }
+        }
+    }  
+    .border-bottom-custom {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+    .bg-custom-gradient, .bg-custom-cancel {
+        line-height: 32px;
+        background:linear-gradient(to right, color(primary-color) 0%, darken(color(primary-color), $amount:12) 100%);
+        color: #fff;
+        box-shadow: 0 10px 15px rgba(0, 69, 255, 0.2);
+        i {
+            &:before {
+                font-size: 22px;
+            }
+            &.bi-download {
+                &:before {
+                    font-size: 16px;
+                    line-height: 23px;
+                }
+            }
+            &.bi-arrow-counterclockwise {
+                &:before {
+                    font-size: 18px;
+                    line-height: 21px;
+                }
+            }
+            &.button-icon {
+                &:before {
+                    font-size: 16px;
+                    line-height: initial;
+                }
+            }
+        }
+        &:hover {
+            box-shadow: 0 2px 15px rgba(0, 69, 255, 0.2);
+        }
+        &.font-14 {
+            font-size: 14px;
+        }
+    }
+    .bg-custom-cancel {
+        background: color(cancel);
+    }
+    .search-field-xs {
+        @media screen and (max-width:575px) {
+            width: 100%;
+            margin-top: 10px;
+        } 
+    }
+    .btn-clear-filter {
+        background-color: color(cancel);
+        border: 1px solid color(cancel);
+        @include transition;
+        i {
+            line-height: 0;
+        }
+        i:before, span {
+            font-size: 14px;
+            color: #fff;
+        }
+        &:hover {
+            background-color: transparent;
+            @include transition;
+            i:before, span {
+                color: color(cancel);
+                @include transition;
+            }
+        }
+    }
+    .filter-footer {
+        .btn-submit {
+            @include btn-theme(darken(color(profile-blue), $amount:2),#fff);
+            background-color:darken(color(profile-blue), $amount:2);
+            &:after {
+                content: none;
+            }
+            &:hover {
+                background-color:lighten(color(profile-blue), $amount:2);
+                color: #fff;
+            }
+        }
+    }
+}
+@media screen and (max-width:575px) {
+    .ps-small-0 {
+        padding-left: 0;
+    }
+}
+          

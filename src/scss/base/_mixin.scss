@@ -1,0 +1,67 @@
+@import "variables.scss";
+@mixin pseudo_function ($content, $position, $width, $height, $top, $right,  $bottom, $left, $bg) {
+    content: $content;
+    position:  $position;
+    width: $width;
+    height: $height;
+    top: $top;
+    right: $right;
+    left: $left;
+    bottom: $bottom;
+    background: $bg;
+}
+@mixin nav_animation {
+    transition-duration: 0.2s, 0.2s, 0.35s;
+    transition-timing-function: linear, linear, ease;
+    -webkit-overflow-scrolling: touch;
+}
+@mixin btn-theme($bg, $colr,) {
+  position: relative;
+  color: $colr;
+  border: 2px solid $bg;
+  font-size: 16px;
+  font-weight: 400;
+  z-index: 2;
+  overflow: hidden;
+  &:after {
+    @include pseudo_function ('', absolute, 106%, 106%, -1px, 0, 0, -1px, $bg);
+    z-index: -1;
+    @include transition;
+    transform-origin: 0 0;
+    transition-timing-function: cubic-bezier(0.5, 0.6, 0.4, 0.7);
+    transform: scaleY(1);
+  }
+  &:hover {
+    border-color: darken($bg, $amount: 3);
+    color: $bg;
+    @include transition;
+    &:after {
+      transform: scaleY(0);
+    }
+  }  
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+@mixin marchar-color($color) {
+  background-color: lighten($color, $amount: 7);
+  border: 1px solid darken($color, $amount: 14);
+}
+@mixin gradient-color($color) {
+  background-image: linear-gradient(124deg, lighten($color, $amount: 4), darken($color, $amount: 12));
+  border: 1px solid darken($color, $amount: 20);
+}
+@mixin transition {
+    transition: all .3s linear;
+}
+@mixin total-score($color) {
+  h4 {
+      color: $color;
+  }
+  svg {
+      circle {
+          stroke: $color;
+      }
+  }
+}

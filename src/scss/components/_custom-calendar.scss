@@ -1,0 +1,153 @@
+@import "../base/variables";
+%bg-popup {
+    background-color: #fff;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+%no-focus {
+    border-color: transparent;
+}
+.custom-calendar {
+    input {
+        padding: 7.5px 7px;
+        border: 1px solid  #bfc9d4;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 400;
+        color: darken(color(placeholder), $amount: 20);
+        transition: all 0s ease-out;
+        &:focus, &:active {
+            border-color: color(primary-color);
+            outline: none;
+            box-shadow: 0 0 5px 2px rgba(194, 213, 255,  0.62);
+        }
+    }
+    .vc-popover-content-wrapper.is-interactive {
+        transform: unset !important;
+        inset: 34px 0 auto auto !important;
+        z-index: 3;
+        .vc-popover-content-wrapper.is-interactive {
+            z-index: 2;
+        }
+        @media screen and (max-width:600px) {
+            inset: 48px 0 auto auto !important;
+            width: 100%;
+        }
+    }
+    .vc-container {
+        @extend %bg-popup;
+        @media screen and (max-width:575px) {
+            width: 100%;
+            min-width: unset;
+        }
+    }
+    .vc-nav-popover-container {
+        @extend %bg-popup;
+    }
+    .vc-nav-title, .vc-nav-items, .vc-nav-item  {
+        color: color(label-color);
+        font-weight: 400;
+        &:hover {
+            background-color: transparent;
+            color: color(primary-color);
+        }
+        @extend %no-focus;
+    }
+    .vc-nav-item {
+        &:hover, &.is-active {
+            background-color: color(primary-color);
+            color: #fff;
+        }
+    }
+    .vc-nav-arrow {
+        svg {
+            color: color(table-td);
+        }
+        &:hover {
+            background-color: #edf2f7;
+        }
+        &:focus {
+            @extend %no-focus;
+        }
+    }
+    .vc-title {
+        font-size: 16px;
+        font-weight: 400;
+        color: color(black-color);
+    }
+    .vc-svg-icon {
+        height: 21px;
+    }
+    .vc-weekday {
+        font-weight: 400;
+        height: 40px;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        color: color(black-color);
+    }
+    .vc-day-content {
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        color: color(black-color);
+        font-weight: 400 !important;
+        &:focus {
+            background-color: transparent;
+        }
+        &.is-disabled {
+            color: color(input-label);
+        }
+    }
+    .vc-pane-layout {
+        .vc-pane {
+            &:nth-child(2) {
+                border-left: 2px solid rgba(0, 0, 0, 0.12);
+            }
+        }
+    }
+    .vc-highlight {
+        background-color: color(primary-color) !important;
+        color: #fff !important;
+        border-color: color(primary-color) !important;
+        &.vc-highlight-base-middle {
+            background-color: rgba(color(primary-color), 0.4) !important;
+        }
+        + span {
+            color: #fff !important;
+        }
+    }
+    .vc-highlights {
+        + span {
+            color: #fff !important;
+        }
+    }
+    &.left-caret-none {
+        .vc-popover-caret.direction-bottom.align-left {
+            display: none;
+        }
+    }
+    .vc-pane-layout {
+        @media screen and (max-width:600px) {
+            display: flex;
+            flex-wrap: wrap;
+            .vc-pane {
+                width: 100%;
+            }
+        }
+        
+    }
+    &.header-calendar {
+        input {
+            max-width: 100px;
+        }
+        i:before {
+            color: color(primary-color);
+            font-size: 19px;
+        }
+    }
+    @media screen and (max-width:600px) { 
+        position: relative;
+    }
+}

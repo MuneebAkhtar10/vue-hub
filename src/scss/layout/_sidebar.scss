@@ -1,0 +1,273 @@
+@import "../base/variables";
+@import '../base/mixin';
+%active-style {
+    background-color: rgba(59, 63, 92, 0.35);
+    border: 1px solid rgba(85, 85, 85, 0.211765);
+}
+%active-hover {
+    color: darken($color: #fff, $amount: 14);
+    i {
+        color: color(blue-link);
+    }
+}
+%collapse-hidden {
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: max-height .2s linear, margin .999s linear;
+}
+%collapse-show {
+    margin: 10px 0;
+    max-height: 300px;
+    transition: max-height .2s linear;
+}
+%hide-caret {
+    transform: rotate(0deg);
+    @include transition;
+    line-height: 0;
+}
+%show-caret {
+    transform: rotate(90deg);
+    transition: all .2s ease-in-out;
+}
+*:focus {
+    outline: none;
+}
+body {
+    .sidebar {
+        background-color:color(sidebar-bg);
+        height: 100vh;
+        width: 260px;
+        scroll-behavior: smooth;
+        padding: 0 12px;
+        z-index: 11;
+        overflow: hidden;
+        @include transition;
+        .sidebar-header {
+            padding: 22px 0 21px;
+            overflow: hidden;
+            white-space: nowrap;
+            min-width: 236px;
+            .logo-image {
+                width: 40px;
+                height: 40px;
+                img {
+                    object-fit: cover;
+                    border-radius: 6px;
+                }
+            }
+            p {
+                font-size: 20px;
+                color: #fff;
+            }
+            button {
+                i::before {
+                    color: #fff;
+                    font-size: 23px;
+                    transform: rotate(0deg);
+                    @include transition;
+                }
+                &:focus, &:active {
+                    box-shadow: none;
+                }
+            }
+        }
+        .sidelinks-wrapper {
+            height: calc(100vh - 75px);
+            padding-bottom: 30px;
+            margin:  0;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                background-color: color(sidebar-bg);
+                width: 6px;
+            }
+            &::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                background-color: #55586d;
+            }
+        }
+        ul {
+            margin: 20px 0 0;
+            list-style: none;
+            li {
+                margin: 0 0 3px ;
+                a, .dropdown-sidebar button div {
+                    border: 1px solid transparent;
+                    font-weight: 500;
+                    padding: 9px 20px;
+                    border-radius: 3px;
+                    color:color(sidebar-link);
+                    text-decoration: none;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    @include transition;
+                    i {
+                        margin-right: 10px;
+                        color: inherit;
+                        &.caret {
+                            @extend %hide-caret;
+                            &:before {
+                                font-size: 12px;
+                            }
+                            &.inner-caret {
+                                right: -19px;
+                            }
+                        }
+                        &:before {
+                            font-size: 20px;
+                        }
+                    }
+                    p, span {
+                        font-size: 13px;
+                        font-weight: 400;
+                    }
+                    &:hover {
+                        color: darken($color: #fff, $amount: 14);
+                    }
+                    &.active, &.router-link-exact-active {
+                        @extend %active-style;
+                        color: darken($color: #fff, $amount: 14);
+                        &:hover {
+                            @extend %active-hover;
+                        }
+                    }
+                }
+                .side-collapse {
+                    @extend %collapse-hidden;
+                    &.inner-menu {
+                        padding: 0 0 0 20px;
+                    }
+                }
+                &.show, &.show_parent {
+                    .caret {
+                        @extend %show-caret;
+                        &.inner-caret {
+                            @extend %hide-caret;
+                        }
+                    }
+                    .side-collapse {
+                       @extend %collapse-show;
+                        &.inner-menu {
+                            @extend %collapse-hidden;
+                        }
+                    }
+                    @extend %active-style;
+                    i {
+                        color: color(blue-link);
+                    }
+                }
+                &.show-inner {
+                     .caret {
+                        &.inner-caret {
+                            @extend %show-caret;
+                        }
+                    }
+                    .side-collapse {
+                        &.inner-menu {
+                            @extend %collapse-show;
+                        }
+                    }
+                }
+                .caret {
+                    right: 10px;
+                    transform: rotate(0deg);
+                    transition: all .3s ease-in-out;
+                    color: color(light-gray);
+                }
+                .side-collapse {
+                    a {
+                        &:before {
+                            @include pseudo_function ("", absolute, 4px, 4px, 16px, null,  6px, 7px, #fff);
+                            border-radius: 50%;
+                        }
+                        &:hover {
+                            color: color(blue-link);
+                            &:before {
+                                background-color:color(blue-link);
+                            }
+                        }
+                        &.router-link-exact-active {
+                            @extend %active-style;
+                        }
+                    }
+                }
+                &:first-child {
+                    a {
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+        @media screen and (max-width:991px) {
+            width: 260px;
+            padding: 0 12px;
+        }
+    }
+    &.nav-toggle { 
+        .sidebar {
+            width: 62px;
+            @include transition;
+            .sidebar-header {
+                button {
+                    svg, i::before {
+                        transform: rotate(180deg);
+                        @include transition;
+                    }
+                }
+            }
+            .caret {
+                @media screen and (min-width:992px) {
+                    opacity: 0;
+                }
+            }
+            .sidelinks-wrapper {
+                @media screen and (min-width:992px) {
+                    overflow: hidden;
+                }
+            }
+            ul {
+                li {
+                    a, .dropdown-sidebar button div {
+                        @media screen and (min-width:992px) {
+                            padding: 11px 8px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            @include transition;
+                        }
+                    }
+                }
+            }
+            .side-collapse {
+                @media screen and (min-width:992px) {
+                    display:none;
+                }
+            }
+            &:hover {
+                width: 260px;
+                .caret {
+                    opacity: 1;
+                    transition: opacity .3s linear;
+                }
+                ul {
+                    li {
+                        a, .dropdown-sidebar button div {
+                            padding: 9px 20px;
+                            @include transition;
+                        }
+                    }
+                }
+                .sidelinks-wrapper {
+                    overflow-y: scroll;
+                }
+                .side-collapse {
+                    display: block;
+                }
+            }
+            @media screen and (max-width:991px) {
+                width: 0;
+                padding: 0;
+            }
+        }
+    }
+}

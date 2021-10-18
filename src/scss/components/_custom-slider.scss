@@ -1,0 +1,35 @@
+.vue-slider {
+    &.custom-slider {
+        .vue-slider-mark-step {
+            display: none;
+        }
+        .vue-slider-process {
+            background-color: color(primary-color);
+        }
+        .vue-slider-dot-handle-focus, .vue-slider-dot-handle {
+            border-color: color(primary-color) !important;
+        }
+        .vue-slider-dot-handle-focus {
+            box-shadow: 0 0 0 5px rgba(color(primary-color), 0.2);
+        }
+        .vue-slider-mark-label {
+            cursor: pointer;
+        }
+        &:hover {
+            .vue-slider-process {
+                background-color: color(primary-color);
+            }
+            .vue-slider-dot-handle-focus, .vue-slider-dot-handle {
+                border-color: color(primary-color) !important;
+            }
+            .vue-slider-dot-handle-focus {
+                box-shadow: 0 0 0 5px rgba(color(primary-color), 0.2);
+            }
+        }
+        @media screen and (max-width:575px) {
+            .vue-slider-mark-label {
+                display: none;
+            }
+        }
+    }
+}

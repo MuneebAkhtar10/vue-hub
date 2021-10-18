@@ -1,0 +1,307 @@
+@import '../base/variables';
+%scrollbar-design {
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 10px;
+        background-color:lighten(color(primary-color), $amount: 12);
+        border-radius: 30px;
+    }
+    &::-webkit-scrollbar-track{
+        -webkit-border-radius:30px;
+        border-radius:30px;
+        background:transparent;
+        border:none;
+        box-shadow:none;
+    }
+    &::-webkit-scrollbar-thumb{
+        -webkit-border-radius:5px;
+        border-radius:5px;
+        background: darken(color(primary-color), $amount: 12);
+    } 
+}
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius: 4px 4px 0 0;
+    @extend %scrollbar-design;
+    table {
+        border-collapse: collapse;
+        margin-bottom: 16px;
+        &.custom-table {
+            width: 100%;
+            thead {
+                width: calc( 100% - 1em );
+                border-radius: 4px 4px 0 0;
+                border-top: 1px solid #e0e6ed;
+                border-bottom: 1px solid #e0e6ed;
+                tr {
+                    padding-bottom: 10px;
+                    th {
+                        padding: 9px 8px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        color: color(profile-blue);
+                        border: none;
+                        text-align: left;
+                        &:focus {
+                            outline: none;
+                        }
+                        &.action {
+                            text-align: right;
+                        }
+                    }
+                }
+                &.position-fixed {
+                    border: none;
+                    top: 76px;
+                    background-color: #fff;
+                    display: table;
+                    tr {
+                        display: table;
+                        width: 100%;
+                        box-sizing: border-box;
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        padding: 5px 8px;
+                        font-size: 14px;
+                        font-weight: 400;
+                        letter-spacing: 1px;
+                        color: color(table-td);
+                        a {
+                            color: color(table-anchor);
+                            font-weight: 500;
+                            &.toggle-row {
+                                width: 22px;
+                                height: 22px;
+                                background-color: lighten(color(success), $amount: 6);
+                                i {
+                                    &:before {
+                                        color: #fff;
+                                        font-size: 16px;
+                                    }
+                                    &.bi-dash {
+                                        display: none;
+                                    }
+                                }
+                                &.show {
+                                    background-color: color(cancel);
+                                    i {
+                                        &.bi-plus {
+                                            display: none;
+                                        }
+                                        &.bi-dash {
+                                            display: inline-block;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        &.max-limit-width {
+                            max-width: 316px;
+                        }
+                        .status {
+                            min-width: 40px;
+                            border-radius: 30px;
+                            padding: 4px 10px;
+                            &.active {
+                                background-color: lighten(color(success), $amount: 40);
+                                color: darken(color(success), $amount: 10);
+                                box-shadow: 0 3px 2px rgba(color(success), 0.35);
+                            }
+                            &.inactive {
+                                background-color: lighten(color(missed), $amount: 32);
+                                color: darken(color(missed), $amount: 10);
+                                box-shadow: 0 3px 2px rgba(color(missed), 0.35);
+                            }
+                            &.loading {
+                                background-color: lighten(color(refusal), $amount: 32);
+                                color: darken(color(refusal), $amount: 16);
+                                box-shadow: 0 3px 2px rgba(color(refusal), 0.35);
+                            }
+                        }
+                        img {
+                            &.table-img {
+                                width: 55px;
+                                height: 55px;
+                                object-fit: cover;
+                                border: 2px solid color(label-color);
+                            }
+                        }
+                        .designation {
+                            font-size: 12px;
+                            border-radius: 4px;
+                            padding: 3px 5px;
+                            background-color: lighten(color(success), $amount: 40);
+                            color: lighten(color(success), $amount: 4);
+                        }
+                    }
+                    &.hidden-row {
+                        .collapse {
+                            overflow: hidden;
+                            max-height: 0;
+                            transition: all .3s linear;
+                        }
+                    }
+                    &.show-hidden-row {
+                        + .hidden-row {
+                            .collapse {
+                                max-height: 300px;
+                                transition: all .3s linear;
+                            }
+                        }
+                    }
+                    border-bottom: 1px solid #ddd;
+                    @include transition;
+                    &:last-child {
+                        border: none;
+                    }
+                }
+                &.no-header {
+                    tr {
+                        &:first-child {
+                            td {
+                                border-top: none;
+                                padding-top: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.table-user {
+            @media screen and (max-width:720px) {
+                min-width: 720px;
+            }    
+        }
+        &.table-employee {
+            th, td {
+                &:first-child {
+                    width: 50px;
+                }
+            }
+            .mw-40 {
+                max-width: 40px;
+            }
+            @media screen and (max-width:1199px) {
+                min-width: 557px;
+            }
+            
+        }
+        &.max-height {
+            thead {
+                tr {
+                    width: calc(100% - 11px);
+                }
+            }
+            tbody {
+                display: block;
+                max-height: 800px;
+                overflow-y: auto;
+                @extend %scrollbar-design;
+                tr {
+                    &:first-child {
+                        td {
+                            &:last-child {
+                                .dropdown-menu {
+                                    transform: translate(-97px, 28px) !important;
+                                }
+                            }
+                        }
+                    } 
+                }
+                &::-webkit-scrollbar {
+                    background: transparent;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: color(has-visit);
+                }
+            }
+            tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+            &.max-height-8 {
+                tbody {
+                    max-height: 272px;
+                }
+            }
+        }
+        &.table-risk-assessment {
+            min-width: 940px;
+        }
+        .dropdown {
+            &.table-dropdown {
+                button {
+                    &.btn {
+                        i {
+                            font-size: 24px;
+                            color: color(sidebar-link);
+                        }
+                    }
+                    &:after {
+                        content: none;
+                    }
+                }
+                .dropdown-menu  {
+                    padding: 10px;
+                    border: none;
+                    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+                    background-color: #fff;
+                    transform: translate(-123px, 12px) !important;
+                    border-radius: 4px;
+                    list-style: none;
+                    z-index: 1;
+                    li {
+                        a {
+                            padding: 10px 5px;
+                            font-size: 14px;
+                            font-weight: 400;
+                            width: auto;
+                            color: color(label-color);
+                            width: 100%;
+                            i {
+                                &:before {
+                                    font-size: 16px;
+                                    margin-right: 10px;
+                                    color: darken(color(label-color), $amount: 10);
+                                }
+                            }
+                            &:hover {
+                                background-color: color(primary-color);
+                                box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
+                                color: #fff;
+                                border-radius: 4px;
+                                transition: all 150ms linear;
+                                i {
+                                    &:before {
+                                        color: #fff;
+                                    }
+                                }
+                            }
+                        }
+                        border-top: 1px solid rgba(0,0,0, 0.1);
+                        &:first-child {
+                            border-top: none;
+                        }                
+                    }
+                }
+            }
+        }
+        tr {
+            &:last-child {
+                td {
+                    .dropdown {
+                        .dropdown-menu {
+                            transform: translate(-97px, -38px) !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

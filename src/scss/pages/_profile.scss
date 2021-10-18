@@ -1,0 +1,101 @@
+@import "../layout/structure";
+@import "../layout/card.scss";
+@import "../components/accordion";
+%list-unstyled {
+    list-style-type: none;
+}
+.user-info {
+    img {
+        object-fit: cover;
+        width: 90px;
+        height: 90px;
+        border-radius: 6px;
+        box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.2), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+    }
+    h3 {
+        color: color(profile-blue);
+        font-size: 18px;
+        font-weight: 400;
+    }
+}
+.user-info-list {
+    ul {
+        @extend %list-unstyled;
+        li {
+            margin-bottom: 14px;
+            i {
+                &:before {
+                    color: color(sidebar-link);
+                    font-size: 18px;
+                    margin-right: 14px;
+                }
+            }
+            span {
+                min-width: 156px;
+                max-width: 160px;
+                text-align: left;
+                font-size: 15px;
+                font-weight: 400;
+                color: color(sidebar-link);
+                @media screen and (max-width:1112px) {
+                    word-break: break-word;
+                }
+            }
+            a {
+                color: color(profile-blue);
+            }
+        }
+    }
+}
+.card {
+    &.card-height-md {
+        &.h-100 {
+            @media screen and (max-width:1150px) {
+                height: unset !important;
+            }
+        }
+    }
+}
+.bio {
+    p {
+        color: color(sidebar-link);
+        font-size: 15px;
+        margin-bottom: 16px;
+        line-height: 22px;
+        font-weight: 300;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+h5 {
+    &.card-title {
+        font-size: 15px;
+        line-height: 20px;
+        a {
+            color: #333;
+            &:hover {
+                color: color(primary-color);
+            }
+        }
+    }
+}
+.medication {
+     @extend %list-unstyled;
+     padding: 6px 9px;
+     li {
+         span {
+             color: color(sidebar-link);
+             font-size: 14px;
+             font-weight: 400;
+             &.label {
+                 font-weight: 500;
+                 color: darken( color(sidebar-link), $amount: 6);
+             }
+             &.date {
+                 margin-left: 4px;
+             }
+         }
+         margin-bottom:6px;
+     }
+}

@@ -1,0 +1,30 @@
+.label-mental {
+    @media screen and (max-width:1835px) and (min-width:808px) {
+        height: 34px;
+        display: block;
+    }
+    @media screen and (max-width:807px) and (min-width:768px) {
+        height: 51px;
+        display: block;
+    }
+}
+.label-behaviour {
+    @media screen and (min-width:1247px) {
+        height: 36px;
+        align-items: flex-start !important;
+    }
+    @media screen and (max-width:1246px) and (min-width:767px) {
+        height: 53px;
+        align-items: flex-start !important;
+    }
+}
+.label-behaviour-small {
+    @media screen and (max-width:1469px) and (min-width:767px) {
+        height: 36px;
+    }
+}
+.label-pressure {
+    @media screen and (max-width:1427px) and (min-width:767px) {
+        height: 34px;
+    }
+}

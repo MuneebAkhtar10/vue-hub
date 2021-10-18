@@ -1,0 +1,194 @@
+@import "../base/variables";
+%small-btn {
+    font-size: 14px;
+    border: 1px solid darken(color(primary-color), $amount: 2);
+    background-color: darken(color(primary-color), $amount: 2);
+    color: #fff;
+    padding-right: 34px;
+    span {
+        max-width: calc(100% - -6px);
+    }
+    i {
+        right: 7px;
+        top: 10px;
+        line-height: 0;
+        transform: rotate(0deg);
+        transition: all .3s ease-in-out;
+        &:before {
+            font-size: 13px;
+        }
+    }
+    &.show {
+        i {
+            transform: rotate(180deg);
+            transition: all .3s ease-in-out;
+        }
+        + .dropdown-menu {
+            transform: translate(0,0) scale(1) !important;
+        }
+    }
+}
+.dropdown-custom {
+    .dropdown {
+        button {
+            &.btn {
+                box-shadow: none;
+                padding: 7px 13.5px;
+                margin-left: 5px;
+                i {
+                    font-size: 24px;
+                    margin-right: 3px;
+                    color: color(light-gray);
+                }
+            }
+            &:after {
+                content: none;
+            }
+        }
+        .dropdown-menu  {
+            display: block;
+            padding: 15px;
+            border: none;
+            transform: translate(-73%, 85%) scale(0) !important;
+            transform-origin: 100% -27%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+            background-color: #fff;
+            border-radius: 4px;
+            min-width: 208px;
+            list-style: none;
+            inset: -14px auto auto -21px !important;
+            z-index: 1;
+            li {
+                a {
+                    padding: 10px 5px;
+                    font-size: 14px;
+                    width: auto;
+                    color: color(black-color);
+                    width: 100%;
+                    &:hover {
+                        background-color: color(primary-color);
+                        box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
+                        color: #fff;
+                        border-radius: 4px;
+                        transition: all 150ms linear;
+                    }
+                    i {
+                        &:before {
+                            font-size: 22px;
+                        }
+                    }
+                    span {
+                        width: calc(100% - 54px);
+                        text-align: left;
+                        vertical-align: unset;
+                    }
+                }
+                border-top: 1px solid rgba(0,0,0, 0.1);
+                &:first-child {
+                    border-top: none;
+                }                
+            }
+            &.show {
+                transform: translate(-69%, 52%) scale(1) !important;
+                right: 15px !important;
+            }
+        }
+        &.rounded-dropdown {
+            .dropdown-menu {
+                padding: 10px;
+                transform: translate(0,0) scale(0) !important;
+                right: 0 !important;
+                top: 46px !important;
+                min-width: unset !important;
+                width: 100%;
+                inset: 42px auto auto -1px !important;
+                li {
+                    padding: 10px 5px;
+                    border-radius: 4px;
+                    margin-top: 6px;
+                    border-top: none;
+                    cursor: pointer;
+                    span {
+                        font-size: 14px;
+                        color: color(black-color);
+                        max-width: calc(100% - 30px);
+                    }
+                    i {
+                        &:before {
+                            font-size: 18px;
+                        }
+                    }
+                    a {
+                        height: unset;
+                    }
+                    &:hover {
+                        background-color: lighten(color(profile-blue), $amount: 10);
+                        span, i:before {
+                            color: #fff;
+                        }
+                        &:active {
+                            span {
+                                color: #fff;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            button {
+                @extend %small-btn;
+            }
+        }
+        &.dropdown-button {
+            button {
+                @extend %small-btn;
+            }
+            .dropdown-menu {
+                inset: unset !important;
+                right: 2px !important;
+                margin-top: 10px !important;
+                min-width: 280px;
+                li {
+                    a {
+                        @media screen and (max-width:575px) {
+                            height: auto;
+                            line-height: unset;
+                        }
+                    }
+                }
+                
+                @media screen and (max-width:575px) {
+                    min-width: unset;
+                    width: 236px;
+                }
+            }
+        }
+    }
+    &.nav-dropdown {
+        .dropdown {
+            .dropdown-menu {
+                transform-origin: 197px  80px;
+                transform: translate(0, 0) scale(0) !important;
+                inset: unset !important;
+                right: 0 !important;
+                &.show {
+                    transform: translate(0, 0) scale(1) !important;
+                    right: 0 !important;
+                }
+                &.right-xs-negative {
+                    @media screen and (max-width:380px) {
+                        right: -45px !important;
+                    }
+                }
+            }
+            button {
+                &.btn {
+                    @media screen and (max-width:575px) {
+                        margin-left: 2px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,102 @@
+@import "../layout/form";
+* {
+    font-family: 'Rubik', sans-serif;
+}
+.login {
+    height: 100vh;
+    width: 100%;
+    .col-12 {
+        padding: 30px 30px 30px 60px;
+        &:nth-child(2) {
+            background-color:color(primary-color);
+        }
+        .logo {
+            color: color(black-color);
+            img {
+                width: 60px;
+                height: 60px;
+                object-fit:cover;
+                vertical-align: middle;
+            }
+            span {
+                font-size: 16px;
+                padding-left: 10px;
+                font-weight: 700;
+            }
+            &:hover {
+                color:color(primary-color);
+                text-decoration: none;
+            }
+        }
+        .custom-auto {
+            top: 36%;
+            position: relative;
+            transform: translate(0, -36%);
+        }
+        form {
+            h1 {
+                font-size: 40px;
+                font-weight: 500;
+                @media screen and (max-width:420px) {
+                    font-size: 30px;
+                }
+            }
+            padding: 0 40px 0 0;
+            button {
+                @include btn-theme(color(primary-color), #fff);
+            }
+            @media screen and (max-width:420px) {
+                padding: 0;
+            }
+            @media screen and (min-width:1500px) {
+                max-width: 550px;
+            }
+        }
+        .image-wrapper {
+            width: 500px;
+            height: 500px;
+            img {
+                object-fit: contain;
+                -webkit-animation: move 2s linear infinite  alternate;
+                animation: move 2s linear infinite  alternate;
+            }
+            &:after {
+                @include pseudo_function ("", absolute, null, 32px, null, 50%,  -25px, 50%, darken(color(label-color), $amount: 18));
+                transform: translate(-66%, 0);
+                opacity: 0.13;
+                border-radius: 50%;
+                animation: blurshadow 2s linear infinite  alternate;
+            }
+            @media screen and (min-width:1400px) {
+                width: 35vw;
+                height: 76vh;
+            }
+            @media screen and (max-height:560px) {
+                width: 30vw;
+                height: 71vh;
+            }
+        }
+        @media screen and (max-width:575px) {
+            padding: 20px;
+        }
+    }
+    @media screen and (max-height:450px) {
+        height: 560px;
+    }
+}
+@-webkit-keyframes move {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(10px);}
+}
+@keyframes move {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(10px);}
+}
+@keyframes blurshadow {
+    0% {
+        width: 70%;
+    }
+    100% {
+        width: 55%;
+    }
+}

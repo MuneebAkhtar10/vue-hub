@@ -1,0 +1,220 @@
+@import "../base/variables";
+%ul-icons {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    margin-right: 6px;
+}
+%mar-colors{
+    &.A {
+        @include marchar-color(color(admin));
+    }
+    &.R {
+        @include marchar-color(color(refusal));   
+    }
+    &.NA {
+        @include marchar-color(color(not-avail));    
+    }    
+    &.NR {
+        @include marchar-color(color(not-required));
+    }   
+    &.LO {
+        @include marchar-color(color(left));
+    }    
+    &.C {
+        @include marchar-color(color(cancelled));    
+    }   
+    &.PR {
+        background-color:color(prn);
+        border:1px solid darken( color(prn), $amount: 14);      
+    }   
+    &.O{
+        @include marchar-color(color(other));      
+    }
+    &.M{
+        @include marchar-color(color(missed));      
+    }
+    &.has-visit{
+        @include marchar-color(color(has-visit));      
+    }
+}
+%mar-header {
+        color: darken(color(input-label), $amount: 6);
+        font-size: 16px;
+        font-weight: 400;
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+}
+.marchart-box, .medicine-table table tr td{
+        width: 10%;
+        height: 38px;
+        line-height: 34px;
+        margin-right: 1%;
+        overflow: hidden;
+        border-radius: 4px;
+        // box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.04), 0 1px 20px 0 rgba(0 ,0 ,0, 0.04), 0px 1px 11px 0px rgba(0 ,0 ,0, 0.05);
+        @media screen and (max-width:1340px) {
+            width: 19%;
+            margin-bottom: 10px;
+        }
+        @media screen and (max-width:575px) {
+            width: 32%;
+        }
+        @media screen and (max-width:376px) {
+            width: 49%;
+        }
+        p {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: color(black-color);
+            @media screen and (max-width:1540px) and (min-width:1340px) {
+                font-size: 0.68rem;
+            }
+        }
+        span {
+           @extend %mar-colors; 
+           cursor: pointer;
+        }
+}
+.marchart-wrapper {
+    .marchart-box {
+        @extend %mar-colors;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+.medicine-time {
+        width: 110px;
+        list-style: none;
+        li {
+            padding-bottom: 20px;
+            font-size: 15px;
+            color: darken(color(input-label), $amount: 20);
+            font-weight: 600;
+            &.day {
+                height: 55px;
+                @extend %mar-header;
+                border-bottom: 1px solid lighten(color(input-label), $amount: 6);
+                i {
+                    &:before {
+                        font-size: 17px;
+                    }
+                }
+            }
+            &:last-child {
+                padding-bottom: 0;
+            }
+            i {
+                &:before {
+                    @extend %ul-icons;
+                }
+                &.morning {
+                    &:before {
+                        color: color(warning-color);
+                    }
+                }
+            }
+            svg {
+                @extend %ul-icons;
+                &.lunch {
+                    fill: darken(color(warning-color), $amount: 20);
+                }
+                &.bed {
+                    height: 17px;
+                    fill: lighten(color(black-color), $amount: 10) ;
+                }
+            }
+        }
+}
+.medicine-table {
+        width: calc(100% - 110px);
+        overflow-x: auto;
+        padding-bottom: 8px;
+        scroll-behavior: smooth;
+        touch-action: pan-x;
+        table {
+            border-collapse: collapse;
+            tbody {
+                tr {
+                    padding: 6px 0 10px
+                }
+            }
+            thead {
+                tr {
+                    border-bottom: 1px solid lighten(color(input-label), $amount: 6);
+                }
+            }
+            tr {
+                th {
+                    @extend %mar-header;
+                    min-width: 26px;
+                    text-align: center;
+                    margin: 0 3px;
+                    &.current {
+                        color: color(profile-blue);
+                        font-weight: 600;
+                    }
+                    &.weekdays {
+                        font-size: 16px;
+                        color: color(input-label);
+                    }
+                }
+                td {
+                    font-size: 14px;
+                    color: color(label-color);
+                    width: 26px;
+                    height: 26px;
+                    line-height: 24px;
+                    font-weight: 500;
+                    // border: 1px solid lighten(color(table-td), $amount: 34);
+                    background-color: lighten(color(table-td), $amount: 34);
+                    border-radius: 6px;
+                    margin: 0 3px;
+                    box-shadow: 1px 1px 6px rgba(222, 222, 222, 0.6);
+                }
+            }
+        }
+        &::-webkit-scrollbar {
+            width: 6px;
+            height: 10px;
+            background-color:lighten(color(label-color), $amount: 60);
+            border-radius: 30px;
+        }
+        &::-webkit-scrollbar-track{
+            -webkit-border-radius:30px;
+            border-radius:30px;
+            background:transparent;
+            border:none;
+            box-shadow:none;
+        }
+        &::-webkit-scrollbar-thumb{
+            -webkit-border-radius:5px;
+            border-radius:5px;
+            background: lighten(color(sidebar-link), $amount: 20);
+        }
+}
+.card {
+    .content-card-right {
+        &.marchart-content {
+            @media screen and (max-width:1199px) {
+                width: 70%;
+            }
+            @media screen and (max-width:575px) {
+                width: 60%;
+            }
+            + .custom-calendar {
+                @media screen and (max-width:1199px) {
+                    width: 100%;
+                    margin-top: 20px;
+                    text-align: right;
+                }
+            }
+            a {
+                @media screen and (max-width:575px) {
+
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,276 @@
+@import "../base/variables";
+@import "../base/mixin";
+%font16 {
+    font-size: 14px;
+}
+$medium-circle:28px;
+$small-circle:20px;
+form {
+    &.custom-form {
+        input, textarea, select {
+            padding: 5px 10px;
+            border: 1px solid  #bfc9d4;
+            border-radius: 4px;
+            height: 38px;
+            font-size: 14px;
+            font-weight: 400;
+            color: darken(color(placeholder), $amount: 20);
+            margin-top: 6px;
+            transition: all 0s ease-out;
+            &:focus, &:active {
+                border-color: color(primary-color);
+                outline: none;
+                box-shadow: 0 0 5px 2px rgba(194, 213, 255,  0.62);
+            }
+            &::placeholder {
+                color: color(placeholder);
+                font-size: $font-placeholder;
+                font-weight: 400;
+                @media screen and (max-width:575px) {
+                    font-size: 14px;
+                }
+            }
+            &[disabled] {
+                background: lighten(color(placeholder), $amount: 20);
+                border-radius: 3px;
+               + svg {
+                    left: 6px;
+                }
+            }
+            &.invalid {
+                background-image:linear-gradient(to top, color(cancel) 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+                background-size: 100% 100%, 100% 100%;
+                transition-duration: 0.3s;
+            }
+            &[type="checkbox"], &[type="radio"] {
+                background-image: none;
+                background-position: center;
+                box-shadow: none;
+                transition: all .3s ease-in;
+                cursor: pointer;
+                + label {
+                    transition: all .3s ease-in;
+                    cursor: pointer;
+                }
+            }
+            &[type="checkbox"]{
+                margin-top: 4px;
+                width: 18px;
+                height: 18px;
+                border: 2px solid color(input-label);
+                + label {
+                    padding: 5px 0 0 6px;
+                }
+            }
+            &[type="radio"] {
+                width: 20px;
+                height: 20px;
+                margin: 1px 6px 0 0;
+                padding: 0;
+            }
+            &:checked[type ="checkbox"] {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+                background-size: 14px;
+                background-color: color(primary-color);
+                border: 1px solid lighten(color(placeholder), $amount: 36);
+                transition: all .3s ease-in;
+            }
+            &:checked[type="radio"] {
+                background-color: color(primary-color);
+                border-color: lighten(color(primary-color), $amount: 10);
+            }
+            &:checked[type ="checkbox"], &:checked[type="radio"] {
+                + label {
+                    color: darken(color(placeholder), $amount: 20);
+                    transition: all .3s ease-in;   
+                }
+            }
+            &.light-disable {
+                &[disabled] {
+                    background-color:lighten(color(placeholder), $amount: 52);
+                    cursor: not-allowed;
+                }
+            }
+            @media screen and (max-width:575px) {
+                font-size: 14px;
+            }
+        }
+        .invalid-message {
+            font-size: 14px;
+            color: color(cancel);
+            width: 100%;
+        }
+        textarea {
+            height: 94px;
+            overflow: auto !important;
+            &.h-300 {
+                height: 300px;
+            }
+            &.h-400 {
+                height: 400px;
+            }
+            &.h-500 {
+                height: 500px;
+            }
+            &.h-600 {
+                height: 600px;
+            }
+        }
+        select {
+            option {
+                font-size: 15px;
+            }
+        }
+        .heading {
+            color: color(input-label);
+            margin-bottom: 30px;
+        }
+        .heading-h4 {
+            color: color(black-color);
+        }
+        .icon-input {
+            svg, i {
+                font-size: 20px;
+                top: 33px;
+                left: 9px;
+                color: lighten(color(label-color), $amount: 30);
+            }
+            input, textarea, select {
+                padding-left: 35px;
+                &:focus +, &:active + {
+                    svg, i {
+                        color:lighten(color(input-label), $amount: 4);
+                        @include transition;
+                    }
+                }
+            }
+            
+        }
+        .form-group {
+            margin-bottom: 20px;
+            .form-check {
+                display: flex;
+                align-items: center;
+                label {
+                    padding-top: 2px !important;
+                }
+                input {
+                    min-width: 18px;
+                }
+            }
+            &.icon-right {
+                input {
+                    padding-right: 40px;
+                }
+                i { 
+                    right: 1px;
+                    top: 23px;
+                    cursor: pointer;
+                    background: lighten(color(has-visit), $amount: 14);
+                    height: 36px;
+                    width: 35px;
+                    line-height: 36px;
+                    text-align: center;
+                    border-radius: 0 4px 4px 0;
+                    border-left: 1px solid  #bfc9d4;
+                    &:before {
+                        color: color(label-color);
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+        label {
+            color: color(input-label);
+            font-weight: 400;
+            margin-bottom: 0;
+            @extend %font16;
+            &.dark-color {
+                color: color(black-color);
+                font-weight: 600;
+            }
+        }
+        .theme-color {
+            color: color(primary-color);
+            @extend %font16;
+            text-decoration: none;
+        }
+        .form-row {
+            margin: 0 -15px;
+            label {
+                @media screen and (max-width:575px) {
+                    margin-bottom: 0;
+                    font-size: 14px;
+                }
+            }
+        }
+        .form-switch {
+            input {
+                &[type="checkbox"] {
+                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+                    background-position: left center;
+                    width: 40px;
+                    height: 18px;
+                    background-size: 16px;
+                    @media screen and (max-width:575px) {
+                        width: 33px;
+                        height: 16px;
+                        background-size: 14px;
+                    }
+                }
+                &:checked[type="checkbox"] {
+                    background-color: color(primary-color);
+                    background-position: right center;
+                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+                 }
+                 &.small-switch {
+                     &[type="checkbox"] {
+                        width: 30px;
+                        height: 14px;
+                        background-size: 12px;
+                    }
+                 }
+            }
+        }
+        .two-input {
+            i {
+                line-height: unset;
+                &::before  {
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+.btn-gradient {
+    background:linear-gradient(to right, color(primary-color) 0%, darken(color(primary-color), $amount:12) 100%);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    box-shadow: 0 10px 15px rgba(0, 69, 255, 0.2);
+    &:hover {
+        color: #fff;
+    }
+    &.medium-circle {
+        width: $medium-circle;
+        height: $medium-circle;
+        line-height: $medium-circle;
+        i {
+            line-height: 0;
+            &:before {
+                font-size: 15px;
+            }
+        }
+    }
+    &.small-circle {
+        width: $small-circle;
+        height: $small-circle;
+        line-height: $small-circle;
+        i {
+            font-size: 14px;
+        }
+    }
+}

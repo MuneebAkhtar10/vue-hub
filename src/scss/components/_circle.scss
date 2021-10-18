@@ -1,0 +1,93 @@
+@import "../base/variables";
+@import "../base/mixin";
+.circle-wrapper {
+    .circle {
+        width: 120px;
+        height: 120px;
+        margin-top: 18px;
+        box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.20);
+        @media screen and (max-width:575px) {
+            width: 90px;
+            height: 90px;
+        }
+        span {
+            color: color(label-color);
+        }
+        &.A {
+            @include marchar-color(color(admin));
+        }
+        &.R {
+            @include marchar-color(color(refusal));   
+        }
+        &.NA {
+            @include marchar-color(color(not-avail));    
+        }    
+        &.NR {
+            @include marchar-color(color(not-required));
+        }   
+        &.LO {
+            @include marchar-color(color(left));
+        }    
+        &.C {
+            @include marchar-color(color(cancelled));    
+        }   
+        &.PR {
+            background-color:color(prn);
+            border:1px solid darken( color(prn), $amount: 14);      
+        }   
+        &.O{
+            @include marchar-color(color(other));      
+        }
+        &.M{
+            @include marchar-color(color(missed));      
+        }
+        &.has-visit{
+            @include marchar-color(color(has-visit));      
+        }
+        &.PC {
+            @include marchar-color(lighten(color(primary-color), $amount: 5))
+        }
+        &.GA {
+            @include gradient-color(color(admin));
+        }
+        &.GR {
+            @include gradient-color(color(refusal));   
+        }
+        &.GNA {
+            @include gradient-color(color(not-avail));    
+        }    
+        &.GNR {
+            @include gradient-color(color(not-required));
+        }   
+        &.GLO {
+            @include gradient-color(color(left));
+        }    
+        &.GC {
+            @include gradient-color(color(cancelled));    
+        }   
+        &.GPR {
+            @include gradient-color(color(prn));   
+        }   
+        &.GO{
+            @include gradient-color(color(other));      
+        }
+        &.GM{
+            @include gradient-color(color(missed));      
+        }
+        &.Ghas-visit{
+            @include gradient-color(color(has-visit));      
+        }
+        &.GPC {
+            @include gradient-color(lighten(color(primary-color), $amount: 5))
+        }
+        border-width: 2px  !important;
+        
+    }
+    &.gradient {
+        .circle {
+            span {
+                color: #000;
+            }
+        }
+    }
+}

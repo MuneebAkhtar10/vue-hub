@@ -1,0 +1,89 @@
+@import "../base/variables";
+.upload-label {
+    // padding: 10px 0;
+    border-radius: 10px;
+    border: 2px dashed lighten(color(primary-color), $amount: 20);
+    background-color: lighten(color(primary-color), $amount: 38);
+    cursor: pointer;
+    min-width: 120px;
+    min-height: 100px;
+    h2 {
+        font-size: 20px;
+        font-weight: 600;
+        color: lighten(color(primary-color), $amount: 14);
+    }
+    h4 {
+        font-size: 14px;
+        font-weight: 500;
+        color: lighten(color(label-color), $amount: 34);
+    }
+    .overlay {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(color(primary-color), 0.7);
+        transform: scale(0);
+        border-radius: 8px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        i {
+            &:before {
+                font-size: 35px;
+                margin-bottom: 6px;
+            }
+        }
+    }
+    &:hover {
+        .overlay {
+            transform: scale(1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    }
+}
+.uploaded-image {
+    width: 140px;
+    height: 120px;
+    img {
+        object-fit: cover;
+    }
+}
+.uploaded-name {
+    width: calc(100% - 60px);
+    padding: 0 30px 0 10px;
+    word-break: break-word;
+    .uploaded-image-name {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22px;
+        color: color(black-color);
+        @media screen and (max-width:575px) {
+            font-size: 13px;
+        }
+    }
+}
+.btn-cancel {
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: lighten(color(cancel), $amount: 20);
+    i {
+        &:before {
+            font-size: 20px;
+            color: darken(color(cancel), $amount: 10);
+            transform: rotate(0deg);
+            transition: all .3s ease-in-out;
+        }
+    }
+    &:hover {
+        i {
+            &:before {
+                transform: rotate(30deg);
+                transition: all .3s ease-in-out;
+            }
+        }
+    }
+}

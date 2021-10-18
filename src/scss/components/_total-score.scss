@@ -1,0 +1,111 @@
+@import "../base/variables";
+@import "../base/mixin";
+%circle-inner {
+    font-weight: 600;
+    letter-spacing: 0;
+}
+.total-score {
+    margin: 20px auto;
+    width: 130px;
+    height: 130px;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.2);
+    h4 {
+        font-size: 40px;
+        font-weight: 300;
+        letter-spacing: 4px;
+    }
+    svg {
+        width: 160px;
+        height: 160px;
+        circle {
+            width: 160px;
+            height: 160px;
+            fill: none;
+            stroke-width:6;
+            stroke: #000;
+            transform: translate(6px, 6px);
+            stroke-dasharray: 560;
+            stroke-linecap:round;
+            stroke:color(primary-color)
+        }
+    }
+    &.low {
+        @include total-score(color(cancel));
+    }
+    &.medium {
+        @include total-score(color(warning-color));
+    }
+    &.high {
+        @include total-score(color(success));
+    }
+    &.A {
+        @include total-score(color(admin));
+    }
+    &.R {
+        @include total-score(color(refusal));   
+    }
+    &.NA {
+        @include total-score(color(not-avail));    
+    }    
+    &.NR {
+        @include total-score(color(not-required));
+    }   
+    &.LO {
+        @include total-score(color(left));
+    }    
+    &.C {
+        @include total-score(color(cancelled));    
+    }   
+    &.PR {
+        @include total-score(color(prn));    
+    }   
+    &.O{
+        @include total-score(color(other));      
+    }
+    &.M{
+        @include total-score(color(missed));      
+    }
+    &.has-visit{
+        @include total-score(color(has-visit));      
+    }
+    &.PC {
+        @include total-score(lighten(color(primary-color), $amount: 5))
+    }
+    &.small-score {
+        width: 40px;
+        height: 40px;
+        margin: 8px auto;
+        h4 {
+            @extend %circle-inner;
+            font-size: 16px;
+        }
+        svg {
+            width: 75px;
+            height: 75px;
+            circle {
+                width: 20px;
+                height: 20px;
+                stroke-dasharray: 176;
+                stroke-width: 3px;
+            }
+        }
+    }
+    &.medium-score {
+        width: 70px;
+        height: 70px;
+        h4 {
+            @extend %circle-inner;
+            font-size: 20px;
+        }
+        svg {
+            width: 105px;
+            height: 105px;
+            circle {
+                width: 50px;
+                height: 50px;
+                stroke-dasharray: 296;
+                stroke-width: 4px;
+            }
+        }
+    }
+}

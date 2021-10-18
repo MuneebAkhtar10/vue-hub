@@ -1,0 +1,94 @@
+@import "../base/variables";
+@import '../base/mixin';
+@import"../components/dropdowns";
+
+body {
+  nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      right: 0;
+      z-index: 10;
+      padding: 12px 0;
+      background-color: #fff;
+      box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+      @include transition;
+      a {
+          &.navbar-brand {
+              font-size: 18px;
+              font-weight: 400;
+              color: color(black-color);
+          }
+      }
+      ul {
+          top: -1px;
+          li {
+              a {
+                  i {
+                      &.material-icons {
+                          font-size: 20px;
+                          margin-right: 3px;
+                          max-width: 24px;
+                          &.code {
+                              font-size: 24px;
+                              color: color(primary-color);
+                              position: relative;
+                              top: 2px;
+                          }
+                      }
+                  }
+              }
+              .dropdown-custom {
+                  .dropdown {
+                      .dropdown-menu {
+                        top: 62px !important;
+                        right: 0 !important;
+                        transform: translate(-67%, 0) scale(0) !important;
+                        &.show {
+                            transform: translate(-67%, 0) scale(1) !important;
+                            right: 0 !important;
+                        }
+                      }
+                  }
+              }
+          }
+      }
+      .nav-link {
+        padding: 7.5px 15px;
+        font-weight: 400;
+        font-size: 12px;
+        margin-left: 4px;
+        border-radius: 3px;
+      }
+      form {
+          width: 202px;
+          position: relative;
+          top: -2px;
+          .form-group {
+              width: 100%;
+              div {
+                  display: flex;
+                  input {
+                    max-width: 159px;
+                  }
+              }
+          }
+      }
+      .overlay-layer { 
+          display: block;
+          &:before {
+              @include pseudo_function ('', absolute, 100%, 100vh, 0, 0, 0, 0, rgba(0, 0, 0, 0.35));
+          }
+      }
+      @media screen and (max-width:991px) {
+          width: 100%;
+      }
+  }
+  &.nav-toggle {
+    nav {
+      .overlay-layer {
+          display: none;
+      }
+    }
+  }
+}

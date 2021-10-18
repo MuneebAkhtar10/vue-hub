@@ -1,0 +1,40 @@
+@import "../base/variables";
+form {
+    &.custom-form {
+        .custom-select-check {
+            padding: 0;
+            margin-bottom: 10px;
+            input {
+                top: 11px;
+                left: 7px;
+                width: 20px;
+                height: 20px;
+                background: lighten(color(placeholder), $amount: 40);
+                border-color: lighten(color(placeholder), $amount: 40);
+                &:checked {
+                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+                    background-color: lighten(color(profile-blue), $amount: 15);
+                    background-size: 14px;
+                    background-position: center center;
+                    + label {
+                        background: lighten(color(profile-blue), $amount: 45);
+                        border-color:darken(color(profile-blue), $amount: 4) ;
+                        box-shadow: none;
+                    }
+                }
+            }
+            label {
+                color: lighten(color(label-color), $amount: 4);
+                width: 80%;
+                padding: 10px 10px 10px 30px;
+                background: #fff;
+                border-radius: 4px;
+                border: 2px solid transparent;
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+                @media screen and (max-width:575px) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

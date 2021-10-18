@@ -1,0 +1,27 @@
+@import '../base/variables';
+@import '../base/mixin';
+.card {
+    &.inner-card {
+        .daily-task-weeks {
+            .single-task {
+                width: 14%;
+                @media screen and (max-width:1400px) {
+                    width: 20%;
+                    margin-bottom: 20px;
+                }
+                @media screen and (max-width:1100px) {
+                    width: 25%;
+                }
+                @media screen and (max-width:640px) {
+                    width: 33%;
+                }
+                @media screen and (max-width:575px) {
+                    width: 50%;
+                }
+                @media screen and (max-width:400px) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

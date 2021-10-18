@@ -1,0 +1,32 @@
+.note {
+    .icon {
+        &:before {
+            color: color(primary-color);
+            font-size: 18px;
+        }
+        &.icon-gray {
+            &:before {
+                color: lighten(color(label-color), $amount: 6);
+            }
+        }
+    }
+    .icon-text {
+        color: color(label-color);
+    }
+    .note-text {
+        background-color: lighten(color(primary-color), $amount: 38);
+        border: 1px solid lighten(color(primary-color), $amount: 34);
+        color: lighten(color(label-color), $amount: 6);
+        border-radius: 6px;
+        font-size: 14px;
+        line-height: 20px;
+        &.side-by-side {
+            .right-content {
+                width: calc(100% - 26px);
+                @media screen and (max-width:575px) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

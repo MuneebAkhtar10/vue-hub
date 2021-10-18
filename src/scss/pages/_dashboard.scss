@@ -1,0 +1,17 @@
+@import "../layout/structure";
+@import "../layout/card.scss";
+@import "../layout/form";
+@import "../components/dashboard-header-cards";
+@import "../base/animations";
+@import "../components/multiselect";
+@import "../layout/table";
+@import "../components/dashboard-header-graph";
+
+section {
+    &.dashboard {
+        overflow-x: hidden;
+        .dashboard-table {
+            min-height: 217px;
+        }
+    }
+}

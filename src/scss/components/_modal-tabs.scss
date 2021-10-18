@@ -1,0 +1,48 @@
+.modal-tabs-wrapper {
+    overflow-x: auto;
+    .small-custom-tabs  {
+        &.modal-tabs {
+            overflow: hidden;
+            &.width-list-2 {
+                li {
+                    width: 50%;
+                }
+            }
+            &.width-list-3 {
+                li {
+                    width: 33.33%;
+                }
+                @media screen and (max-width:575px) {
+                    width: 430px;
+                }
+            }
+            &.width-list-4 {
+                li {
+                    width: 25%;
+                }
+                @media screen and (max-width:575px) {
+                    width: 560px;
+                }
+            }
+            li {
+                min-height: 42px;
+                span {
+                    @media screen and (max-width:575px) {
+                        font-size: 14px;
+                    }
+                }
+                &:after {
+                    @include pseudo_function ('', absolute, 0, 2px, null, 0, 0, 0, color(primary-color));
+                }
+                &.active {
+                    span {
+                        color: color(sidebar-bg);
+                    }
+                    &:after {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

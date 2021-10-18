@@ -1,0 +1,41 @@
+@import "../base/variables";
+%border-radius {
+    border-radius: 5px;
+}
+$icon-size:85px;
+.dashboard-header-graph {
+    .card {
+        padding: 14px 13px;
+        @extend %border-radius;
+        .graph-wrapper {
+            width: $icon-size;
+        }
+        .card-content {
+            width: calc(100% - #{$icon-size});
+            padding: 0 8px 0 0;
+            color: darken(color(label-color), $amount: 14);
+            h4 {
+                color: color(input-label);
+                font-size: 14px;
+                font-weight: 500;
+            }
+            h2 {
+                font-size: 22px;
+                color: color(black-color);
+            }
+        }
+        .graph {
+            font-size: 12px;
+            padding: 6px 8px;
+            border-radius: 4px;
+            &.high {
+                background-color: lighten(color(success), $amount: 40) ;
+                color: color(success);
+            }
+            &.low {
+                background-color: lighten(color(cancel), $amount: 24) ;
+                color: color(cancel);
+            }
+        }
+    }
+}

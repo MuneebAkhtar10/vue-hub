@@ -1,0 +1,87 @@
+@import "../base/variables";
+%border-radius {
+    border-radius: 5px;
+}
+$icon-size:45px;
+.dashboard-cards {
+    .card {
+        padding: 24px 13px;
+        @extend %border-radius;
+        .icon-wrapper {
+            width: $icon-size;
+            height: $icon-size;
+            @extend %border-radius;
+            img {
+                width: 34px;
+                &.weekly {
+                    width: 28px;
+                }
+            }
+        }
+        .card-content {
+            width: calc(100% - #{$icon-size});
+            padding: 0 5px 0 16px;
+            color: darken(color(label-color), $amount: 14);
+            h4 {
+                font-size: 14px;
+                font-weight: 400;
+                
+            }
+            h2 {
+                font-size: 22px;
+            }
+        }
+        &.dark-blue {
+            background-color: lighten(color(black-color), $amount: 64);
+            box-shadow: 1px 1px 3px 1px rgba(color(black-color), 0.26);
+            .icon-wrapper {
+                background-color: lighten(color(black-color), $amount: 50);
+            }
+        }
+        &.light-blue {
+            background-color: lighten(color(primary-color), $amount: 35);
+            box-shadow: 1px 1px 3px 1px rgba(color(primary-color), 0.26);
+            .icon-wrapper {
+                background-color: lighten(color(primary-color), $amount: 28);
+            }
+        }
+        &.light-green {
+            background-color: lighten(color(success), $amount: 44);
+            box-shadow: 1px 1px 3px 1px rgba(color(success), 0.26);
+            .icon-wrapper {
+                background-color: lighten(color(success), $amount: 28);
+            }
+        }
+        &.yellow {
+            background-color: lighten(color(warning-color), $amount: 28);
+            box-shadow: 1px 1px 3px 1px rgba(color(warning-color), 0.26);
+            .icon-wrapper {
+                background-color: lighten(color(warning-color), $amount: 20);
+            }
+        }
+        &.light-purple {
+            background-color: lighten(color(prn), $amount: 36);
+            box-shadow: 1px 1px 3px 1px rgba(color(prn), 0.26);
+            .icon-wrapper {
+                background-color: lighten(color(prn), $amount: 24);
+            }
+        }
+        &.red {
+            background-color: lighten(color(missed), $amount: 30);
+            box-shadow: 1px 1px 3px 1px rgba(color(missed), 0.26);
+            .icon-wrapper {
+                background-color: lighten(color(missed), $amount: 24);
+            }
+        }
+    }
+    .col-xxl-custom {
+        @media screen and (min-width:1400px) {
+            width: 16.66%;
+        }
+        &.four-items {
+            @media screen and (min-width:1400px) {
+                width: 25%;
+            }
+        }
+    }
+}

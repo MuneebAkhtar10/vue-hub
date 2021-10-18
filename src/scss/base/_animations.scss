@@ -1,0 +1,48 @@
+@keyframes popup-animate  {
+    0% {
+        -webkit-transform: scale(.7);
+        transform: scale(.7);
+        }
+    45% {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+    80% {
+        -webkit-transform: scale(.95);
+        transform: scale(.95);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+@keyframes popout-animate  {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(.5);
+        transform: scale(.5);
+        opacity: 0;
+    }
+}
+@keyframes scroll{
+    50%{background-size:80%;}
+    100%{background-position:125% 0;}
+   }
+
+   @media screen and (max-width:768px) {
+    .page-order{
+        order: 2;
+    }
+    .error-img-box{
+        order:1;
+    }
+}
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}

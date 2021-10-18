@@ -1,0 +1,36 @@
+$colors : (
+    'primary-color':#437aea,
+    'sidebar-bg':#060818,
+    'sidebar-link':#888ea8,
+    'blue-link':#25d5e4,
+    'black-color':#3b3f5c,
+    'input-label':#acb0c3,
+    'label-color':#555,
+    'placeholder':#6c757d,
+    'cancel':#ff6a6a,
+    'body-color':#f1f2f3,
+    'profile-blue':#1b55e2,
+    'success':#4caf50,
+    'table-td':#4b4b4b,
+    'table-anchor':#111111,
+    'warning-color':#ffbb44,
+    'admin':#73f073,
+    'refusal': #ffb100,
+    'not-avail': #77def5,
+    'not-required':#8b8ffd,
+    'left': #a6dfff,
+    'cancelled':#F1E004,
+    'prn':#bfbf4e,
+    'other':#f889ff,
+    'has-visit':#c4c4c4,
+    'missed':#fd4d4d,
+    'calendar-gray':#f5f7fb,
+    'copy-color': #51C4D3,
+    'assign': #57CC99,
+    'move':#1687A7
+
+);
+$font-placeholder:14px;
+@function color($ColorName) {
+    @return map-get($colors,$ColorName);
+}

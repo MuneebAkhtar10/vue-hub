@@ -1,0 +1,52 @@
+@import "../base/variables";
+.custom-pagination {
+    padding-bottom: 10px;
+    list-style-type: none;
+    .page-item {
+        align-self: center;
+        span {
+            font-size: 20px;   
+            color: color(label-color); 
+        }
+        button, a {
+            border: 0;
+            font-size: 15px;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 50%;
+            margin: 0 6px;
+            color: color(label-color);
+            &:hover {
+                background-color: lighten(color(label-color), $amount: 55);
+            }
+            @media screen and (max-width:575px) {
+                width: 28px;
+                height: 28px;
+                line-height: 28px;
+                font-size: 14px;
+                margin: 0 4px;
+            }
+            
+        }
+        &.active {
+            button, a, a > span {
+                background-color: color(primary-color);
+                color: #fff;
+                box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+        &:last-child {
+            .page-link {
+                margin-right: 0;
+            }
+        }
+    }
+    @media screen and (max-width:575px) {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,206 @@
+%small-font {
+    @media screen and (max-width:575px) {
+        font-size: 14px !important;
+    }
+}
+.custom-modal {
+    &.popup-animation {
+        &.show {
+            .modal-dialog {
+                -webkit-animation: popup-animate .3s;
+                animation: popup-animate  .3s;
+            }
+            &.hide {
+                .modal-dialog {
+                    -webkit-animation: popout-animate .3s;
+                    animation: popout-animate  .3s;
+                }
+            }    
+        }
+        &.slow {
+            .modal-dialog {
+                -webkit-animation: popup-animate .8s;
+                animation: popup-animate  .8s;
+            }
+            &.hide {
+                .modal-dialog {
+                    -webkit-animation: popout-animate .8s;
+                    animation: popout-animate  .8s;
+                }
+            }
+        }
+    }
+    .warning-wrapper {
+        width: 130px;
+        height: 130px;
+        margin: 15px auto 25px;
+        box-shadow: 0px 3px 25px 0px rgba(113, 106, 202, 0.2);
+        i {
+            &:before {
+                font-size: 80px;
+                color: color(warning-color);
+                @media screen and (max-width:575px) {
+                    font-size: 50px;
+                }
+            }
+        }
+        &.success {
+            i {
+                &:before {
+                    color: color(success);
+                }
+            }
+        }
+        @media screen and (max-width:575px) {
+            width: 90px;
+            height: 90px;
+        }
+    }
+    .warning-title {
+        h2 {
+            color: lighten(color(black-color), $amount: 14);
+            font-weight: 500;
+            font-size: 20px;
+            letter-spacing: 1px;
+            @media screen and (max-width:575px) {
+                font-size: 16px;
+            }
+        }
+        p {
+            color: darken(color(warning-color), $amount: 20);
+            font-size: 18px;
+            @media screen and (max-width:575px) {
+                font-size: 16px;
+            }
+        }
+    }
+    .modal-custom-xs {
+        @media screen and (max-width:991px) {
+            max-width: unset;
+            width: 90%;
+        }
+    }
+    .modal-header {
+        h1 {
+            font-size: 20px;
+            color: color(black-color);
+        }
+        .btn-close {
+            cursor: pointer;
+            &.bg-custom-gradient {
+                line-height: 36px;
+                min-width: 30px;
+                height: 30px;
+                background:linear-gradient(to right, color(primary-color) 0%, darken(color(primary-color), $amount:12) 100%);
+                color: #fff;
+                box-shadow: 0 10px 15px rgba(0, 69, 255, 0.2);
+                i {
+                    &:before {
+                        font-size: 22px;
+                    }
+                    &.small {
+                        &:before {
+                            font-size: 16px;
+                            line-height: 29px;
+                        }
+                    }
+                    &.bi-download {
+                        &:before {
+                            font-size: 15px;
+                            line-height: 25px;
+                        }
+                    }
+                }
+                &:hover {
+                    box-shadow: 0 2px 15px rgba(0, 69, 255, 0.2);
+                }
+            }
+        }
+        .header-btn {
+            padding: 7px 10px !important;
+            line-height: unset;
+            .btn-static-icon {
+                transform: none !important;
+                &::before {
+                    font-size: 18px;
+                }
+            }
+            .btn-text {
+                font-size: 14px;
+            }
+            &.bg-custom-gradient {
+                @include transition;
+                border: 1px solid color(primary-color);
+                &:hover {
+                    background: #fff;
+                    color: color(primary-color);
+                    border-color: color(primary-color);
+                    @include transition;
+                    i:before {
+                        color: color(primary-color);
+                        @include transition;
+                    }
+                }
+                &.dropdown-toggle {
+                    i {
+                        transition: none;
+                    }
+                }
+            }
+        }
+    }
+    .modal-body {
+        .uploads-image {
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+            }
+            
+        }
+        .document-pdf {
+            height: 800px;
+        }
+        &::-webkit-scrollbar {
+            width: 6px;
+            height: 10px;
+            background-color:lighten(color(primary-color), $amount: 12);
+            border-radius: 30px;
+        }
+        &::-webkit-scrollbar-track{
+            -webkit-border-radius:30px;
+            border-radius:30px;
+            background:transparent;
+            border:none;
+            box-shadow:none;
+        }
+        &::-webkit-scrollbar-thumb{
+            -webkit-border-radius:5px;
+            border-radius:5px;
+            background: darken(color(primary-color), $amount: 12);
+        } 
+    }
+    .modal-footer {
+        .btn {
+            border: 1px solid transparent;
+            margin-right: 10px;
+            &:last-child {
+                margin-right: 0
+            }
+        }
+        .btn-theme {
+            @include btn-theme(color(profile-blue), #fff);
+            @extend %small-font;
+        }
+        .btn-secondary-theme {
+            @include btn-theme(#fff, color(profile-blue));
+            border-color: #e8e8e8;
+            @extend %small-font;
+            &:hover {
+                color: color(profile-blue);
+                border-color:color(profile-blue);
+            }
+        }
+    }
+}

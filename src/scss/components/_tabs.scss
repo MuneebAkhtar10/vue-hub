@@ -1,0 +1,218 @@
+@import '../base/variables';
+%card-style {
+    border-radius: 4px;
+    box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.17), 0 1px 20px 0 rgba(0, 0, 0, 0.03), 0px 1px 11px 0px rgba(0, 0, 0, 0.03);
+}
+%top-left-border {
+    border-radius: 6px 0 0 0;
+}
+%full-height {
+    @media screen and (min-width:992px) {
+        height: 100%;
+    }
+}
+%hide-collapse {
+    margin-left: 10px;
+    overflow: hidden;
+    max-height: 0;
+    transition: all .3s ease-in;
+}
+%hide-collapse-icon {
+    font-size: 14px;
+    transform: rotate(0deg);
+    transition: all .2s linear;
+}
+%show-collapse {
+    max-height: 1200px;
+    transition: max-height .3s linear;
+}
+%show-collapse-icon-move {
+    transform: rotate(180deg);
+    transition: all .2s linear;
+}
+.custom-tabs {
+    .tabs-container {
+        &.position-sticky {
+            @media screen and (min-width:992px) {
+                top: 80px;
+                min-height: calc(100vh - 107px);
+            }
+        }
+        @media screen and (max-width:991px) {
+            position: relative !important;
+        }
+    }
+    aside {
+        @extend %card-style;
+        .card {
+            .card-header {
+                &.rouded-custom {
+                    padding:15px 13px;
+                }
+            }
+        }
+        ul {
+            li {
+                width: 100%;
+                button.btn {
+                        padding: 8px 8px 8px 14px;
+                        text-align: left;
+                        background-color: transparent;
+                        @extend %top-left-border;
+                        color: color(black-color);
+                        span {
+                            font-size: 14px;
+                        }
+                        &.active, &:hover {
+                            color: color(primary-color);
+                            span {
+                                font-weight: 600;
+                            }
+                        }
+                        &:focus {
+                            box-shadow: none;
+                        }
+                }
+                &.nav-collapse {
+                    button {
+                        padding-right: 24px;
+                    }
+                    i {
+                        display: block;
+                        top: 7px;
+                        right: 10px;
+                        color: color(label-color);
+                        &:before {
+                            @extend %hide-collapse-icon;
+                        }
+                    }
+                    .level {
+                        @extend %hide-collapse;
+                        button {
+                            padding-bottom: 6px;
+                        }
+                        li {
+                            &:last-child {
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+                }
+                &.show {
+                    .level {
+                        @extend %show-collapse;
+                        &.level-third {
+                            @extend %hide-collapse;
+                            margin-left: 20px
+                        }
+                        li {
+                            &.show {
+                                .level-third {
+                                    @extend %show-collapse;
+                                }
+                                .two-level:before {
+                                    @extend %show-collapse-icon-move;
+                                }
+                            }
+                        }
+                    }
+                    i {
+                        &.two-level:before {
+                            @extend %hide-collapse-icon;
+                        }
+                        &:before {
+                            @extend %show-collapse-icon-move;
+                        }
+                    }
+                } 
+                .level-third {
+                    li {
+                        position: relative;
+                        &:before {
+                            @include pseudo_function ('', absolute, 5px, 5px, 50%, null,  null, 2px, color(primary-color));
+                            border-radius: 50%;
+                            transform: translate(0, -50%);
+                        }
+                    }
+                }
+            }
+            &.left-content-tabs {
+                li {
+                    button {
+                    border-bottom: 1px solid #d8d8d8;
+                    }
+                } 
+            }
+        }
+        .tabs-list-wrapper {
+            @media screen and (min-width:992px) {
+                height: calc(100vh - 168px);
+                overflow-y: auto;
+                &::-webkit-scrollbar {
+                    width: 6px;
+                    height: 10px;
+                    background-color:lighten(color(sidebar-link), $amount: 25);
+                    border-radius: 30px;
+                }
+                &::-webkit-scrollbar-track{
+                    border-radius:30px;
+                    background:transparent;
+                    border:none;
+                    box-shadow:none;
+                }
+                &::-webkit-scrollbar-thumb{
+                    border-radius:5px;
+                    background: darken(color(sidebar-link), $amount: 25);
+                } 
+            }
+            @media screen and (max-width:991px) {
+                display: none;
+                position: absolute;
+                top: 130px;
+                background: #fff;
+                z-index: 1;
+                border-radius: 4px;
+                box-shadow: 0 0px 4px 0 rgba(85, 85, 85, 0.17), 0 1px 20px 0 rgba(0, 0, 0, 0.03), 0px 6px 11px 0px rgba(0, 0, 0, 0.15);
+                &.show {
+                    display: block;
+                }
+            } 
+        }
+    }
+    .card {
+        @extend %full-height;
+        .card-header {
+            &.rouded-custom {
+                padding: 10px 20px;
+                border-radius: 0px 6px 0 0;
+            }
+        }
+    }
+    .tab-content {
+        @extend %card-style;
+        @extend %full-height;
+        .tab-pane {
+            @extend %full-height;
+        }
+    }
+    .md-dropdown {
+        cursor: pointer;
+        padding: 14.5px 13px;
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: color(black-color);
+        }
+        i:before {
+            font-size: 16px;
+            line-height: 16px;
+            @include transition;
+        }
+        &.show {
+            i:before {
+                transform: rotate(180deg);
+                @include transition;
+            }
+        }
+    }
+}
