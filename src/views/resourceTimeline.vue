@@ -247,11 +247,14 @@
                                   style="height: 0px;"
                                 >
                                   <div
-                                    v-for="(patient,
-                                    patientIndex) in patientShapedData[
+                                    v-for="(appointment,
+                                    appointmentIndex) in appointmentShapedData[
                                       carer.id
                                     ]"
-                                    :key="'patient-shaped-data' + patientIndex"
+                                    :key="
+                                      'appointment-shaped-data' +
+                                        appointmentIndex
+                                    "
                                     class="fc-timeline-event-harness"
                                     style="top: 0px; left: 600px; right: -900px;"
                                   >
@@ -265,7 +268,7 @@
                                               class="fc-event-title fc-sticky"
                                               style="top: 0px;"
                                             >
-                                              {{ patient.name }}
+                                              {{ appointment.patient.name }}
                                             </div>
                                           </div>
                                         </div>

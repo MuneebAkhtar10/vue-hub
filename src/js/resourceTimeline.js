@@ -44,9 +44,31 @@ export default {
           carer: { id: "lorem3" },
         },
       ],
+      appointmentTime: [
+        {
+          carer: { id: "lorem" },
+          patient: { id: "patient", name: "Sit Amet" },
+          time: "5",
+        },
+        {
+          carer: { id: "lorem1" },
+          patient: { id: "patient1", name: "Sit Amet1" },
+          time: "2",
+        },
+        {
+          carer: { id: "lorem2" },
+          patient: { id: "patient2", name: "Sit Amet2" },
+          time: "3",
+        },
+        {
+          carer: { id: "lorem3" },
+          patient: { id: "patient3", name: "Sit Amet3" },
+          time: "4",
+        },
+      ],
       resourceSize: 26,
       timeRanges: [],
-      patientShapedData: {},
+      appointmentShapedData: {},
     };
   },
   computed: {},
@@ -87,17 +109,12 @@ export default {
     },
     dataShaper: function() {
       var _this = this;
-      _.each(_this.patients, (patient) => {
-        if (
-          patient &&
-          patient.carer &&
-          patient.carer.id &&
-          _this.patientShapedData[patient.carer.id] != undefined
-        ) {
-          _this.patientShapedData[patient.carer.id].push(patient);
+      _.each(_this.appointmentTime, (appointment) => {
+        if (_this.appointmentShapedData[appointment.carer.id] != undefined) {
+          _this.appointmentShapedData[appointment.carer.id].push(appointment);
         } else {
-          _this.patientShapedData[patient.carer.id] = [];
-          _this.patientShapedData[patient.carer.id].push(patient);
+          _this.appointmentShapedData[appointment.carer.id] = [];
+          _this.appointmentShapedData[appointment.carer.id].push(appointment);
         }
       });
     },
