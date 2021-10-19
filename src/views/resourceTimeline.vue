@@ -37,9 +37,9 @@
       >
         <table role="grid" class="fc-scrollgrid  fc-scrollgrid-liquid">
           <colgroup>
-            <col style="width: 30%;" />
-            <col />
-            <col />
+            <col style="width: 20%;" />
+            <!-- <col />
+            <col /> -->
           </colgroup>
           <thead role="rowgroup">
             <tr
@@ -197,7 +197,11 @@
                     class="fc-scroller fc-scroller-liquid-absolute"
                     style="overflow: scroll;"
                   >
-                    <div class="fc-timeline-body " style="min-width: 1440px;">
+                    <div
+                      class="fc-timeline-body "
+                      style="min-width: 1440px;"
+                      ref="newRef"
+                    >
                       <div class="fc-timeline-slots">
                         <table
                           aria-hidden="true"
@@ -218,6 +222,10 @@
                                 :key="time + '-' + timeIndex"
                                 class="fc-timeline-slot fc-timeline-slot-lane fc-timeline-slot-minor fc-slot fc-slot-fri fc-slot-today  fc-slot-future"
                                 :data-date="'2021-10-15T' + time"
+                                @drop="drop"
+                                @dragover="dragOver"
+                                @dragleave="dragLeave"
+                                @dragenter="dragEnter"
                               >
                                 <div></div>
                               </td>
@@ -235,6 +243,8 @@
                           <tr
                             v-for="(carer, carerIndex) in carers"
                             :key="'event' - carer.id + '-' + carerIndex"
+                            :id="'carer-' + carer.id"
+                            @dragover="newDragOver($event, carerIndex)"
                           >
                             <td class="fc-timeline-lane fc-resource">
                               <div
@@ -246,7 +256,7 @@
                                   class="fc-timeline-events fc-scrollgrid-sync-inner"
                                   style="height: 0px;"
                                 >
-                                  <div
+                                  <!-- <div
                                     v-for="(appointment,
                                     appointmentIndex) in appointmentShapedData[
                                       carer.id
@@ -257,6 +267,33 @@
                                     "
                                     class="fc-timeline-event-harness"
                                     style="top: 0px; left: 600px; right: -900px;"
+                                    draggable="true"
+                                  > -->
+                                  <div
+                                    v-for="(appointment,
+                                    appointmentIndex) in appointmentShapedData[
+                                      carer.id
+                                    ]"
+                                    :key="
+                                      'appointment-shaped-data' +
+                                        appointmentIndex
+                                    "
+                                    class="fc-timeline-event-harness"
+                                    :id="
+                                      'dragged-appointment-' +
+                                        appointmentIndex +
+                                        '-' +
+                                        carerIndex
+                                    "
+                                    draggable="true"
+                                    @dragstart="
+                                      dragStart(
+                                        $event,
+                                        appointmentIndex,
+                                        carerIndex
+                                      )
+                                    "
+                                    @dragend="dragEnd($event, appointmentIndex)"
                                   >
                                     <a
                                       class="fc-timeline-event fc-h-event fc-event fc-event-draggable fc-event-resizable fc-event-start fc-event-end fc-event-past fc-event-today"
@@ -314,4 +351,4 @@ body {
 </style>
 
 <script src="../js/resourceTimeline.js"></script>
-<style src="../style/main.min.css" />
+<style src="../style/main.css" />

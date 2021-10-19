@@ -1,4 +1,5 @@
 import _ from "lodash";
+
 export default {
   name: "resource-timeline",
   props: {},
@@ -69,6 +70,8 @@ export default {
       resourceSize: 26,
       timeRanges: [],
       appointmentShapedData: {},
+      draggedAppointmentIndex: -1,
+      draggedAppointmentCarerIndex: -1,
     };
   },
   computed: {},
@@ -117,6 +120,38 @@ export default {
           _this.appointmentShapedData[appointment.carer.id].push(appointment);
         }
       });
+    },
+    dragStart: function(event, apIndex, crIndex) {
+      this.draggedAppointmentIndex = apIndex;
+      this.draggedAppointmentCarerIndex = crIndex;
+      // console.log("Drag started");
+    },
+    dragEnd: function() {
+      // console.log("Drag ended");
+    },
+    dragOver: function(e) {
+      e.preventDefault();
+      // console.log("old drag", e);
+    },
+    dragEnter: function() {
+      // console.log("DragEnter");
+    },
+    dragLeave: function() {
+      // console.log("DragLeave");
+    },
+    drop: function(e) {
+      console.log("Drop");
+      var _this = this;
+      const dragableAppointment = document.querySelector(
+        "#dragged-appointment-" +
+          _this.draggedAppointmentIndex +
+          "-" +
+          _this.draggedAppointmentCarerIndex
+      );
+      e.target.append(dragableAppointment);
+    },
+    newDragOver: function(e, carerIndex) {
+      console.log(" New dragOver", e, carerIndex);
     },
   },
 };
