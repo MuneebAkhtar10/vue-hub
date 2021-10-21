@@ -76,6 +76,11 @@ const routes = [
     name: "timelineTemplate",
     component: () => import("../views/resourceTimelineTemplate.vue"),
   },
+  {
+    path: "/newResourceTimeline",
+    name: "newResourceTimeline",
+    component: () => import("../views/newResourceTimeline.vue"),
+  },
 ];
 
 const router = createRouter({

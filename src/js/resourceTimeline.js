@@ -1,5 +1,5 @@
 import _ from "lodash";
-
+import jQuery from "./jQuery";
 export default {
   name: "resource-timeline",
   props: {},
@@ -47,21 +47,25 @@ export default {
       ],
       appointmentTime: [
         {
+          id: "dolore",
           carer: { id: "lorem" },
           patient: { id: "patient", name: "Sit Amet" },
           time: "5",
         },
         {
+          id: "dolore1",
           carer: { id: "lorem1" },
           patient: { id: "patient1", name: "Sit Amet1" },
           time: "2",
         },
         {
+          id: "dolore2",
           carer: { id: "lorem2" },
           patient: { id: "patient2", name: "Sit Amet2" },
           time: "3",
         },
         {
+          id: "dolore3",
           carer: { id: "lorem3" },
           patient: { id: "patient3", name: "Sit Amet3" },
           time: "4",
@@ -79,7 +83,9 @@ export default {
     this.createTimeInterval();
     this.dataShaper();
   },
-  mounted() {},
+  mounted() {
+    this.jQueryForArea();
+  },
   methods: {
     createTimeInterval: function() {
       let items = [];
@@ -152,6 +158,43 @@ export default {
     },
     newDragOver: function(e, carerIndex) {
       console.log(" New dragOver", e, carerIndex);
+    },
+    jQueryForArea: function() {
+      var dragging = false;
+      var selected = null;
+      var cell = $("table").find(".data-cell");
+
+      $(".table-area-selected").each(function(index) {
+        $(this).css("top", $(cell.get(index)).position().top);
+        $(this).css("left", $(cell.get(index)).position().left);
+
+        $(this).css("width", $(cell.get(index)).innerWidth());
+        $(this).css("height", $(cell.get(index)).innerHeight());
+      });
+
+      $(".table-area-selected").on("mousedown", function(event) {
+        console.log("mousedown");
+        selected = $(this);
+        dragging = true;
+      });
+
+      $(window).on("mouseup", function(event) {
+        console.log("mouseup");
+        selected = null;
+        dragging = false;
+      });
+
+      $(".data-cell").on("mouseover", function(event) {
+        var cell = $(this);
+        if (dragging) {
+          selected.css("top", cell.position().top);
+          selected.css("left", cell.position().left);
+
+          selected.css("width", cell.innerWidth());
+          selected.css("height", cell.innerHeight());
+          console.log("dragged a selection box : " + selected);
+        }
+      });
     },
   },
 };
