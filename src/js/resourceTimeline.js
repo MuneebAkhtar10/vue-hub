@@ -1,5 +1,5 @@
 import _ from "lodash";
-import jQuery from "./jQuery";
+import jQuery from "jquery";
 export default {
   name: "resource-timeline",
   props: {},
@@ -51,24 +51,28 @@ export default {
           carer: { id: "lorem" },
           patient: { id: "patient", name: "Sit Amet" },
           time: "5",
+          cell: -1,
         },
         {
           id: "dolore1",
           carer: { id: "lorem1" },
           patient: { id: "patient1", name: "Sit Amet1" },
           time: "2",
+          cell: -1,
         },
         {
           id: "dolore2",
           carer: { id: "lorem2" },
           patient: { id: "patient2", name: "Sit Amet2" },
           time: "3",
+          cell: -1,
         },
         {
           id: "dolore3",
           carer: { id: "lorem3" },
           patient: { id: "patient3", name: "Sit Amet3" },
           time: "4",
+          cell: -1,
         },
       ],
       resourceSize: 26,
@@ -81,10 +85,10 @@ export default {
   computed: {},
   created() {
     this.createTimeInterval();
-    this.dataShaper();
   },
   mounted() {
-    this.jQueryForArea();
+    // this.jQueryForArea();
+    this.dataShaper();
   },
   methods: {
     createTimeInterval: function() {
@@ -118,13 +122,18 @@ export default {
     },
     dataShaper: function() {
       var _this = this;
-      _.each(_this.appointmentTime, (appointment) => {
-        if (_this.appointmentShapedData[appointment.carer.id] != undefined) {
-          _this.appointmentShapedData[appointment.carer.id].push(appointment);
-        } else {
-          _this.appointmentShapedData[appointment.carer.id] = [];
-          _this.appointmentShapedData[appointment.carer.id].push(appointment);
-        }
+      // _.each(_this.appointmentTime, (appointment) => {
+      //   if (_this.appointmentShapedData[appointment.carer.id] != undefined) {
+      //     _this.appointmentShapedData[appointment.carer.id].push(appointment);
+      //   } else {
+      //     _this.appointmentShapedData[appointment.carer.id] = [];
+      //     _this.appointmentShapedData[appointment.carer.id].push(appointment);
+      //   }
+      // });
+      _.each(_this.appointmentTime, (apt, aptIndex) => {
+        var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
+        apt.cell = carerIndex * 24 + parseInt(apt.time) + 1;
+        this.jQueryForArea(apt.cell);
       });
     },
     dragStart: function(event, apIndex, crIndex) {
@@ -137,7 +146,6 @@ export default {
     },
     dragOver: function(e) {
       e.preventDefault();
-      // console.log("old drag", e);
     },
     dragEnter: function() {
       // console.log("DragEnter");
@@ -159,42 +167,65 @@ export default {
     newDragOver: function(e, carerIndex) {
       console.log(" New dragOver", e, carerIndex);
     },
-    jQueryForArea: function() {
-      var dragging = false;
-      var selected = null;
-      var cell = $("table").find(".data-cell");
+    jQueryForArea: function(cellNumber) {
+      var isDragging = false;
 
-      $(".table-area-selected").each(function(index) {
-        $(this).css("top", $(cell.get(index)).position().top);
-        $(this).css("left", $(cell.get(index)).position().left);
+      var jQueryselected = jQuery(".table-area-selected");
 
-        $(this).css("width", $(cell.get(index)).innerWidth());
-        $(this).css("height", $(cell.get(index)).innerHeight());
-      });
+      var jQuerycells = jQuery("table").find(".data-cell");
+      var colSpan = 1;
+      var jQuerycurrentCell = jQuery(jQuerycells[cellNumber]);
+      var cellWidth = jQuerycurrentCell.outerWidth();
 
-      $(".table-area-selected").on("mousedown", function(event) {
-        console.log("mousedown");
-        selected = $(this);
-        dragging = true;
-      });
+      jQueryselected.css("width", cellWidth * colSpan);
+      jQueryselected.css("height", jQuerycurrentCell.outerHeight() - 2); // fiddle factor
+      jQueryselected.css("top", jQuerycurrentCell.position().top);
+      jQueryselected.css("left", jQuerycurrentCell.position().left);
 
-      $(window).on("mouseup", function(event) {
-        console.log("mouseup");
-        selected = null;
-        dragging = false;
-      });
+      // drag start
+      jQueryselected.mousedown(dragStart);
 
-      $(".data-cell").on("mouseover", function(event) {
-        var cell = $(this);
-        if (dragging) {
-          selected.css("top", cell.position().top);
-          selected.css("left", cell.position().left);
+      // drag end
+      jQuery(window).mouseup(dragEnd);
 
-          selected.css("width", cell.innerWidth());
-          selected.css("height", cell.innerHeight());
-          console.log("dragged a selection box : " + selected);
+      // drag over cells
+      jQuerycells.mouseenter(draggingIntoNewCell);
+      jQueryselected.mousemove(draggingInSelectedCell);
+
+      function dragStart() {
+        isDragging = true;
+      }
+
+      function dragEnd() {
+        isDragging = false;
+      }
+
+      function draggingIntoNewCell() {
+        jQuerycurrentCell = jQuery(this);
+        reposition(jQuerycurrentCell);
+      }
+
+      // find if we've moved into the next column under this selection
+      function draggingInSelectedCell(e) {
+        if (isDragging) {
+          // find relative position within selection div
+          var relativeXPosition = e.pageX - jQuery(this).offset().left;
+
+          if (relativeXPosition > cellWidth) {
+            // moved into next column
+            jQuerycurrentCell = jQuerycurrentCell.next();
+            reposition(jQuerycurrentCell);
+          }
         }
-      });
+      }
+
+      function reposition(jQuerycell) {
+        // only reposition if not the last cell in the table (otherwise can't span 2 cols)
+        if (isDragging && jQuerycell.hasClass("data-cell")) {
+          jQueryselected.css("top", jQuerycell.position().top);
+          jQueryselected.css("left", jQuerycell.position().left);
+        }
+      }
     },
   },
 };

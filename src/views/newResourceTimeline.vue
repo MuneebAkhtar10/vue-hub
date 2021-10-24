@@ -1,7 +1,5 @@
 <template>
-  <h1>Hello Plunker!</h1>
-
-  <div class="table-area">
+  <div class="table-area mainContainer">
     <table>
       <thead>
         <tr>
@@ -20,10 +18,10 @@
           v-for="(carer, carerIndex) in carers"
           :key="carer.id + '-' + carerIndex"
         >
-          <td>
-            {{ carer.name }}
-          </td>
+          <td>{{ carer.name }}</td>
+
           <td
+            class="data-cell"
             v-for="(time, timeIndex) in timeRanges"
             :key="time + '-' + timeIndex"
           ></td>
@@ -31,8 +29,12 @@
       </tbody>
     </table>
 
-    <div class="table-area-selected"></div>
-    <div class="table-area-selected"></div>
+    <div
+      v-for="(apt, aptIndex) in appointmentTime"
+      :key="apt.id + '-' + aptIndex"
+    >
+      <div class="table-area-selected"></div>
+    </div>
   </div>
 </template>
 
