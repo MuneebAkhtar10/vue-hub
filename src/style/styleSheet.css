@@ -1,19 +1,87 @@
 .mainContainer {
   margin-top: 5%;
-  max-width: 78%;
-  margin-left: 10%;
+  max-width: 100%;
+  margin-left: 15px;
   overflow-x: scroll;
   position: relative;
 }
 
 table th, table td {
   padding: 10px 50px;
-  border: 2px dotted #cecece;
+  color: black;
+  /* border: 2px inset white; */
 }
 
 .table-area-selected {
   position: absolute;
-  background: green;
+  background: rgba(242,235,251,1);
   border: 1px solid blue;
   cursor: pointer;
+  border-radius: 10px;
+  border-color: black;
+  padding: 5px;
+}
+
+.header {
+  overflow: hidden;
+  background-color: rgba(2,143,169,1);
+  padding: 20px 10px;
+}
+
+.header a {
+  float: left;
+  color:white;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  line-height: 25px;
+  border-radius: 4px;
+  font-family: ITC Avant Garde Gothic Std;
+  white-space: nowrap;
+    text-align: left;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.06px;
+    margin-right: 30px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  color: white;
+  font-family: ITC Avant Garde Gothic Std
+}
+
+.header a:hover {
+  color:white;
+}
+
+.header a.active {
+  background-color: white;
+  color: rgba(2,143,169,1);
+}
+
+.header-right {
+  margin-right: 360px;
+  float: right;
+}
+
+.name {
+  background-color: rgba(242,235,251,1) !important;
+  border-radius: 10px;
+}
+
+.head {
+  /* background-color: violet; */
+  border-color: black;
+}
+/* .headd {
+  min-width: 200px;
+} */
+.circle {
+  height: 50px;
+  width: 50px;
+  background-color: #555;
+  border-radius: 50%;
 }

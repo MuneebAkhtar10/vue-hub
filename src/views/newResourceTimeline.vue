@@ -1,4 +1,18 @@
 <template>
+  <body>
+    <div class="header">
+      <a href="#" class="logo">Care Planner Logo</a>
+      <div class="header-right">
+        <a class="active" href="#home">Dashboard</a>
+        <a href="#contact">Carers</a>
+        <a href="#contact">Clients</a>
+        <a href="#contact">Manage</a>
+        <a href="#contact">Reports</a>
+        <a href="#contact">Finance</a>
+        <a href="#contact">Admin</a>
+      </div>
+    </div>
+  </body>
   <div class="table-area mainContainer">
     <table>
       <thead>
@@ -14,11 +28,12 @@
       </thead>
 
       <tbody>
-        <tr
+        <!-- table effect -->
+        <tr class="head"
           v-for="(carer, carerIndex) in carers"
           :key="carer.id + '-' + carerIndex"
         >
-          <td>{{ carer.name }}</td>
+          <td class="name">{{ carer.name }}</td>
 
           <td
             class="data-cell"
