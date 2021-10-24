@@ -68,16 +68,6 @@ const routes = [
   },
   {
     path: "/timeline",
-    name: "timeline",
-    component: () => import("../views/resourceTimeline.vue"),
-  },
-  {
-    path: "/timelineTemplate",
-    name: "timelineTemplate",
-    component: () => import("../views/resourceTimelineTemplate.vue"),
-  },
-  {
-    path: "/newResourceTimeline",
     name: "newResourceTimeline",
     component: () => import("../views/newResourceTimeline.vue"),
   },

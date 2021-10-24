@@ -75,11 +75,7 @@ export default {
           cell: -1,
         },
       ],
-      resourceSize: 26,
       timeRanges: [],
-      appointmentShapedData: {},
-      draggedAppointmentIndex: -1,
-      draggedAppointmentCarerIndex: -1,
     };
   },
   computed: {},
@@ -87,7 +83,6 @@ export default {
     this.createTimeInterval();
   },
   mounted() {
-    // this.jQueryForArea();
     this.dataShaper();
   },
   methods: {
@@ -122,18 +117,10 @@ export default {
     },
     dataShaper: function() {
       var _this = this;
-      // _.each(_this.appointmentTime, (appointment) => {
-      //   if (_this.appointmentShapedData[appointment.carer.id] != undefined) {
-      //     _this.appointmentShapedData[appointment.carer.id].push(appointment);
-      //   } else {
-      //     _this.appointmentShapedData[appointment.carer.id] = [];
-      //     _this.appointmentShapedData[appointment.carer.id].push(appointment);
-      //   }
-      // });
       _.each(_this.appointmentTime, (apt, aptIndex) => {
         var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
-        apt.cell = carerIndex * 24 + parseInt(apt.time) + 1;
-        this.jQueryForArea(apt.cell);
+        apt.cell = carerIndex * 24 + parseInt(apt.time);
+        this.jQueryForArea(apt.cell, apt.id);
       });
     },
     dragStart: function(event, apIndex, crIndex) {
@@ -167,10 +154,10 @@ export default {
     newDragOver: function(e, carerIndex) {
       console.log(" New dragOver", e, carerIndex);
     },
-    jQueryForArea: function(cellNumber) {
+    jQueryForArea: function(cellNumber, aptId) {
       var isDragging = false;
 
-      var jQueryselected = jQuery(".table-area-selected");
+      var jQueryselected = jQuery("#apt-" + aptId);
 
       var jQuerycells = jQuery("table").find(".data-cell");
       var colSpan = 1;
@@ -217,6 +204,7 @@ export default {
             reposition(jQuerycurrentCell);
           }
         }
+        console.log("Dragging in selected cell", e);
       }
 
       function reposition(jQuerycell) {
@@ -225,6 +213,7 @@ export default {
           jQueryselected.css("top", jQuerycell.position().top);
           jQueryselected.css("left", jQuerycell.position().left);
         }
+        console.log("New cell", jQuerycell);
       }
     },
   },

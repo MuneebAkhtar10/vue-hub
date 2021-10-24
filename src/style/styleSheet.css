@@ -1,19 +1,14 @@
-table th,
-table td {
-  padding: 10px 50px;
-  border: 1px solid #cecece;
+.mainContainer {
+  margin-top: 5%;
+  max-width: 78%;
+  margin-left: 10%;
+  overflow-x: scroll;
+  position: relative;
 }
 
-.table-area {
-  position: relative;
-  -webkit-user-select: none;
-  /* Chrome, Opera, Safari */
-  -moz-user-select: none;
-  /* Firefox 2+ */
-  -ms-user-select: none;
-  /* IE 10+ */
-  user-select: none;
-  /* Standard syntax */
+table th, table td {
+  padding: 10px 50px;
+  border: 2px dotted #cecece;
 }
 
 .table-area-selected {
@@ -21,7 +16,4 @@ table td {
   background: green;
   border: 1px solid blue;
   cursor: pointer;
-}
-
-.data-cell {
 }

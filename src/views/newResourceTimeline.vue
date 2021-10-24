@@ -33,7 +33,9 @@
       v-for="(apt, aptIndex) in appointmentTime"
       :key="apt.id + '-' + aptIndex"
     >
-      <div class="table-area-selected"></div>
+      <div class="table-area-selected" :id="'apt-' + apt.id">
+        {{ apt.patient.name }}
+      </div>
     </div>
   </div>
 </template>
