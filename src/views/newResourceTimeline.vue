@@ -13,6 +13,50 @@
       </div>
     </div>
   </body>
+
+
+  <!-- <div class="col-md-4 col-md-offset-1 vsa">
+    <div class="row main">
+      <span class="Circle sidebar span1" style="padding:29px 12px;">Verify</span> 
+      <div class="page-wrap">
+        Verify your student status using your institute ID card or Email ID.
+      </div>
+    </div>
+  </div> -->
+
+  <!-- <table class="carer_table">
+    <tbody>
+      <tr 
+        v-for="(carer, carerIndex) in carers"
+        :key="carer.id + '-' + carerIndex"
+      >
+        <div class="card">
+          <div class="card_img"> 
+            <img class="image">
+          </div>
+          <div class="card_info"> 
+            <td>{{ carer.name }}</td>
+          </div>
+        </div>
+      </tr>
+    </tbody>
+  </table> -->
+
+  <!-- <tbody>
+    <tr class="head"
+      v-for="(carer, carerIndex) in carers"
+      :key="carer.id + '-' + carerIndex"
+    >
+      <main class="container">
+        <div class="card">
+          <div class="img"></div>
+          <div class="content">
+            <td>{{ carer.name }}</td>
+          </div>
+        </div>
+      </main>
+    </tr>
+  </tbody> -->
   <div class="table-area mainContainer">
     <table>
       <thead>
@@ -26,14 +70,19 @@
           </th>
         </tr>
       </thead>
-
       <tbody>
-        <!-- table effect -->
-        <tr class="head"
+        <tr
           v-for="(carer, carerIndex) in carers"
           :key="carer.id + '-' + carerIndex"
         >
-          <td class="name">{{ carer.name }}</td>
+          <main class="container">
+            <div class="card">
+              <div class="img"></div>
+              <div class="content">
+                <td style="min-width: 200px;">{{ carer.name }}</td>
+              </div>
+            </div>
+          </main>
 
           <td
             class="data-cell"
