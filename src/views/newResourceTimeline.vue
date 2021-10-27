@@ -14,7 +14,6 @@
     </div>
   </body>
 
-
   <!-- <div class="col-md-4 col-md-offset-1 vsa">
     <div class="row main">
       <span class="Circle sidebar span1" style="padding:29px 12px;">Verify</span> 
@@ -58,6 +57,10 @@
     </tr>
   </tbody> -->
   <div class="table-area mainContainer">
+    <appointment-popup
+      v-if="showAppointmentPopup"
+      :appointment="appointmentForPopup"
+    ></appointment-popup>
     <table>
       <thead>
         <tr>
@@ -97,7 +100,11 @@
       v-for="(apt, aptIndex) in appointmentTime"
       :key="apt.id + '-' + aptIndex"
     >
-      <div class="table-area-selected" :id="'apt-' + apt.id">
+      <div
+        class="table-area-selected"
+        :id="'apt-' + apt.id"
+        @click="openAppointmentPopup(apt.id)"
+      >
         {{ apt.patient.name }}
       </div>
     </div>

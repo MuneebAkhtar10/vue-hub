@@ -1,5 +1,6 @@
 import _ from "lodash";
 import jQuery from "jquery";
+import APPOINTMENT_POPUP from "../views/appointmentPopup.vue";
 export default {
   name: "resource-timeline",
   props: {},
@@ -77,56 +78,68 @@ export default {
           id: "dolore",
           carer: { id: "lorem" },
           patient: { id: "patient", name: "Sit Amet" },
-          time: "5",
+          startTime: "05:00",
+          endTime: "06:00",
           cell: -1,
         },
         {
           id: "dolore1",
           carer: { id: "lorem1" },
           patient: { id: "patient1", name: "Sit Amet1" },
-          time: "2",
+          startTime: "02:00",
+          endTime: "03:00",
           cell: -1,
         },
         {
           id: "dolore2",
           carer: { id: "lorem2" },
           patient: { id: "patient2", name: "Sit Amet2" },
-          time: "3",
+          startTime: "03:00",
+          endime: "04:00",
           cell: -1,
         },
         {
           id: "dolore3",
           carer: { id: "lorem3" },
           patient: { id: "patient3", name: "Sit Amet3" },
-          time: "4",
+          startTime: "04:00",
+          endTime: "05:00",
           cell: -1,
         },
         {
           id: "dolore6",
           carer: { id: "lorem6" },
           patient: { id: "patient6", name: "Muneeb" },
-          time: "5",
+          startTime: "05:00",
+          endTime: "06:00",
           cell: -1,
         },
         {
           id: "dolore4",
           carer: { id: "lorem4" },
           patient: { id: "patient4", name: "Sit Amet4" },
-          time: "6",
+          startTime: "06:00",
+          endTime: "07:00",
           cell: -1,
         },
         {
           id: "dolore5",
           carer: { id: "lorem5" },
           patient: { id: "patient5", name: "Sit Amet5" },
-          time: "7",
+          startTime: "07:00",
+          endTime: "08:00",
           cell: -1,
         },
       ],
       timeRanges: [],
+      appointmentForPopup: {},
+      showAppointmentPopup: false,
     };
   },
   computed: {},
+  components: {
+    "appointment-popup": APPOINTMENT_POPUP,
+  },
   created() {
     this.createTimeInterval();
   },
@@ -167,7 +180,8 @@ export default {
       var _this = this;
       _.each(_this.appointmentTime, (apt, aptIndex) => {
         var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
-        apt.cell = carerIndex * 24 + parseInt(apt.time);
+        var timeCell = apt.startTime.split(":");
+        apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
         this.jQueryForArea(apt.cell, apt.id);
       });
     },
@@ -252,7 +266,7 @@ export default {
             reposition(jQuerycurrentCell);
           }
         }
-        console.log("Dragging in selected cell", e);
+        // console.log("Dragging in selected cell", e);
       }
 
       function reposition(jQuerycell) {
@@ -261,8 +275,15 @@ export default {
           jQueryselected.css("top", jQuerycell.position().top);
           jQueryselected.css("left", jQuerycell.position().left);
         }
-        console.log("New cell", jQuerycell);
+        // console.log("New cell", jQuerycell);
       }
+    },
+    openAppointmentPopup: function(appointmentId) {
+      var _this = this;
+      _this.appointmentForPopup = _.find(_this.appointmentTime, {
+        id: appointmentId,
+      });
+      _this.showAppointmentPopup = true;
     },
   },
 };
