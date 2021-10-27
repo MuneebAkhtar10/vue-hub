@@ -60,6 +60,7 @@
     <appointment-popup
       v-if="showAppointmentPopup"
       :appointment="appointmentForPopup"
+      @close="showAppointmentPopup = false"
     ></appointment-popup>
     <table>
       <thead>
