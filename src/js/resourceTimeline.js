@@ -135,6 +135,7 @@ export default {
       appointmentForPopup: {},
       showAppointmentPopup: false,
       appointmentFixed: true,
+      isResizing: false,
     };
   },
   computed: {},
@@ -218,8 +219,8 @@ export default {
       console.log(" New dragOver", e, carerIndex);
     },
     jQueryForArea: function(cellNumber, aptId) {
+      var _this = this;
       var isDragging = false;
-
       var jQueryselected = jQuery("#apt-" + aptId);
 
       var jQuerycells = jQuery("table").find(".data-cell");
@@ -248,16 +249,19 @@ export default {
 
       function dragEnd() {
         isDragging = false;
+        _this.showAppointmentPopup = false;
       }
 
       function draggingIntoNewCell() {
-        jQuerycurrentCell = jQuery(this);
-        reposition(jQuerycurrentCell);
+        if (!_this.isResizing) {
+          jQuerycurrentCell = jQuery(this);
+          reposition(jQuerycurrentCell);
+        }
       }
 
       // find if we've moved into the next column under this selection
       function draggingInSelectedCell(e) {
-        if (isDragging) {
+        if (isDragging && !_this.isResizing) {
           // find relative position within selection div
           var relativeXPosition = e.pageX - jQuery(this).offset().left;
 
@@ -272,11 +276,49 @@ export default {
 
       function reposition(jQuerycell) {
         // only reposition if not the last cell in the table (otherwise can't span 2 cols)
-        if (isDragging && jQuerycell.hasClass("data-cell")) {
+        if (
+          isDragging &&
+          jQuerycell.hasClass("data-cell") &&
+          !_this.isResizing
+        ) {
           jQueryselected.css("top", jQuerycell.position().top);
           jQueryselected.css("left", jQuerycell.position().left);
+          _this.showAppointmentPopup = false;
         }
         // console.log("New cell", jQuerycell);
+      }
+    },
+    resizingOnMouseDown: function(e, aptId) {
+      var _this = this;
+      const el = document.querySelector("#apt-" + aptId);
+      let currentResizer;
+      console.log(e);
+      currentResizer = e.target;
+      this.isResizing = true;
+
+      let prevX = e.clientX;
+      // let prevY = e.clientY;
+
+      window.addEventListener("mousemove", mousemove);
+      window.addEventListener("mouseup", mouseup);
+
+      function mousemove(e) {
+        console.log("...");
+        const rect = el.getBoundingClientRect();
+
+        if (currentResizer.classList.contains("se")) {
+          el.style.width = rect.width - (prevX - e.clientX) + "px";
+        } else if (currentResizer.classList.contains("ne")) {
+          el.style.width = rect.width - (prevX - e.clientX) + "px";
+        }
+        prevX = e.clientX;
+      }
+
+      function mouseup() {
+        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener("mouseup", mouseup);
+        _this.isResizing = false;
+        _this.showAppointmentPopup = false;
       }
     },
     openAppointmentPopup: function(appointmentId) {

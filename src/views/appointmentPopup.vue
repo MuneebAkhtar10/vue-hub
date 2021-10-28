@@ -11,7 +11,7 @@
             <a href="#contact">Notes</a>
             <a href="#contact">Travel</a>
             <a href="#contact">History</a>
-<!-- 
+            <!-- 
             <div>
               <a
                 href="javascript:void(0)"
@@ -127,7 +127,14 @@
             </button>
           </div>
           <div>
-            <a href="javascript:void(0)" title="Cancel" class="cancel" @click="$emit('close')"> Cancel </a>
+            <a
+              href="javascript:void(0)"
+              title="Cancel"
+              class="cancel"
+              @click="$emit('close')"
+            >
+              Cancel
+            </a>
           </div>
         </div>
       </div>
@@ -152,6 +159,7 @@ export default {
       endTime: "",
       carerId: "",
       duration: "",
+      date: "",
     };
   },
   components: {

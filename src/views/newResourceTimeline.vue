@@ -105,10 +105,15 @@
       >
         <div
           class="table-area-selected"
+          :class="'se-' + apt.id"
           :id="'apt-' + apt.id"
           @click="openAppointmentPopup(apt.id)"
         >
           {{ apt.patient.name }}
+          <div
+            class="resizer se"
+            @mousedown="resizingOnMouseDown($event, apt.id)"
+          ></div>
         </div>
       </div>
     </template>
