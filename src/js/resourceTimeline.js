@@ -73,7 +73,7 @@ export default {
           carer: { id: "lorem6" },
         },
       ],
-      appointmentTime: [
+      appointments: [
         {
           id: "dolore",
           carer: { id: "lorem" },
@@ -95,7 +95,7 @@ export default {
           carer: { id: "lorem2" },
           patient: { id: "patient2", name: "Sit Amet2" },
           startTime: "03:00",
-          endime: "04:00",
+          endTime: "04:00",
           cell: -1,
         },
         {
@@ -134,6 +134,7 @@ export default {
       timeRanges: [],
       appointmentForPopup: {},
       showAppointmentPopup: false,
+      appointmentFixed: true,
     };
   },
   computed: {},
@@ -178,11 +179,11 @@ export default {
     },
     dataShaper: function() {
       var _this = this;
-      _.each(_this.appointmentTime, (apt, aptIndex) => {
+      _.each(_this.appointments, (apt, aptIndex) => {
         var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
         var timeCell = apt.startTime.split(":");
         apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
-        this.jQueryForArea(apt.cell, apt.id);
+        _this.jQueryForArea(apt.cell, apt.id);
       });
     },
     dragStart: function(event, apIndex, crIndex) {
@@ -280,10 +281,35 @@ export default {
     },
     openAppointmentPopup: function(appointmentId) {
       var _this = this;
-      _this.appointmentForPopup = _.find(_this.appointmentTime, {
+      _this.appointmentForPopup = _.find(_this.appointments, {
         id: appointmentId,
       });
       _this.showAppointmentPopup = true;
+    },
+    deleteAppointment: function(event) {
+      var _this = this;
+      _this.appointmentFixed = false;
+      var aptIndex = _.findIndex(_this.appointments, { id: event });
+      _this.appointments.splice(aptIndex, 1);
+      // _.remove(_this.appointments, { id: event });
+      _.each(_this.appointments, (apt, aptIndex) => {
+        _this.jQueryForArea(apt.cell, apt.id);
+      });
+      _this.appointmentFixed = true;
+      _this.showAppointmentPopup = false;
+    },
+    saveAppointment: function(event) {
+      var _this = this;
+      var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
+      var timeCell = event.startTime.split(":");
+      event.cell = carerIndex * 24 + parseInt(timeCell[0]);
+      var aptIndex = _.findIndex(_this.appointments, { id: event.id });
+      _this.appointments[aptIndex] = event;
+      _this.jQueryForArea(
+        _this.appointments[aptIndex].cell,
+        _this.appointments[aptIndex].id
+      );
+      this.showAppointmentPopup = false;
     },
   },
 };

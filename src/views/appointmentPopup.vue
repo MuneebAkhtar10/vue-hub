@@ -39,7 +39,7 @@
   </div>
   <div>
     <label>Carer 1</label>
-    <select>
+    <select v-model="carerId">
       <option
         v-for="carer in $parent.carers"
         :value="carer.id"
@@ -81,10 +81,20 @@
     >
   </div>
   <div>
-    <a href="javascript:void(0)" title="Delete">Delete</a>
+    <a href="javascript:void(0)" title="Delete" @click="deleteAppointment"
+      >Delete</a
+    >
   </div>
   <div>
     <a href="javascript:void(0)">View in Schedule</a>
+  </div>
+  <div>
+    <a href="javascript:void(0)" @click="saveAppointment">Save</a>
+  </div>
+  <div>
+    <a href="javascript:void(0)" @click="saveAppointment"
+      >Save & update Schedule</a
+    >
   </div>
 </template>
 <script>
@@ -103,6 +113,7 @@ export default {
     return {
       startTime: "",
       endTime: "",
+      carerId: "",
       duration: "",
     };
   },
@@ -113,12 +124,13 @@ export default {
   mounted() {
     this.modelData();
   },
-  emits: ["close"],
+  emits: ["close", "delete", "save"],
   computed: {},
   methods: {
     modelData: function() {
       this.startTime = this.appointment.startTime;
       this.endTime = this.appointment.endTime;
+      this.carerId = this.appointment.carer.id;
       this.calculateDuration();
     },
     timeChange: function(type) {
@@ -158,6 +170,19 @@ export default {
     },
     onClosePopup: function() {
       this.$emit("close");
+    },
+    deleteAppointment: function() {
+      var _this = this;
+      _this.$emit("delete", _this.appointment.id);
+    },
+    saveAppointment: function() {
+      var requestBody = {};
+      requestBody.carer = { id: this.carerId };
+      requestBody.patient = this.appointment.patient;
+      requestBody.startTime = this.startTime;
+      requestBody.endTime = this.endTime;
+      requestBody.id = this.appointment.id;
+      this.$emit("save", requestBody);
     },
   },
 };

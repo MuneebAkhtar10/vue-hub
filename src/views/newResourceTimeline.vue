@@ -61,6 +61,8 @@
       v-if="showAppointmentPopup"
       :appointment="appointmentForPopup"
       @close="showAppointmentPopup = false"
+      @delete="deleteAppointment"
+      @save="saveAppointment"
     ></appointment-popup>
     <table>
       <thead>
@@ -96,19 +98,20 @@
         </tr>
       </tbody>
     </table>
-
-    <div
-      v-for="(apt, aptIndex) in appointmentTime"
-      :key="apt.id + '-' + aptIndex"
-    >
+    <template v-if="appointmentFixed">
       <div
-        class="table-area-selected"
-        :id="'apt-' + apt.id"
-        @click="openAppointmentPopup(apt.id)"
+        v-for="(apt, aptIndex) in appointments"
+        :key="apt.id + '-' + aptIndex"
       >
-        {{ apt.patient.name }}
+        <div
+          class="table-area-selected"
+          :id="'apt-' + apt.id"
+          @click="openAppointmentPopup(apt.id)"
+        >
+          {{ apt.patient.name }}
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
