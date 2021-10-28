@@ -289,13 +289,13 @@ export default {
     deleteAppointment: function(event) {
       var _this = this;
       _this.appointmentFixed = false;
+      _this.appointmentFixed = true;
       var aptIndex = _.findIndex(_this.appointments, { id: event });
       _this.appointments.splice(aptIndex, 1);
       // _.remove(_this.appointments, { id: event });
       _.each(_this.appointments, (apt, aptIndex) => {
         _this.jQueryForArea(apt.cell, apt.id);
       });
-      _this.appointmentFixed = true;
       _this.showAppointmentPopup = false;
     },
     saveAppointment: function(event) {

@@ -16,7 +16,7 @@ table th, table td {
 
 .table-area-selected {
   position: absolute;
-  background: rgba(242,235,251,1);
+  background: rgba(242, 235, 251, 1);
   border: 0.3px dashed silver;
   cursor: pointer;
   border-radius: 10px;
@@ -27,13 +27,13 @@ table th, table td {
 
 .header {
   overflow: hidden;
-  background-color: rgba(2,143,169,1);
+  background-color: rgba(2, 143, 169, 1);
   padding: 20px 10px;
 }
 
 .header a {
   float: left;
-  color:white;
+  color: white;
   text-align: center;
   padding: 12px;
   text-decoration: none;
@@ -41,13 +41,13 @@ table th, table td {
   border-radius: 4px;
   font-family: ITC Avant Garde Gothic Std;
   white-space: nowrap;
-    text-align: left;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    color: rgba(255,255,255,1);
-    letter-spacing: 0.06px;
-    margin-right: 30px;
+  text-align: left;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 1);
+  letter-spacing: 0.06px;
+  margin-right: 30px;
 }
 
 .header a.logo {
@@ -57,12 +57,12 @@ table th, table td {
 }
 
 .header a:hover {
-  color:white;
+  color: white;
 }
 
 .header a.active {
   background-color: white;
-  color: rgba(2,143,169,1);
+  color: rgba(2, 143, 169, 1);
 }
 
 .header-right {
@@ -71,12 +71,12 @@ table th, table td {
 }
 
 .name {
-  background-color: rgba(244,241,250,1) !important;
+  background-color: rgba(244, 241, 250, 1) !important;
   border-radius: 10px;
 }
 
 .carer_table {
-  background-color: rgba(242,235,251,1) !important;
+  background-color: rgba(242, 235, 251, 1) !important;
   padding: 20px;
 }
 
@@ -85,16 +85,18 @@ table th, table td {
   flex-wrap: wrap;
   justify-content: space-around;
   text-align: left;
-  background-color: rgba(242,235,251,1);
+  background-color: rgba(242, 235, 251, 1);
 }
 
-.content{
+.content {
   border-block: inherit;
-  border-block-color: rgba(242,235,251,1) !important;
+  border-block-color: rgba(242, 235, 251, 1) !important;
 }
+
 #app {
   background-color: white;
 }
+
 .card {
   display: flex;
   margin-left: 20px;
@@ -114,6 +116,69 @@ table th, table td {
   opacity: .7;
   margin: 0 .6em 0 0;
   border: solid 1px black;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container, .modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 @media (max-width: 820px) {

@@ -1,100 +1,126 @@
 <template>
-  <body>
-    <div>
-      <div>
-        <a class="active" href="#home">Appointment</a>
-        <a href="#contact">Care Required</a>
-        <a href="#contact">Finance</a>
-        <a href="#contact">Notes</a>
-        <a href="#contact">Travel</a>
-        <a href="#contact">History</a>
+  <div class="modal-mask">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-header">
+          <div>
+            <a class="active" href="#home">Appointment</a>
+            <a href="#contact">Care Required</a>
+            <a href="#contact">Finance</a>
+            <a href="#contact">Notes</a>
+            <a href="#contact">Travel</a>
+            <a href="#contact">History</a>
+            <div>
+              <a href="javascript:void(0)" title="Close" @click="onClosePopup()"
+                >X</a
+              >
+            </div>
+            <div>
+              <a
+                href="javascript:void(0)"
+                title="Cancel"
+                @click="$emit('close')"
+                >Cancel</a
+              >
+            </div>
+            <div>
+              <a
+                href="javascript:void(0)"
+                title="Delete"
+                @click="deleteAppointment"
+                >Delete</a
+              >
+            </div>
+            <div>
+              <a href="javascript:void(0)">View in Schedule</a>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div>Client: {{ appointment.patient.name }}</div>
+          <div>
+            <label>Start Time</label>
+            <vue-timepicker
+              v-model="startTime"
+              :minute-interval="15"
+              close-on-complete
+              @change="timeChange('start')"
+            ></vue-timepicker>
+          </div>
+          <div>
+            <label>End Time</label>
+            <vue-timepicker
+              v-model="endTime"
+              :minute-interval="15"
+              close-on-complete
+              @change="timeChange('end')"
+            ></vue-timepicker>
+          </div>
+          <div>
+            <label>Duration</label>
+            <span>{{ duration }}</span>
+          </div>
+          <div>
+            <label>Carer 1</label>
+            <select v-model="carerId">
+              <option
+                v-for="carer in $parent.carers"
+                :value="carer.id"
+                :key="carer.id"
+                >{{ carer.name }}</option
+              >
+            </select>
+            <button>Recommend</button>
+          </div>
+          <div>
+            <label>Carer 2</label>
+            <select>
+              <option value="Not Required">Not Required</option>
+              <option
+                v-for="carer in $parent.carers"
+                :value="carer.id"
+                :key="carer.id"
+                >{{ carer.name }}</option
+              >
+            </select>
+            <button>Recommend</button>
+          </div>
+          <div>
+            <label>Shadow</label>
+            <select>
+              <option value="Not Required">Not Required</option>
+              <option
+                v-for="carer in $parent.carers"
+                :value="carer.id"
+                :key="carer.id"
+                >{{ carer.name }}</option
+              >
+            </select>
+            <button>Recommend</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div>
+            <button
+              class="modal-default-button"
+              href="javascript:void(0)"
+              @click="saveAppointment"
+            >
+              Save
+            </button>
+          </div>
+          <div>
+            <button
+              class="modal-default-button"
+              href="javascript:void(0)"
+              @click="saveAppointment"
+            >
+              Save & update Schedule
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
-  <div>
-    <a href="javascript:void(0)" title="Close" @click="onClosePopup()">X</a>
-  </div>
-  <div>Client: {{ appointment.patient.name }}</div>
-  <div>
-    <label>Start Time</label>
-    <vue-timepicker
-      v-model="startTime"
-      :minute-interval="15"
-      close-on-complete
-      @change="timeChange('start')"
-    ></vue-timepicker>
-  </div>
-  <div>
-    <label>End Time</label>
-    <vue-timepicker
-      v-model="endTime"
-      :minute-interval="15"
-      close-on-complete
-      @change="timeChange('end')"
-    ></vue-timepicker>
-  </div>
-  <div>
-    <label>Duration</label>
-    <span>{{ duration }}</span>
-  </div>
-  <div>
-    <label>Carer 1</label>
-    <select v-model="carerId">
-      <option
-        v-for="carer in $parent.carers"
-        :value="carer.id"
-        :key="carer.id"
-        >{{ carer.name }}</option
-      >
-    </select>
-    <button>Recommend</button>
-  </div>
-  <div>
-    <label>Carer 2</label>
-    <select>
-      <option value="Not Required">Not Required</option>
-      <option
-        v-for="carer in $parent.carers"
-        :value="carer.id"
-        :key="carer.id"
-        >{{ carer.name }}</option
-      >
-    </select>
-    <button>Recommend</button>
-  </div>
-  <div>
-    <label>Shadow</label>
-    <select>
-      <option value="Not Required">Not Required</option>
-      <option
-        v-for="carer in $parent.carers"
-        :value="carer.id"
-        :key="carer.id"
-        >{{ carer.name }}</option
-      >
-    </select>
-    <button>Recommend</button>
-  </div>
-  <div>
-    <a href="javascript:void(0)" title="Cancel" @click="$emit('close')"
-      >Cancel</a
-    >
-  </div>
-  <div>
-    <a href="javascript:void(0)" title="Delete" @click="deleteAppointment"
-      >Delete</a
-    >
-  </div>
-  <div>
-    <a href="javascript:void(0)">View in Schedule</a>
-  </div>
-  <div>
-    <a href="javascript:void(0)" @click="saveAppointment">Save</a>
-  </div>
-  <div>
-    <a href="javascript:void(0)" @click="saveAppointment"
-      >Save & update Schedule</a
-    >
   </div>
 </template>
 <script>
