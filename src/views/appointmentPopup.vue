@@ -2,6 +2,7 @@
   <div class="modal-mask">
     <div class="modal-wrapper">
       <div class="modal-container">
+        <a class="close" @click="onClosePopup()" href="#">&times;</a>
         <div class="modal-header">
           <div>
             <a class="active" href="#home">Appointment</a>
@@ -10,11 +11,7 @@
             <a href="#contact">Notes</a>
             <a href="#contact">Travel</a>
             <a href="#contact">History</a>
-            <div>
-              <a href="javascript:void(0)" title="Close" @click="onClosePopup()"
-                >X</a
-              >
-            </div>
+<!-- 
             <div>
               <a
                 href="javascript:void(0)"
@@ -30,31 +27,33 @@
                 @click="deleteAppointment"
                 >Delete</a
               >
-            </div>
+            </div> -->
             <div>
               <a href="javascript:void(0)">View in Schedule</a>
             </div>
           </div>
         </div>
         <div class="modal-body">
-          <div>Client: {{ appointment.patient.name }}</div>
-          <div>
-            <label>Start Time</label>
-            <vue-timepicker
-              v-model="startTime"
-              :minute-interval="15"
-              close-on-complete
-              @change="timeChange('start')"
-            ></vue-timepicker>
-          </div>
-          <div>
-            <label>End Time</label>
-            <vue-timepicker
-              v-model="endTime"
-              :minute-interval="15"
-              close-on-complete
-              @change="timeChange('end')"
-            ></vue-timepicker>
+          <div class="e-start-end-row">
+            <div>Client: {{ appointment.patient.name }}</div>
+            <div>
+              <label>Start Time</label>
+              <vue-timepicker
+                v-model="startTime"
+                :minute-interval="15"
+                close-on-complete
+                @change="timeChange('start')"
+              ></vue-timepicker>
+            </div>
+            <div>
+              <label>End Time</label>
+              <vue-timepicker
+                v-model="endTime"
+                :minute-interval="15"
+                close-on-complete
+                @change="timeChange('end')"
+              ></vue-timepicker>
+            </div>
           </div>
           <div>
             <label>Duration</label>
@@ -99,7 +98,25 @@
             <button>Recommend</button>
           </div>
         </div>
+        <!-- footer -->
         <div class="modal-footer">
+          <div class="delete">
+            <a
+              href="javascript:void(0)"
+              title="Delete"
+              @click="deleteAppointment"
+              >Delete</a
+            >
+          </div>
+          <!-- <div>
+            <button
+              class="modal-default-button"
+              href="javascript:void(0)"
+              @click="saveAppointment"
+            >
+              Save
+            </button>
+          </div> -->
           <div>
             <button
               class="modal-default-button"
@@ -110,13 +127,7 @@
             </button>
           </div>
           <div>
-            <button
-              class="modal-default-button"
-              href="javascript:void(0)"
-              @click="saveAppointment"
-            >
-              Save & update Schedule
-            </button>
+            <a href="javascript:void(0)" title="Cancel" class="cancel" @click="$emit('close')"> Cancel </a>
           </div>
         </div>
       </div>

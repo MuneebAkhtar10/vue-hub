@@ -136,14 +136,21 @@ table th, table td {
 }
 
 .modal-container {
-  width: 300px;
   margin: 0px auto;
-  padding: 20px 30px;
+  padding: 10px 30px;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+
+  max-height: 929px;
+  z-index: 1005;
+  width: 500px;
+  left: 0px;
+  top: 0px;
+  min-height: 300px;
+  position: relative;
 }
 
 .modal-header h3 {
@@ -156,7 +163,16 @@ table th, table td {
 }
 
 .modal-default-button {
+  cursor: pointer;
+  font-size: 18px;
+  background-color: transparent;
+  border-color: transparent;
+  color: #e3165b;
   float: right;
+  padding: 10px;
+}
+.modal-default-button:hover {
+  background-color: gainsboro;
 }
 
 /*
@@ -195,4 +211,59 @@ table th, table td {
   .card {
     box-shadow: none;
   }
+}
+.e-start-end-row {
+  display: flex;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+/* .e-start-container {
+  width: 50%;
+} */
+
+/* background-color: transparent;
+    border-color: transparent;
+    border-radius: 50%;
+    bottom: 0;
+    float: right;
+    height: 30px;
+    left: 6px;
+    position: relative;
+    width: 30px; */
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.close:hover {
+  color: black;
+}
+.delete {
+  margin-right: 160px;
+}
+.delete a {
+  color: black;
+  padding: 10px;
+}
+.delete a:hover{
+  background-color: gainsboro;
+}
+.cancel {
+  color: black;
+  cursor: pointer;
+  font-size: 18px;
+  background-color: transparent;
+  border-color: transparent;
+  float: right;
+  padding: 10px;
+}
+.cancel:hover{
+  background-color: gainsboro;
 }
