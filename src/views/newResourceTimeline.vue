@@ -56,11 +56,16 @@
       </main>
     </tr>
   </tbody> -->
+  <div>
+    <label>Date</label>
+    <datepicker v-model="date" />
+  </div>
+
   <div class="table-area mainContainer">
     <appointment-popup
       v-if="showAppointmentPopup"
       :appointment="appointmentForPopup"
-      @close="showAppointmentPopup = false"
+      @close="onCloseAppointmentPopup"
       @delete="deleteAppointment"
       @save="saveAppointment"
     ></appointment-popup>
@@ -99,15 +104,12 @@
       </tbody>
     </table>
     <template v-if="appointmentFixed">
-      <div
-        v-for="(apt, aptIndex) in appointments"
-        :key="apt.id + '-' + aptIndex"
-      >
+      <div v-for="apt in appointments" :key="apt.id">
         <div
           class="table-area-selected"
           :class="'se-' + apt.id"
           :id="'apt-' + apt.id"
-          @click="openAppointmentPopup(apt.id)"
+          @dblclick="openAppointmentPopup(apt.id)"
         >
           {{ apt.patient.name }}
           <div

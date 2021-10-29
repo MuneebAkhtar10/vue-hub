@@ -38,6 +38,10 @@
             <label>Client: </label>
             <div class="appointment_name">{{ appointment.patient.name }}</div>
             <div>
+              <label>Date</label>
+              <datepicker v-model="date" />
+            </div>
+            <div>
               <label>Start Time</label>
               <vue-timepicker
                 v-model="startTime"
@@ -144,6 +148,9 @@
 </template>
 <script>
 import VueTimepicker from "vue3-timepicker/src/VueTimepicker.vue";
+import Datepicker from "vue3-datepicker";
+import { ref } from "vue";
+
 export default {
   name: "appointment-popup",
   props: {
@@ -160,11 +167,12 @@ export default {
       endTime: "",
       carerId: "",
       duration: "",
-      date: "",
+      date: ref(new Date()),
     };
   },
   components: {
     VueTimepicker,
+    Datepicker,
   },
   created() {},
   mounted() {
@@ -177,6 +185,7 @@ export default {
       this.startTime = this.appointment.startTime;
       this.endTime = this.appointment.endTime;
       this.carerId = this.appointment.carer.id;
+      this.date = new Date(this.appointment.date);
       this.calculateDuration();
     },
     timeChange: function(type) {
@@ -228,6 +237,7 @@ export default {
       requestBody.startTime = this.startTime;
       requestBody.endTime = this.endTime;
       requestBody.id = this.appointment.id;
+      requestBody.date = this.date;
       this.$emit("save", requestBody);
     },
   },

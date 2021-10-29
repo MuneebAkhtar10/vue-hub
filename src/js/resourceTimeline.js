@@ -1,6 +1,8 @@
 import _ from "lodash";
 import jQuery from "jquery";
+import { ref } from "vue";
 import APPOINTMENT_POPUP from "../views/appointmentPopup.vue";
+import Datepicker from "vue3-datepicker";
 export default {
   name: "resource-timeline",
   props: {},
@@ -51,7 +53,6 @@ export default {
           id: "lorem10",
           name: "Lorem ispum10",
         },
-        
       ],
       patients: [
         {
@@ -115,6 +116,7 @@ export default {
           id: "dolore",
           carer: { id: "lorem" },
           patient: { id: "patient", name: "Sit Amet" },
+          date: new Date("Oct 29 2021"),
           startTime: "05:00",
           endTime: "06:00",
           cell: -1,
@@ -123,6 +125,7 @@ export default {
           id: "dolore1",
           carer: { id: "lorem1" },
           patient: { id: "patient1", name: "Sit Amet1" },
+          date: new Date("Oct 29 2021"),
           startTime: "02:00",
           endTime: "03:00",
           cell: -1,
@@ -131,6 +134,7 @@ export default {
           id: "dolore2",
           carer: { id: "lorem2" },
           patient: { id: "patient2", name: "Sit Amet2" },
+          date: new Date("Oct 29 2021"),
           startTime: "03:00",
           endTime: "04:00",
           cell: -1,
@@ -139,6 +143,7 @@ export default {
           id: "dolore3",
           carer: { id: "lorem3" },
           patient: { id: "patient3", name: "Sit Amet3" },
+          date: new Date("Oct 29 2021"),
           startTime: "04:00",
           endTime: "05:00",
           cell: -1,
@@ -147,6 +152,7 @@ export default {
           id: "dolore6",
           carer: { id: "lorem6" },
           patient: { id: "patient6", name: "Muneeb" },
+          date: new Date("Oct 29 2021"),
           startTime: "05:00",
           endTime: "06:00",
           cell: -1,
@@ -155,6 +161,7 @@ export default {
           id: "dolore4",
           carer: { id: "lorem4" },
           patient: { id: "patient4", name: "Sit Amet4" },
+          date: new Date("Oct 29 2021"),
           startTime: "06:00",
           endTime: "07:00",
           cell: -1,
@@ -163,6 +170,7 @@ export default {
           id: "dolore5",
           carer: { id: "lorem5" },
           patient: { id: "patient5", name: "Sit Amet5" },
+          date: new Date("Oct 29 2021"),
           startTime: "07:00",
           endTime: "08:00",
           cell: -1,
@@ -171,6 +179,7 @@ export default {
           id: "dolore7",
           carer: { id: "lorem7" },
           patient: { id: "patient7", name: "Sit Amet7" },
+          date: new Date("Oct 29 2021"),
           startTime: "07:00",
           endTime: "08:00",
           cell: -1,
@@ -179,11 +188,14 @@ export default {
           id: "dolore9",
           carer: { id: "lorem9" },
           patient: { id: "patient9", name: "Sit Amet9" },
+          date: new Date("Oct 29 2021"),
           startTime: "01:00",
           endTime: "03:00",
           cell: -1,
         },
       ],
+      // appointments: [],
+      date: ref(new Date()),
       timeRanges: [],
       appointmentForPopup: {},
       showAppointmentPopup: false,
@@ -194,12 +206,14 @@ export default {
   computed: {},
   components: {
     "appointment-popup": APPOINTMENT_POPUP,
+    Datepicker,
   },
   created() {
     this.createTimeInterval();
   },
   mounted() {
     this.dataShaper();
+    // this.filterAppointments();
   },
   methods: {
     createTimeInterval: function() {
@@ -237,7 +251,9 @@ export default {
         var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
         var timeCell = apt.startTime.split(":");
         apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
-        _this.jQueryForArea(apt.cell, apt.id);
+        var duration = _this.calculateDuration(apt.startTime, apt.endTime);
+        var colSpan = duration[0] + duration[1] / 60;
+        _this.jQueryForArea(apt.cell, apt.id, colSpan);
       });
     },
     dragStart: function(event, apIndex, crIndex) {
@@ -271,13 +287,15 @@ export default {
     newDragOver: function(e, carerIndex) {
       console.log(" New dragOver", e, carerIndex);
     },
-    jQueryForArea: function(cellNumber, aptId) {
+    jQueryForArea: function(cellNumber, aptId, colSpan) {
       var _this = this;
       var isDragging = false;
       var jQueryselected = jQuery("#apt-" + aptId);
 
       var jQuerycells = jQuery("table").find(".data-cell");
-      var colSpan = 1;
+      if (!colSpan) {
+        colSpan = 1;
+      }
       var jQuerycurrentCell = jQuery(jQuerycells[cellNumber]);
       var cellWidth = jQuerycurrentCell.outerWidth();
 
@@ -302,7 +320,6 @@ export default {
 
       function dragEnd() {
         isDragging = false;
-        _this.showAppointmentPopup = false;
       }
 
       function draggingIntoNewCell() {
@@ -336,7 +353,6 @@ export default {
         ) {
           jQueryselected.css("top", jQuerycell.position().top);
           jQueryselected.css("left", jQuerycell.position().left);
-          _this.showAppointmentPopup = false;
         }
         // console.log("New cell", jQuerycell);
       }
@@ -371,7 +387,6 @@ export default {
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
         _this.isResizing = false;
-        _this.showAppointmentPopup = false;
       }
     },
     openAppointmentPopup: function(appointmentId) {
@@ -381,30 +396,68 @@ export default {
       });
       _this.showAppointmentPopup = true;
     },
+    onCloseAppointmentPopup: function() {
+      console.log("On close called");
+      this.showAppointmentPopup = false;
+    },
     deleteAppointment: function(event) {
       var _this = this;
       _this.appointmentFixed = false;
       _this.appointmentFixed = true;
       var aptIndex = _.findIndex(_this.appointments, { id: event });
       _this.appointments.splice(aptIndex, 1);
-      // _.remove(_this.appointments, { id: event });
-      _.each(_this.appointments, (apt, aptIndex) => {
-        _this.jQueryForArea(apt.cell, apt.id);
-      });
       _this.showAppointmentPopup = false;
     },
     saveAppointment: function(event) {
       var _this = this;
+      // if (this.date == event.date) {
       var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
       var timeCell = event.startTime.split(":");
       event.cell = carerIndex * 24 + parseInt(timeCell[0]);
       var aptIndex = _.findIndex(_this.appointments, { id: event.id });
       _this.appointments[aptIndex] = event;
+      var duration = _this.calculateDuration(
+        _this.appointments[aptIndex].startTime,
+        _this.appointments[aptIndex].endTime
+      );
+      var colSpan = duration[0] + duration[1] / 60;
+
       _this.jQueryForArea(
         _this.appointments[aptIndex].cell,
-        _this.appointments[aptIndex].id
+        _this.appointments[aptIndex].id,
+        colSpan
       );
+      // } else {
+      //   var aptIndex = _.findIndex(_this.appointments, { id: event });
+      //   _this.appointments.splice(aptIndex, 1);
+      // }
       this.showAppointmentPopup = false;
+    },
+    calculateDuration: function(startTime, endTime) {
+      var ary1 = startTime;
+      ary1 = ary1.split(":");
+      var ary2 = endTime;
+      ary2 = ary2.split(":");
+      var minsdiff =
+        parseInt(ary2[0], 10) * 60 +
+        parseInt(ary2[1], 10) -
+        parseInt(ary1[0], 10) * 60 -
+        parseInt(ary1[1], 10);
+      var duration =
+        String(100 + Math.floor(minsdiff / 60)).substr(1) +
+        ":" +
+        String(100 + (minsdiff % 60)).substr(1);
+      duration = duration.split(":");
+      duration[0] = parseInt(duration[0]);
+      duration[1] = parseInt(duration[1]);
+      return duration;
+    },
+    filterAppointments: function() {
+      var _this = this;
+      // _this.appointments = _.filter(_this.allAppointments, {
+      //   date: _this.date,
+      // });
+      // this.dataShaper();
     },
   },
 };
