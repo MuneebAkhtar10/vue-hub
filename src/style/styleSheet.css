@@ -1,17 +1,33 @@
 .mainContainer {
   margin-top: 5%;
   max-width: 100%;
-  margin-left: 15px;
   overflow-x: scroll;
   position: relative;
 }
 
 table th, table td {
   padding: 10px 50px;
-  color: black;
+  /* color: black; */
+  white-space: nowrap;
+  text-align: left;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgba(32,79,113,1);
+  letter-spacing: 0.06px;
   border-bottom-style: dotted;
-  border-block-color: silver;
+  border-block-color: #eee;
   /* border: 2px inset white; */
+}
+table th, table td .dates {
+  color: rgba(97,104,115,1);
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
 }
 
 .table-area-selected {
@@ -20,9 +36,12 @@ table th, table td {
   border: 0.3px dashed silver;
   cursor: pointer;
   border-radius: 10px;
-  border-color: black;
+  border-color: gray;
   padding: 5px;
   height: 65px !important;
+  text-align: center;
+  color: cadetblue;
+  line-height: 50px;
 }
 
 .resizer {
@@ -41,9 +60,11 @@ table th, table td {
 }
 
 .resizer.se {
-  bottom: -1px;
-  right: -1px;
+  bottom: 2px;
+  right: 0px;
   cursor: se-resize;
+  height: 55px;
+  background-color: rgba(242, 235, 251, 1);
 }
 
 .header {
@@ -107,9 +128,12 @@ table th, table td {
   justify-content: space-around;
   text-align: left;
   background-color: rgba(242, 235, 251, 1);
+  height: 70px;
 }
 
 .content {
+  margin-left: -15px;
+  min-width: 250px;
   border-block: inherit;
   border-block-color: rgba(242, 235, 251, 1) !important;
 }
@@ -122,7 +146,8 @@ table th, table td {
   display: flex;
   margin-left: 20px;
   margin-right: 20px;
-  padding: 0.6em 1em 0.6em 0.6em;
+  /* padding: 0.6em 1em 0.6em 0.6em; */
+  padding: 0.6em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
   border-radius: 0.7em;
   box-shadow: silver 12px 6px 8px;
@@ -133,9 +158,10 @@ table th, table td {
   min-width: 45px;
   height: 45px;
   border-radius: 30px;
-  background: linear-gradient(to bottom, black 0%, grey 100%);
+  background: linear-gradient(to bottom, black 0%, black 100%);
   opacity: 0.7;
-  margin: 0 0.6em 0 0;
+  /* margin: 0 0.6em 0 0; */
+  margin: 6px -0.4em 1px 10px;
   border: solid 1px black;
 }
 
@@ -193,7 +219,7 @@ table th, table td {
 }
 
 .modal-default-button:hover {
-  background-color: gainsboro;
+  background-color: #eee;
 }
 
 /*
@@ -235,6 +261,7 @@ table th, table td {
 }
 
 .e-start-end-row {
+  font-size: 14px;
   display: flex;
   padding-bottom: 12px;
   width: 100%;
@@ -279,7 +306,7 @@ table th, table td {
 }
 
 .delete a:hover {
-  background-color: gainsboro;
+  background-color: #eee;
 }
 
 .cancel {
@@ -293,5 +320,48 @@ table th, table td {
 }
 
 .cancel:hover {
-  background-color: gainsboro;
+  background-color: #eee;
+}
+.vue__time-picker input.vue__time-picker-input {
+  height: 2.0em !important;
+  font-size: 14px !important;
+}
+.duration {
+  font-size: 14px;
+  margin-bottom: 13px;
+}
+.carer1 {
+  font-size: 14px;
+  margin-bottom: 13px;
+}
+.carer_select {
+  height: 28px;
+  margin-left: 48px;
+  margin-right: 6px;
+  width: 141px;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  background-color: #eee;
+}
+.recommend {
+  margin-left: 15px;
+  height: 28px;
+  width: 110px;
+  background-color: floralwhite;
+  cursor: pointer;
+  border: ridge;
+  border-color: bisque
+}
+.shadow_select {
+  height: 28px;
+  margin-left: 36px;
+  margin-right: 6px;
+  width: 141px;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  background-color: #eee;
 }

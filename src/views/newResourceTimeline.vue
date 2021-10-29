@@ -64,10 +64,10 @@
       @delete="deleteAppointment"
       @save="saveAppointment"
     ></appointment-popup>
-    <table>
+    <table class="dates">
       <thead>
         <tr>
-          <th>someDate</th>
+          <th>Search functionality</th>
           <th
             v-for="(time, timeIndex) in timeRanges"
             :key="time + '-' + timeIndex"

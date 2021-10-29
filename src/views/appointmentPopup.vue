@@ -35,7 +35,8 @@
         </div>
         <div class="modal-body">
           <div class="e-start-end-row">
-            <div>Client: {{ appointment.patient.name }}</div>
+            <label>Client: </label>
+            <div class="appointment_name">{{ appointment.patient.name }}</div>
             <div>
               <label>Start Time</label>
               <vue-timepicker
@@ -55,13 +56,13 @@
               ></vue-timepicker>
             </div>
           </div>
-          <div>
-            <label>Duration</label>
-            <span>{{ duration }}</span>
+          <div class="duration">
+            <label>Duration: </label>
+            <span style="margin-left: 30px">{{ duration }}</span>
           </div>
-          <div>
-            <label>Carer 1</label>
-            <select v-model="carerId">
+          <div class="carer1">
+            <label>Carer </label>
+            <select class="carer_select" v-model="carerId">
               <option
                 v-for="carer in $parent.carers"
                 :value="carer.id"
@@ -69,9 +70,9 @@
                 >{{ carer.name }}</option
               >
             </select>
-            <button>Recommend</button>
+            <button class="recommend">Recommend</button>
           </div>
-          <div>
+          <!-- <div>
             <label>Carer 2</label>
             <select>
               <option value="Not Required">Not Required</option>
@@ -83,10 +84,10 @@
               >
             </select>
             <button>Recommend</button>
-          </div>
-          <div>
+          </div> -->
+          <div class="carer1">
             <label>Shadow</label>
-            <select>
+            <select class="shadow_select">
               <option value="Not Required">Not Required</option>
               <option
                 v-for="carer in $parent.carers"
@@ -95,7 +96,7 @@
                 >{{ carer.name }}</option
               >
             </select>
-            <button>Recommend</button>
+            <button class="recommend">Recommend</button>
           </div>
         </div>
         <!-- footer -->
