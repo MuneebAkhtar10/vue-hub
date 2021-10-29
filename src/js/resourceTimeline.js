@@ -197,6 +197,7 @@ export default {
       // appointments: [],
       date: ref(new Date()),
       timeRanges: [],
+      carerSearchString: "",
       appointmentForPopup: {},
       showAppointmentPopup: false,
       appointmentFixed: true,

@@ -72,7 +72,13 @@
     <table class="dates">
       <thead>
         <tr>
-          <th>Search functionality</th>
+          <th>
+            <input
+              type="text"
+              v-model="carerSearchString"
+              placeholder="Search Carer"
+            />
+          </th>
           <th
             v-for="(time, timeIndex) in timeRanges"
             :key="time + '-' + timeIndex"
