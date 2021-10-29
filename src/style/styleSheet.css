@@ -20,6 +20,9 @@ table th, table td {
   border-block-color: #eee;
   /* border: 2px inset white; */
 }
+.search_box {
+  background: rgba(242, 235, 251, 1);
+}
 table th, table td .dates {
   color: rgba(97,104,115,1);
   white-space: nowrap;
@@ -364,4 +367,39 @@ table th, table td .dates {
   border-left-style: hidden;
   border-bottom-style: groove;
   background-color: #eee;
+}
+.search {
+  height: 60px;
+  width: 270px;
+  margin-left: -20px;
+  border-radius: 10px;
+  border-color: white;
+  border: none;
+}
+.search_icon {
+  position: absolute;
+  width: 59px;
+  height: 56px;
+  left: 241px;
+  top: 14px;
+  overflow: visible;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgba(67,218,159,1);
+}
+
+#searchId::placeholder {
+  left: 10px;
+  top: 18px;
+  position: absolute;
+  overflow: visible;
+  width: 54px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgba(32,79,113,1);
+  letter-spacing: 0.06px;
 }
