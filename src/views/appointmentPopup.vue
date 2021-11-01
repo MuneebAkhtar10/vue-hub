@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="modal-body">
           <div class="e-start-end-row">
             <label>Client: </label>
@@ -41,8 +41,8 @@
           </div>
 
           <div class="e-start-end-row">
-            <label style="line-height: 30px">Date:  </label>
-            <datepicker v-model="date" class="date_pick"/>
+            <label style="line-height: 30px">Date: </label>
+            <datepicker v-model="date" class="date_pick" />
           </div>
 
           <div class="e-start-end-row">
@@ -244,6 +244,8 @@ export default {
       requestBody.endTime = this.endTime;
       requestBody.id = this.appointment.id;
       requestBody.date = this.date;
+      requestBody.date.setHours(0, 0, 0);
+
       this.$emit("save", requestBody);
     },
   },

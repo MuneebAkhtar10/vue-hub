@@ -3,6 +3,10 @@ import jQuery from "jquery";
 import { ref } from "vue";
 import APPOINTMENT_POPUP from "../views/appointmentPopup.vue";
 import Datepicker from "vue3-datepicker";
+import navbar from "../components/nav.vue";
+import sidebar from "../components/sidebar";
+import "../scss/pages/_dashboard.scss";
+
 export default {
   name: "resource-timeline",
   props: {},
@@ -195,7 +199,7 @@ export default {
         },
       ],
       // appointments: [],
-      date: ref(new Date()),
+      date: "",
       timeRanges: [],
       carerSearchString: "",
       appointmentForPopup: {},
@@ -204,13 +208,25 @@ export default {
       isResizing: false,
     };
   },
+  // watch: {
+  //   date: {
+  //     handler: function(newVal, oldVal) {
+  //       this.filterAppointments();
+  //     },
+  //     immediate: true,
+  //   },
+  // },
   computed: {},
   components: {
     "appointment-popup": APPOINTMENT_POPUP,
     Datepicker,
+    navbar: navbar,
+    sidebar: sidebar,
   },
   created() {
     this.createTimeInterval();
+    this.date = ref(new Date("Oct 29 2021"));
+    this.date.setHours(0, 0, 0);
   },
   mounted() {
     this.dataShaper();
@@ -411,27 +427,27 @@ export default {
     },
     saveAppointment: function(event) {
       var _this = this;
-      // if (this.date == event.date) {
-      var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
-      var timeCell = event.startTime.split(":");
-      event.cell = carerIndex * 24 + parseInt(timeCell[0]);
-      var aptIndex = _.findIndex(_this.appointments, { id: event.id });
-      _this.appointments[aptIndex] = event;
-      var duration = _this.calculateDuration(
-        _this.appointments[aptIndex].startTime,
-        _this.appointments[aptIndex].endTime
-      );
-      var colSpan = duration[0] + duration[1] / 60;
+      if (this.date.toDateString() === event.date.toDateString()) {
+        var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
+        var timeCell = event.startTime.split(":");
+        event.cell = carerIndex * 24 + parseInt(timeCell[0]);
+        var aptIndex = _.findIndex(_this.appointments, { id: event.id });
+        _this.appointments[aptIndex] = event;
+        var duration = _this.calculateDuration(
+          _this.appointments[aptIndex].startTime,
+          _this.appointments[aptIndex].endTime
+        );
+        var colSpan = duration[0] + duration[1] / 60;
 
-      _this.jQueryForArea(
-        _this.appointments[aptIndex].cell,
-        _this.appointments[aptIndex].id,
-        colSpan
-      );
-      // } else {
-      //   var aptIndex = _.findIndex(_this.appointments, { id: event });
-      //   _this.appointments.splice(aptIndex, 1);
-      // }
+        _this.jQueryForArea(
+          _this.appointments[aptIndex].cell,
+          _this.appointments[aptIndex].id,
+          colSpan
+        );
+      } else {
+        var aptIndex = _.findIndex(_this.appointments, { id: event.id });
+        _this.appointments.splice(aptIndex, 1);
+      }
       this.showAppointmentPopup = false;
     },
     calculateDuration: function(startTime, endTime) {
@@ -455,10 +471,12 @@ export default {
     },
     filterAppointments: function() {
       var _this = this;
-      // _this.appointments = _.filter(_this.allAppointments, {
-      //   date: _this.date,
-      // });
-      // this.dataShaper();
+      if (!_.isEmpty(_this.date)) {
+        _this.appointments = _.filter(_this.allAppointments, function(o) {
+          return o.date.toDateString() === _this.date.toDateString();
+        });
+        this.dataShaper();
+      }
     },
   },
 };
