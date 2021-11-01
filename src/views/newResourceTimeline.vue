@@ -1,4 +1,5 @@
 <template>
+  <div>
   <body>
     <div class="header">
       <a href="#" class="logo">Care Planner Logo</a>
@@ -56,9 +57,29 @@
       </main>
     </tr>
   </tbody> -->
-  <div>
-    <label>Date</label>
-    <datepicker v-model="date" />
+  <div class="calender_container">
+    <label><p>Group by:</p></label>
+    <datepicker class="group_calender" v-model="date" 
+    />
+    <!-- <i class="fas fa-caret-down"></i> -->
+
+    <img id="drop_down" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAABHNCSVQICAgIfAhkiAAAAklJREFUSEutlM1LVFEYxu
+    eohJRWmBC08M9w2a5FWdCEmANZQ1YkKEG0kja1adGqUEFDmz6IwU1WbkIQF0G7/gNBGAI/AhstXWjdfs9w7nA6nZm5k3PhYc68973v87zPec8xURRdSKVST8BR8A6MGmPW+
+    G34A9cJij4El8FPcM8QXGHRBQz4DebBFURsN1IBPIeplwOXQDOIQEECNlkcd8gk4j0YQsRqI0TA0UGdcdAHmpyaRQmYJpD1XkjdgnVi4yAiLLk67/E41GheArQvkyAdSPhI
+    rB8ntv5HBLXb+O4luAi0xfEjctXOloIkagAlQsPhJy6WEo35Wo8Iap4k/1mgc7mrYb+mxspkfHCM4GtwznMi3o4+PigmEWE7f0Puea8h1VLnGWp9Vy2329iJp8QHPBGybAlcr
+    eUE5J3k5cDZQI1ZYiPU+BY38pcAux1HnO1ocTqWeomQdYWQE5CfIj4Dznjkv/j/Flz3j/c/AqwIDaYup0wFJ9L+YELeTm7edu7P0RxxHet1X3hQgBWhCR4Doe34ZLtZtrm6yKY
+    CnWvrZPtNyH+EXKsowBbW7fUc9HpO6PVnoIGVvR/AaeDW05bJds2Nrt3gU1WAFdHKrwZz0BMhgi9gD3R779T5K6CBq3ql1xTgOPGY9Q1wqFI3Nr7P7wtwp1rncY1EAqwIzYQGM
+    +t16+qJ9/x20jsjsQDHiUeshwMiRK6b7y7kOzVcKr+uS4AzExOsdTrie0K26wjegnw3Kbny6hZgRWgO7lsnVENH8EE9ncci/wBoycflkiuubwAAAABJRU5ErkJggg=="
+    >
+    <div class="card" id="card1">
+        <td style="min-width: 200px;"><p>Monday, 1 November 2021</p></td>
+    </div>
+    <div class="card" id="card2">
+        <td style="min-width: 200px;">Required hours: 52h, 15m</td>
+    </div>
+    <div class="card" id="card3">
+      <td style="min-width: 200px;">Booked hours: 48h, 0m</td>
+    </div>
   </div>
 
   <div class="table-area mainContainer">
@@ -140,6 +161,7 @@
         </div>
       </div>
     </template>
+  </div>
   </div>
 </template>
 

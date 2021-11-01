@@ -38,13 +38,18 @@ table th, table td .dates {
   background: rgba(242, 235, 251, 1);
   border: 0.3px dashed silver;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 7px;
   border-color: gray;
   padding: 5px;
   height: 65px !important;
   text-align: center;
-  color: cadetblue;
   line-height: 50px;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  color: rgba(32,79,113,1);
+  letter-spacing: 0.06px;
 }
 
 .resizer {
@@ -132,6 +137,8 @@ table th, table td .dates {
   text-align: left;
   background-color: rgba(242, 235, 251, 1);
   height: 70px;
+  margin-left: -35px;
+  width: 400px;
 }
 
 .content {
@@ -147,7 +154,7 @@ table th, table td .dates {
 
 .card {
   display: flex;
-  margin-left: 20px;
+  margin-left: 30px;
   margin-right: 20px;
   /* padding: 0.6em 1em 0.6em 0.6em; */
   padding: 0.6em 2em -0.4em 1.6em;
@@ -155,6 +162,7 @@ table th, table td .dates {
   border-radius: 0.7em;
   box-shadow: silver 12px 6px 8px;
   border: solid 1px #ccc;
+  width: 330px;
 }
 
 .img {
@@ -370,18 +378,24 @@ table th, table td .dates {
 }
 .search {
   height: 60px;
-  width: 270px;
-  margin-left: -20px;
+  /* width: 270px;
+  margin-left: -20px; */
   border-radius: 10px;
   border-color: white;
   border: none;
+  width: 300px;
+  margin-left: -40px;
+  box-shadow: silver 30px 6px 8px;
+}
+.search:focus-visible {
+  border-color: white !important;
 }
 .search_icon {
   position: absolute;
   width: 59px;
-  height: 56px;
-  left: 241px;
-  top: 14px;
+  height: 60px;
+  left: 277px;
+  top: 12px;
   overflow: visible;
   padding: 15px;
   border-radius: 10px;
@@ -402,4 +416,66 @@ table th, table td .dates {
   font-size: 15px;
   color: rgba(32,79,113,1);
   letter-spacing: 0.06px;
+}
+.calender_container {
+  display: flex;
+  padding-top: 20px;
+  padding-left: 20px;
+  line-height: 70px;
+}
+.group_calender {
+  margin-left: 20px;
+  background-color: rgba(2,143,169,1);
+  padding: 20px;
+  max-width: 200px;
+  color: white;
+  border-radius: 10px;
+  height: 70px;
+  border-color: white;
+  
+}
+.calender_container {
+  /* position: absolute; */
+  overflow: visible;
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(97,104,115,1);
+  letter-spacing: 0.06px;
+}
+.drop_down {
+  /* position: absolute; */
+  /* width: 16px; */
+  /* height: 9px; */
+  left: 0px;
+  top: 0px;
+  /* overflow: visible; */
+}
+#card1, #card2, #card3{
+  min-width: 230px;
+  text-align: left;
+  padding-left: 20px;
+  height: 70px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(97,104,115,1);
+  letter-spacing: 0.06px;
+}
+#card2 {
+  margin-left: 300px;
+}
+
+.date_pick {
+  border: 1px solid #d2d2d2;
+  width: 10.5em;
+  height: 2.2em;
+  padding: 0.3em 0.5em;
+  margin-left: 50px;
 }

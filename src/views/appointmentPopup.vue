@@ -33,15 +33,21 @@
             </div>
           </div>
         </div>
+        
         <div class="modal-body">
           <div class="e-start-end-row">
             <label>Client: </label>
-            <div class="appointment_name">{{ appointment.patient.name }}</div>
-            <div>
-              <label>Date</label>
-              <datepicker v-model="date" />
-            </div>
-            <div>
+            <div style="margin-left: 52px">{{ appointment.patient.name }}</div>
+          </div>
+
+          <div class="e-start-end-row">
+            <label style="line-height: 30px">Date:  </label>
+            <datepicker v-model="date" class="date_pick"/>
+          </div>
+
+          <div class="e-start-end-row">
+            <label style="line-height: 55px">Time: </label>
+            <div style="margin-left: 52px">
               <label>Start Time</label>
               <vue-timepicker
                 v-model="startTime"
