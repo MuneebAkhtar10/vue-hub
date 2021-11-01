@@ -21,7 +21,7 @@ table th, table td {
   /* border: 2px inset white; */
 }
 .search_box {
-  background: rgba(242, 235, 251, 1);
+  background: rgba(2, 143, 169, 1);
 }
 table th, table td .dates {
   color: rgba(97,104,115,1);
@@ -135,17 +135,17 @@ table th, table td .dates {
   flex-wrap: wrap;
   justify-content: space-around;
   text-align: left;
-  background-color: rgba(242, 235, 251, 1);
+  background-color: rgba(2, 143, 169, 1);
   height: 70px;
   margin-left: -35px;
   width: 400px;
+  margin-bottom: -5px;
 }
 
 .content {
   margin-left: -15px;
   min-width: 250px;
-  border-block: inherit;
-  border-block-color: rgba(242, 235, 251, 1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.562);
 }
 
 #app {
@@ -160,8 +160,7 @@ table th, table td .dates {
   padding: 0.6em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
   border-radius: 0.7em;
-  box-shadow: silver 12px 6px 8px;
-  border: solid 1px #ccc;
+  /* box-shadow: silver 12px 6px 8px; */
   width: 330px;
 }
 
@@ -385,7 +384,7 @@ table th, table td .dates {
   border: none;
   width: 300px;
   margin-left: -40px;
-  box-shadow: silver 30px 6px 8px;
+  /* box-shadow: silver 30px 6px 8px; */
 }
 .search:focus-visible {
   border-color: white !important;
@@ -478,4 +477,35 @@ table th, table td .dates {
   height: 2.2em;
   padding: 0.3em 0.5em;
   margin-left: 50px;
+}
+.carer_name {
+  margin-left: 30px;
+  line-height: 45px;
+}
+.card_head {
+    display: flex;
+    margin-left: 30px;
+    margin-right: 20px;
+    /* padding: 0.6em 1em 0.6em 0.6em; */
+    padding: 0.6em 2em -0.4em 1.6em;
+    margin-bottom: 0.5em;
+    border-radius: 0.7em;
+    box-shadow: silver 12px 6px 8px;
+    border: solid 1px #ccc;
+    width: 330px;
+}
+#hel {
+  opacity: 0.5;
+    fill: transparent;
+    stroke: rgba(255,255,255,1);
+    stroke-width: 1px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+    overflow: visible;
+    position: absolute;
+    width: 308.5px;
+    height: 1px;
+    transform: matrix(1,0,0,1,0,0);
 }
