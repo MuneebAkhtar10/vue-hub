@@ -376,21 +376,26 @@ export default {
     },
     resizingOnMouseDown: function(e, aptId) {
       var _this = this;
-      const el = document.querySelector("#apt-" + aptId);
+      var index = _.findIndex(_this.appointments, { id: aptId });
       let currentResizer;
-      console.log(e);
       currentResizer = e.target;
       this.isResizing = true;
-
       let prevX = e.clientX;
-      // let prevY = e.clientY;
-
+      const el = document.querySelector("#apt-" + aptId);
+      var oldWidth = parseFloat(el.style.width);
+      var duration = _this.calculateDuration(
+        _this.appointments[index].startTime,
+        _this.appointments[index].endTime
+      );
+      var durationInMinutes = duration[0] * 60 + duration[1];
+      var pxPerMin = oldWidth / durationInMinutes;
       window.addEventListener("mousemove", mousemove);
       window.addEventListener("mouseup", mouseup);
 
       function mousemove(e) {
-        console.log("...");
         const rect = el.getBoundingClientRect();
+        // console.log("rect.width", rect.width);
+        // console.log("el.style.width", el.style.width);
 
         if (currentResizer.classList.contains("se")) {
           el.style.width = rect.width - (prevX - e.clientX) + "px";
@@ -404,6 +409,41 @@ export default {
         window.removeEventListener("mousemove", mousemove);
         window.removeEventListener("mouseup", mouseup);
         _this.isResizing = false;
+        if (prevX > e.clientX) {
+          console.log("increase", el.style.width);
+          var minsToAdd = parseInt(
+            (parseFloat(el.style.width) - oldWidth) / pxPerMin
+          );
+          var time = _this.appointments[index].endTime;
+          var newTime = new Date(
+            new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000
+          ).toLocaleTimeString("en-UK", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          });
+          console.log(
+            "update arr",
+            (_this.appointments[index].endTime = newTime)
+          );
+        }
+        if (prevX < e.clientX) {
+          console.log("decrease", el.style.width);
+          var minsToAdd =
+            parseInt(oldWidth - parseFloat(el.style.width)) / pxPerMin;
+          var time = _this.appointments[index].endTime;
+          var newTime = new Date(
+            new Date("1970/01/01 " + time).getTime() - minsToAdd * 60000
+          ).toLocaleTimeString("en-UK", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          });
+          console.log(
+            "update arr",
+            (_this.appointments[index].endTime = newTime)
+          );
+        }
       }
     },
     openAppointmentPopup: function(appointmentId) {
