@@ -62,65 +62,54 @@ export default {
         {
           id: "patient",
           name: "Sit Amet",
-          carer: { id: "lorem" },
         },
         {
           id: "patient1",
           name: "Sit Amet1",
-          carer: { id: "lorem" },
         },
         {
           id: "patient2",
           name: "Sit Amet2",
-          carer: { id: "lorem2" },
         },
         {
           id: "patient3",
           name: "Sit Amet3",
-          carer: { id: "lorem3" },
         },
         {
           id: "patient4",
           name: "Sit Amet4",
-          carer: { id: "lorem4" },
         },
         {
           id: "patient5",
           name: "Sit Amet5",
-          carer: { id: "lorem5" },
         },
         {
           id: "patient6",
           name: "Sit Amet6",
-          carer: { id: "lorem6" },
         },
         {
           id: "patient7",
           name: "Sit Amet7",
-          carer: { id: "lorem7" },
         },
         {
           id: "patient8",
           name: "Sit Amet8",
-          carer: { id: "lorem8" },
         },
         {
           id: "patient9",
           name: "Sit Amet9",
-          carer: { id: "lorem9" },
         },
         {
           id: "patient10",
           name: "Sit Amet10",
-          carer: { id: "lorem10" },
         },
       ],
-      appointments: [
+      allAppointments: [
         {
           id: "dolore",
           carer: { id: "lorem" },
           patient: { id: "patient", name: "Sit Amet" },
-          date: new Date("Oct 29 2021"),
+          date: new Date("Oct 30 2021"),
           startTime: "05:00",
           endTime: "06:00",
           cell: -1,
@@ -198,7 +187,7 @@ export default {
           cell: -1,
         },
       ],
-      // appointments: [],
+      appointments: [],
       date: "",
       timeRanges: [],
       carerSearchString: "",
@@ -206,16 +195,30 @@ export default {
       showAppointmentPopup: false,
       appointmentFixed: true,
       isResizing: false,
+      firstInitializationOfDate: true,
+      slotStartTime: "",
+      slotEndTime: "",
+      existingAppointment: false,
     };
   },
-  // watch: {
-  //   date: {
-  //     handler: function(newVal, oldVal) {
-  //       this.filterAppointments();
-  //     },
-  //     immediate: true,
-  //   },
-  // },
+  watch: {
+    date: {
+      handler: function(newVal, oldVal) {
+        var _this = this;
+        if (!_this.firstInitializationOfDate) {
+          if (_this.date && _this.date != "") {
+            _this.filterAppointments();
+            _this.$nextTick(() => {
+              _this.dataShaper();
+            });
+          }
+        } else {
+          _this.firstInitializationOfDate = false;
+        }
+      },
+      immediate: true,
+    },
+  },
   computed: {},
   components: {
     "appointment-popup": APPOINTMENT_POPUP,
@@ -227,10 +230,10 @@ export default {
     this.createTimeInterval();
     this.date = ref(new Date("Oct 29 2021"));
     this.date.setHours(0, 0, 0);
+    this.filterAppointments();
   },
   mounted() {
     this.dataShaper();
-    // this.filterAppointments();
   },
   methods: {
     createTimeInterval: function() {
@@ -446,16 +449,20 @@ export default {
         }
       }
     },
-    openAppointmentPopup: function(appointmentId) {
+    openAppointmentPopupForExistingAppointment: function(appointmentId) {
       var _this = this;
       _this.appointmentForPopup = _.find(_this.appointments, {
         id: appointmentId,
       });
+      _this.existingAppointment = true;
       _this.showAppointmentPopup = true;
     },
     onCloseAppointmentPopup: function() {
-      console.log("On close called");
-      this.showAppointmentPopup = false;
+      var _this = this;
+      _this.showAppointmentPopup = false;
+      _this.slotStartTime = "";
+      _this.slotEndTime = "";
+      _this.appointmentForPopup = {};
     },
     deleteAppointment: function(event) {
       var _this = this;
@@ -464,31 +471,63 @@ export default {
       var aptIndex = _.findIndex(_this.appointments, { id: event });
       _this.appointments.splice(aptIndex, 1);
       _this.showAppointmentPopup = false;
+      _this.slotStartTime = "";
+      _this.slotEndTime = "";
+      _this.appointmentForPopup = {};
     },
     saveAppointment: function(event) {
       var _this = this;
-      if (this.date.toDateString() === event.date.toDateString()) {
-        var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
-        var timeCell = event.startTime.split(":");
-        event.cell = carerIndex * 24 + parseInt(timeCell[0]);
-        var aptIndex = _.findIndex(_this.appointments, { id: event.id });
-        _this.appointments[aptIndex] = event;
-        var duration = _this.calculateDuration(
-          _this.appointments[aptIndex].startTime,
-          _this.appointments[aptIndex].endTime
-        );
-        var colSpan = duration[0] + duration[1] / 60;
+      if (_this.existingAppointment) {
+        if (this.date.toDateString() === event.date.toDateString()) {
+          var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
+          var timeCell = event.startTime.split(":");
+          event.cell = carerIndex * 24 + parseInt(timeCell[0]);
+          var aptIndex = _.findIndex(_this.appointments, { id: event.id });
+          _this.appointments[aptIndex] = event;
+          var duration = _this.calculateDuration(
+            _this.appointments[aptIndex].startTime,
+            _this.appointments[aptIndex].endTime
+          );
+          var colSpan = duration[0] + duration[1] / 60;
 
-        _this.jQueryForArea(
-          _this.appointments[aptIndex].cell,
-          _this.appointments[aptIndex].id,
-          colSpan
-        );
+          _this.jQueryForArea(
+            _this.appointments[aptIndex].cell,
+            _this.appointments[aptIndex].id,
+            colSpan
+          );
+        } else {
+          var aptIndex = _.findIndex(_this.appointments, { id: event.id });
+          _this.appointments.splice(aptIndex, 1);
+        }
       } else {
-        var aptIndex = _.findIndex(_this.appointments, { id: event.id });
-        _this.appointments.splice(aptIndex, 1);
+        if (this.date.toDateString() === event.date.toDateString()) {
+          var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
+          var timeCell = event.startTime.split(":");
+          event.cell = carerIndex * 24 + parseInt(timeCell[0]);
+          _this.allAppointments.push(event);
+          _this.appointments.push(event);
+          var aptIndex = _.findIndex(_this.appointments, { id: event.id });
+          var duration = _this.calculateDuration(
+            event.startTime,
+            event.endTime
+          );
+          var colSpan = duration[0] + duration[1] / 60;
+          _this.$forceUpdate();
+          _this.$nextTick(() => {
+            _this.jQueryForArea(
+              _this.appointments[aptIndex].cell,
+              _this.appointments[aptIndex].id,
+              colSpan
+            );
+          });
+        } else {
+          _this.allAppointments.push(event);
+        }
       }
-      this.showAppointmentPopup = false;
+      _this.showAppointmentPopup = false;
+      _this.slotStartTime = "";
+      _this.slotEndTime = "";
+      _this.appointmentForPopup = {};
     },
     calculateDuration: function(startTime, endTime) {
       var ary1 = startTime;
@@ -509,14 +548,24 @@ export default {
       duration[1] = parseInt(duration[1]);
       return duration;
     },
+    onChangeDate: function() {
+      var _this = this;
+      _this.filterAppointments();
+      _this.dataShaper();
+    },
     filterAppointments: function() {
       var _this = this;
-      if (!_.isEmpty(_this.date)) {
-        _this.appointments = _.filter(_this.allAppointments, function(o) {
-          return o.date.toDateString() === _this.date.toDateString();
-        });
-        this.dataShaper();
-      }
+      _this.appointments = _.filter(_this.allAppointments, function(o) {
+        return o.date.toDateString() === _this.date.toDateString();
+      });
+    },
+    openAppointmentPopupForNewAppointment: function(time, timeIndex) {
+      var _this = this;
+      _this.existingAppointment = false;
+      _this.slotStartTime = time;
+      _this.slotEndTime =
+        timeIndex != 23 ? _this.timeRanges[timeIndex + 1] : "23:45";
+      _this.showAppointmentPopup = true;
     },
   },
 };

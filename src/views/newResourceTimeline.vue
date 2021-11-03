@@ -8,7 +8,11 @@
       <div class="inner-content">
         <div class="calender_container">
           <label><p>Group by:</p></label>
-          <datepicker class="group_calender" v-model="date" />
+          <datepicker
+            @selected="onChangeDate"
+            class="group_calender"
+            v-model="date"
+          />
           <!-- <i class="fas fa-caret-down"></i> -->
 
           <!-- <img
@@ -36,6 +40,10 @@
           <appointment-popup
             v-if="showAppointmentPopup"
             :appointment="appointmentForPopup"
+            :is-existing="existingAppointment"
+            :slot-start-time="slotStartTime"
+            :slot-end-time="slotEndTime"
+            :slot-date="date"
             @close="onCloseAppointmentPopup"
             @delete="deleteAppointment"
             @save="saveAppointment"
@@ -95,6 +103,9 @@
                   class="data-cell"
                   v-for="(time, timeIndex) in timeRanges"
                   :key="time + '-' + timeIndex"
+                  @dblclick="
+                    openAppointmentPopupForNewAppointment(time, timeIndex)
+                  "
                 ></td>
               </tr>
             </tbody>
@@ -105,7 +116,7 @@
                 class="table-area-selected"
                 :class="'se-' + apt.id"
                 :id="'apt-' + apt.id"
-                @dblclick="openAppointmentPopup(apt.id)"
+                @dblclick="openAppointmentPopupForExistingAppointment(apt.id)"
               >
                 {{ apt.patient.name }}
                 <div

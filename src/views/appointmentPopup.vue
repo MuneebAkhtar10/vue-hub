@@ -11,23 +11,6 @@
             <a href="#contact">Notes</a>
             <a href="#contact">Travel</a>
             <a href="#contact">History</a>
-            <!-- 
-            <div>
-              <a
-                href="javascript:void(0)"
-                title="Cancel"
-                @click="$emit('close')"
-                >Cancel</a
-              >
-            </div>
-            <div>
-              <a
-                href="javascript:void(0)"
-                title="Delete"
-                @click="deleteAppointment"
-                >Delete</a
-              >
-            </div> -->
             <div>
               <a href="javascript:void(0)">View in Schedule</a>
             </div>
@@ -37,7 +20,19 @@
         <div class="modal-body">
           <div class="e-start-end-row">
             <label>Client: </label>
-            <div style="margin-left: 52px">{{ appointment.patient.name }}</div>
+            <div v-if="isExisting" style="margin-left: 52px">
+              {{ appointment.patient.name }}
+            </div>
+            <div v-else class="carer1">
+              <select class="carer_select" v-model="patient">
+                <option
+                  v-for="patient in $parent.patients"
+                  :value="patient"
+                  :key="patient.id"
+                  >{{ patient.name }}</option
+                >
+              </select>
+            </div>
           </div>
 
           <div class="e-start-end-row">
@@ -66,7 +61,7 @@
               ></vue-timepicker>
             </div>
           </div>
-          <div class="duration">
+          <div v-if="isExisting" class="duration">
             <label>Duration: </label>
             <span style="margin-left: 30px">{{ duration }}</span>
           </div>
@@ -111,7 +106,7 @@
         </div>
         <!-- footer -->
         <div class="modal-footer">
-          <div class="delete">
+          <div v-if="isExisting" class="delete">
             <a
               href="javascript:void(0)"
               title="Delete"
@@ -166,6 +161,30 @@ export default {
         return {};
       },
     },
+    isExisting: {
+      type: Boolean,
+      default: function() {
+        return false;
+      },
+    },
+    slotStartTime: {
+      type: String,
+      default: function() {
+        return "09:00";
+      },
+    },
+    slotEndTime: {
+      type: String,
+      default: function() {
+        return "17:00";
+      },
+    },
+    slotDate: {
+      type: Date,
+      default: function() {
+        return new Date();
+      },
+    },
   },
   data() {
     return {
@@ -174,6 +193,7 @@ export default {
       carerId: "",
       duration: "",
       date: ref(new Date()),
+      patient: {},
     };
   },
   components: {
@@ -188,11 +208,18 @@ export default {
   computed: {},
   methods: {
     modelData: function() {
-      this.startTime = this.appointment.startTime;
-      this.endTime = this.appointment.endTime;
-      this.carerId = this.appointment.carer.id;
-      this.date = new Date(this.appointment.date);
-      this.calculateDuration();
+      var _this = this;
+      if (!_.isEmpty(_this.appointment)) {
+        _this.startTime = _this.appointment.startTime;
+        _this.endTime = _this.appointment.endTime;
+        _this.carerId = _this.appointment.carer.id;
+        _this.date = new Date(_this.appointment.date);
+        _this.calculateDuration();
+      } else {
+        _this.startTime = _this.slotStartTime;
+        _this.endTime = _this.slotEndTime;
+        _this.date = new Date(_this.slotDate);
+      }
     },
     timeChange: function(type) {
       if (type == "start") {
@@ -238,15 +265,36 @@ export default {
     },
     saveAppointment: function() {
       var requestBody = {};
-      requestBody.carer = { id: this.carerId };
-      requestBody.patient = this.appointment.patient;
-      requestBody.startTime = this.startTime;
-      requestBody.endTime = this.endTime;
-      requestBody.id = this.appointment.id;
-      requestBody.date = this.date;
-      requestBody.date.setHours(0, 0, 0);
-
+      if (this.isExisting) {
+        requestBody.carer = { id: this.carerId };
+        requestBody.patient = this.appointment.patient;
+        requestBody.startTime = this.startTime;
+        requestBody.endTime = this.endTime;
+        requestBody.id = this.appointment.id;
+        requestBody.date = this.date;
+        requestBody.date.setHours(0, 0, 0);
+      } else {
+        requestBody.carer = { id: this.carerId };
+        requestBody.patient = this.patient;
+        requestBody.startTime = this.startTime;
+        requestBody.endTime = this.endTime;
+        requestBody.id = this.create_UUID();
+        requestBody.date = this.date;
+        requestBody.date.setHours(0, 0, 0);
+      }
       this.$emit("save", requestBody);
+    },
+    create_UUID: function() {
+      var dt = new Date().getTime();
+      var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function(c) {
+          var r = (dt + Math.random() * 16) % 16 | 0;
+          dt = Math.floor(dt / 16);
+          return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+        }
+      );
+      return uuid;
     },
   },
 };
