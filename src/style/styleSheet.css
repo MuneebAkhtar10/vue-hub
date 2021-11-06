@@ -14,17 +14,19 @@ table th, table td {
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
-  color: rgba(32,79,113,1);
+  color: rgba(32, 79, 113, 1);
   letter-spacing: 0.06px;
   border-bottom-style: dotted;
   border-block-color: #eee;
   /* border: 2px inset white; */
 }
+
 .search_box {
   background: rgba(2, 143, 169, 1);
 }
+
 table th, table td .dates {
-  color: rgba(97,104,115,1);
+  color: rgba(97, 104, 115, 1);
   white-space: nowrap;
   text-align: left;
   font-family: ITC Avant Garde Gothic Std;
@@ -48,7 +50,7 @@ table th, table td .dates {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  color: rgba(32,79,113,1);
+  color: rgba(32, 79, 113, 1);
   letter-spacing: 0.06px;
 }
 
@@ -332,18 +334,22 @@ table th, table td .dates {
 .cancel:hover {
   background-color: #eee;
 }
+
 .vue__time-picker input.vue__time-picker-input {
   height: 2.0em !important;
   font-size: 14px !important;
 }
+
 .duration {
   font-size: 14px;
   margin-bottom: 13px;
 }
+
 .carer1 {
   font-size: 14px;
   margin-bottom: 13px;
 }
+
 .carer_select {
   height: 28px;
   margin-left: 48px;
@@ -355,6 +361,7 @@ table th, table td .dates {
   border-bottom-style: groove;
   background-color: #eee;
 }
+
 .recommend {
   margin-left: 15px;
   height: 28px;
@@ -364,6 +371,7 @@ table th, table td .dates {
   border: ridge;
   border-color: bisque
 }
+
 .shadow_select {
   height: 28px;
   margin-left: 36px;
@@ -375,6 +383,7 @@ table th, table td .dates {
   border-bottom-style: groove;
   background-color: #eee;
 }
+
 .search {
   height: 60px;
   /* width: 270px;
@@ -386,9 +395,11 @@ table th, table td .dates {
   margin-left: -40px;
   /* box-shadow: silver 30px 6px 8px; */
 }
+
 .search:focus-visible {
   border-color: white !important;
 }
+
 .search_icon {
   position: absolute;
   width: 59px;
@@ -398,7 +409,7 @@ table th, table td .dates {
   overflow: visible;
   padding: 15px;
   border-radius: 10px;
-  background-color: rgba(67,218,159,1);
+  background-color: rgba(67, 218, 159, 1);
 }
 
 #searchId::placeholder {
@@ -413,26 +424,28 @@ table th, table td .dates {
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
-  color: rgba(32,79,113,1);
+  color: rgba(32, 79, 113, 1);
   letter-spacing: 0.06px;
 }
+
 .calender_container {
   display: flex;
   padding-top: 20px;
   padding-left: 20px;
   line-height: 70px;
 }
+
 .group_calender {
   margin-left: 20px;
-  background-color: rgba(2,143,169,1);
+  background-color: rgba(2, 143, 169, 1);
   padding: 20px;
   max-width: 200px;
   color: white;
   border-radius: 10px;
   height: 70px;
   border-color: white;
-  
 }
+
 .calender_container {
   /* position: absolute; */
   overflow: visible;
@@ -442,9 +455,10 @@ table th, table td .dates {
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  color: rgba(97,104,115,1);
+  color: rgba(97, 104, 115, 1);
   letter-spacing: 0.06px;
 }
+
 .drop_down {
   /* position: absolute; */
   /* width: 16px; */
@@ -453,7 +467,8 @@ table th, table td .dates {
   top: 0px;
   /* overflow: visible; */
 }
-#card1, #card2, #card3{
+
+#card1, #card2, #card3 {
   min-width: 230px;
   text-align: left;
   padding-left: 20px;
@@ -464,9 +479,10 @@ table th, table td .dates {
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  color: rgba(97,104,115,1);
+  color: rgba(97, 104, 115, 1);
   letter-spacing: 0.06px;
 }
+
 #card2 {
   margin-left: 300px;
 }
@@ -478,34 +494,37 @@ table th, table td .dates {
   padding: 0.3em 0.5em;
   margin-left: 50px;
 }
+
 .carer_name {
   margin-left: 30px;
   line-height: 45px;
 }
+
 .card_head {
-    display: flex;
-    margin-left: 30px;
-    margin-right: 20px;
-    /* padding: 0.6em 1em 0.6em 0.6em; */
-    padding: 0.6em 2em -0.4em 1.6em;
-    margin-bottom: 0.5em;
-    border-radius: 0.7em;
-    box-shadow: silver 12px 6px 8px;
-    border: solid 1px #ccc;
-    width: 330px;
+  display: flex;
+  margin-left: 30px;
+  margin-right: 20px;
+  /* padding: 0.6em 1em 0.6em 0.6em; */
+  padding: 0.6em 2em -0.4em 1.6em;
+  margin-bottom: 0.5em;
+  border-radius: 0.7em;
+  box-shadow: silver 12px 6px 8px;
+  border: solid 1px #ccc;
+  width: 330px;
 }
+
 #hel {
   opacity: 0.5;
-    fill: transparent;
-    stroke: rgba(255,255,255,1);
-    stroke-width: 1px;
-    stroke-linejoin: miter;
-    stroke-linecap: butt;
-    stroke-miterlimit: 4;
-    shape-rendering: auto;
-    overflow: visible;
-    position: absolute;
-    width: 308.5px;
-    height: 1px;
-    transform: matrix(1,0,0,1,0,0);
+  fill: transparent;
+  stroke: rgba(255, 255, 255, 1);
+  stroke-width: 1px;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+  stroke-miterlimit: 4;
+  shape-rendering: auto;
+  overflow: visible;
+  position: absolute;
+  width: 308.5px;
+  height: 1px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
 }

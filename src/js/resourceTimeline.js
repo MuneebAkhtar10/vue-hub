@@ -12,7 +12,7 @@ export default {
   props: {},
   data() {
     return {
-      carers: [
+      allCarers: [
         {
           id: "lorem",
           name: "Lorem ispum",
@@ -58,6 +58,7 @@ export default {
           name: "Lorem ispum10",
         },
       ],
+      carers: [],
       patients: [
         {
           id: "patient",
@@ -227,10 +228,12 @@ export default {
     sidebar: sidebar,
   },
   created() {
-    this.createTimeInterval();
-    this.date = ref(new Date("Oct 29 2021"));
-    this.date.setHours(0, 0, 0);
-    this.filterAppointments();
+    var _this = this;
+    _this.createTimeInterval();
+    _this.date = ref(new Date("Oct 29 2021"));
+    _this.date.setHours(0, 0, 0);
+    _this.carers = _.cloneDeep(_this.allCarers);
+    _this.filterAppointments();
   },
   mounted() {
     this.dataShaper();
@@ -566,6 +569,49 @@ export default {
       _this.slotEndTime =
         timeIndex != 23 ? _this.timeRanges[timeIndex + 1] : "23:45";
       _this.showAppointmentPopup = true;
+    },
+    filterAppointmentsByCarer: function() {
+      var _this = this;
+      if (_this.carerSearchString.length > 3) {
+        _this.appointments = [];
+        var carerAppointmentMap = {};
+        _this.carers = _.filter(_this.allCarers, (carer) => {
+          var carerName = carer.name.toLowerCase();
+          var searchString = _this.carerSearchString.toLowerCase();
+          return carerName.includes(searchString);
+        });
+        if (!_.isEmpty(_this.carers)) {
+          _.each(_this.allAppointments, (apt) => {
+            if (
+              apt.carer?.id &&
+              apt.date?.toDateString() === _this.date.toDateString()
+            ) {
+              if (carerAppointmentMap[apt.carer.id]) {
+                carerAppointmentMap[apt.carer.id].push(apt);
+              } else {
+                carerAppointmentMap[apt.carer.id] = [];
+                carerAppointmentMap[apt.carer.id].push(apt);
+              }
+            }
+          });
+          _.each(_this.carers, (carer) => {
+            if (carerAppointmentMap[carer.id]) {
+              _this.appointments = _this.appointments.concat(
+                carerAppointmentMap[carer.id]
+              );
+            }
+          });
+          _this.$nextTick(() => {
+            _this.dataShaper();
+          });
+        } else if (_this.carerSearchString.length == 0) {
+          _this.carers = _.cloneDeep(_this.allCarers);
+          _this.filterAppointments();
+          _this.$nextTick(() => {
+            _this.dataShaper();
+          });
+        }
+      }
     },
   },
 };

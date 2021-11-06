@@ -58,6 +58,7 @@
                     type="text"
                     v-model="carerSearchString"
                     placeholder="Search Carer"
+                    @input="filterAppointmentsByCarer"
                   />
                   <!-- <div class="search_icon"> -->
                   <img
