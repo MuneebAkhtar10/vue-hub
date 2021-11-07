@@ -89,6 +89,7 @@
               <tr
                 v-for="(carer, carerIndex) in carers"
                 :key="carer.id + '-' + carerIndex"
+                class="tableRow"
               >
                 <main class="container">
                   <div class="card">
@@ -107,7 +108,13 @@
                   @dblclick="
                     openAppointmentPopupForNewAppointment(time, timeIndex)
                   "
-                ></td>
+                >
+                  <div v-if="time == currentTimeSlot" class="border">
+                    <div class="border-2" />
+                    <div class="border-3" />
+                    <div class="border-4" />
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -119,7 +126,8 @@
                 :id="'apt-' + apt.id"
                 @dblclick="openAppointmentPopupForExistingAppointment(apt.id)"
               >
-                {{ apt.patient.name }}
+                <p class="patientsName">{{ apt.patient.name }}</p>
+                <hr class="appointmentTimeline" />
                 <div
                   class="resizer se"
                   @mousedown="resizingOnMouseDown($event, apt.id)"
