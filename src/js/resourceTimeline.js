@@ -16,46 +16,57 @@ export default {
         {
           id: "lorem",
           name: "Lorem ispum",
+          designation: "Designation",
         },
         {
           id: "lorem1",
           name: "Lorem ispum1",
+          designation: "Designation",
         },
         {
           id: "lorem2",
           name: "Lorem ispum2",
+          designation: "Designation",
         },
         {
           id: "lorem3",
           name: "Lorem ispum3",
+          designation: "Designation",
         },
         {
           id: "lorem4",
           name: "Lorem ispum4",
+          designation: "Designation",
         },
         {
           id: "lorem5",
           name: "Lorem ispum5",
+          designation: "Designation",
         },
         {
           id: "lorem6",
           name: "Lorem ispum6",
+          designation: "Designation",
         },
         {
           id: "lorem7",
           name: "Lorem ispum7",
+          designation: "Designation",
         },
         {
           id: "lorem8",
           name: "Lorem ispum8",
+          designation: "Designation",
         },
         {
           id: "lorem9",
           name: "Lorem ispum9",
+          designation: "Designation",
         },
         {
           id: "lorem10",
           name: "Lorem ispum10",
+          designation: "Designation",
         },
       ],
       carers: [],
@@ -186,6 +197,41 @@ export default {
           startTime: "01:00",
           endTime: "03:00",
           cell: -1,
+        },
+      ],
+      carerAvailability: [
+        {
+          carerId: "lorem",
+        },
+        {
+          carerId: "lorem1",
+        },
+        {
+          carerId: "lorem2",
+        },
+        {
+          carerId: "lorem3",
+        },
+        {
+          carerId: "lorem4",
+        },
+        {
+          carerId: "lorem5",
+        },
+        {
+          carerId: "lorem6",
+        },
+        {
+          carerId: "lorem7",
+        },
+        {
+          carerId: "lorem8",
+        },
+        {
+          carerId: "lorem9",
+        },
+        {
+          carerId: "lorem10",
         },
       ],
       appointments: [],
