@@ -1,7 +1,7 @@
 .mainContainer {
   margin-top: 5%;
   max-width: 100%;
-  /* overflow-x: scroll; */
+  overflow-x: scroll;
   position: relative;
   margin-left: -3px;
 }
@@ -19,6 +19,7 @@ table th, table td {
   letter-spacing: 0.06px;
   border-bottom-style: dotted;
   border-block-color: #eee;
+  background-color: white;
 }
 
 .search_box {
@@ -624,6 +625,7 @@ p {
 
 .data-cell {
   border-bottom: 2pt dotted lightgray;
+  background-color: white;
 }
 
 .tableRowStyle {
@@ -632,4 +634,7 @@ p {
 
 .patientsName {
   margin-top: -4px;
+}
+body .inner-content {
+  background-color: white !important;
 }
