@@ -1,8 +1,9 @@
 .mainContainer {
   margin-top: 5%;
   max-width: 100%;
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
   position: relative;
+  margin-left: -3px;
 }
 
 table th, table td {
@@ -24,6 +25,7 @@ table th, table td {
   background: rgba(2, 143, 169, 1);
   margin-top: -28px;
   border-bottom: none;
+  max-width: 360px;
   /* position: fixed; */
   /* width: 367px; */
   /* margin-left: -2px; */
@@ -408,7 +410,7 @@ table th, table td .dates {
   border-radius: 10px;
   border-color: white;
   border: none;
-  width: 300px;
+  width: 340px;
   margin-left: -40px;
   /* box-shadow: silver 30px 6px 8px; */
 }
@@ -419,12 +421,12 @@ table th, table td .dates {
 
 .search_icon {
   position: absolute;
-  width: 59px;
-  height: 50px;
-  left: 255px;
   top: 12px;
+  width: 52px;
+  height: 50px;
+  left: 300px;
   overflow: visible;
-  padding: 15px;
+  padding: 11px;
   border-radius: 10px;
   background-color: rgba(67, 218, 159, 1);
 }
@@ -528,6 +530,9 @@ table th, table td .dates {
   box-shadow: silver 12px 6px 8px;
   border: solid 1px #ccc;
   width: 330px;
+}
+p {
+  font-family: ITC Avant Garde Gothic Std;
 }
 
 #hel {
