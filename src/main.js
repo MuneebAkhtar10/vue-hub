@@ -9,8 +9,14 @@ import "./scss/_custom_bootstrap.scss";
 import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 // Import Vcalendar
 import VCalendar from 'v-calendar';
+
 // Import Apex Charts
 import VueApexCharts from "vue3-apexcharts";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faUserSecret)
 
 createApp(App)
   .use(router)

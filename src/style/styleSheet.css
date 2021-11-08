@@ -22,6 +22,11 @@ table th, table td {
 
 .search_box {
   background: rgba(2, 143, 169, 1);
+  margin-top: -28px;
+  border-bottom: none;
+  /* position: fixed; */
+  /* width: 367px; */
+  /* margin-left: -2px; */
 }
 
 table th, table td .dates {
@@ -52,7 +57,6 @@ table th, table td .dates {
   color: rgb(255, 255, 255);
   background-color: #ea7a57;
   letter-spacing: 0.06px;
-  margin-top: 12px;
   font-weight: bolder;
   -webkit-user-select: none;
   /* Safari */
@@ -148,9 +152,10 @@ table th, table td .dates {
   justify-content: space-around;
   text-align: left;
   background-color: rgba(2, 143, 169, 1);
-  height: 88px;
+  height: 70px;
   margin-left: -35px;
   width: 400px;
+  margin-top: -2px;
   margin-bottom: -5px;
 }
 
@@ -174,6 +179,8 @@ table th, table td .dates {
   border-radius: 0.7em;
   /* box-shadow: silver 12px 6px 8px; */
   width: 330px;
+  color: white;
+  box-shadow: none;
 }
 
 .img {
@@ -395,7 +402,7 @@ table th, table td .dates {
 }
 
 .search {
-  height: 60px;
+  height: 50px;
   /* width: 270px;
   margin-left: -20px; */
   border-radius: 10px;
@@ -413,8 +420,8 @@ table th, table td .dates {
 .search_icon {
   position: absolute;
   width: 59px;
-  height: 60px;
-  left: 277px;
+  height: 50px;
+  left: 255px;
   top: 12px;
   overflow: visible;
   padding: 15px;
@@ -540,7 +547,7 @@ table th, table td .dates {
 }
 
 .tableRow {
-  height: 85px;
+  height: 60px;
 }
 
 .border {
@@ -605,12 +612,13 @@ table th, table td .dates {
   width: 200%;
   position: absolute;
   margin-left: -23%;
-  border: 5px solid rgb(255, 0, 140);
+  margin-top: 4px;
+  border: 2px solid #EA7E57;
   border-radius: 5px;
 }
 
 .data-cell {
-  border-bottom: 2pt dashed rgb(56, 56, 56);
+  border-bottom: 2pt dotted lightgray;
 }
 
 .tableRowStyle {
