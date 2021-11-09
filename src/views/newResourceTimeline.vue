@@ -8,16 +8,45 @@
       <div class="inner-content">
         <div class="calender_container">
           <!-- <label><p>Group by:</p></label> -->
+          <div class="card_head" id="card1">
+            <select id="view-selector" v-model="view" style="min-width: 200px;">
+              <option value="today">Today</option>
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+            </select>
+          </div>
           <datepicker
             @selected="onChangeDate"
             class="group_calender"
             v-model="date"
           />
           <!-- <i class="fas fa-caret-down"></i> -->
-
-          <div class="card_head" id="card1">
+          <!-- <div class="card_head" id="card1">
             <td style="min-width: 200px;"><p>Monday, 1 November 2021</p></td>
-          </div>
+          </div> -->
+          <template v-if="view == 'week'">
+            <div class="card_head">
+              <span>Mo</span>
+            </div>
+            <div class="card_head">
+              <td>Tu</td>
+            </div>
+            <div class="card_head">
+              <td>We</td>
+            </div>
+            <div class="card_head">
+              <td>Th</td>
+            </div>
+            <div class="card_head">
+              <td>Fr</td>
+            </div>
+            <div class="card_head">
+              <td>Sa</td>
+            </div>
+            <div class="card_head">
+              <td>Su</td>
+            </div>
+          </template>
           <div class="card_head" id="card2">
             <td style="min-width: 200px;">Required hours: 52h, 15m</td>
           </div>
@@ -25,8 +54,15 @@
             <td style="min-width: 200px;">Booked hours: 48h, 0m</td>
           </div>
           <div class="card_head" id="card3">
-            <td style="min-width: 200px;">Carers Working: 10</td>
+            <td style="min-width: 200px;">Carers working: 10</td>
           </div>
+          <button class="moreBtn">
+            more<i class="bi bi-arrow-right" style="margin-left:15px"></i>
+          </button>
+          <button class="settingBtn">
+            <i class="bi bi-gear"></i>
+          </button>
+          <i class="bi bi-three-dots-vertical threeVerticalDots"></i>
         </div>
 
         <div class="table-area mainContainer">
@@ -88,8 +124,11 @@
                   <div class="card">
                     <div class="img"></div>
                     <div class="content">
-                      <div className="carer_name" style="min-width: 200px;">
-                        {{ carer.name }}
+                      <div className="carerContent" style="min-width: 200px;">
+                        <div style="font-size:18px">{{ carer.name }}</div>
+                        <div style="margin-top:-9%">
+                          {{ carer.designation }}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -120,11 +159,16 @@
                 @dblclick="openAppointmentPopupForExistingAppointment(apt.id)"
               >
                 <p class="patientsName">{{ apt.patient.name }}</p>
-                <hr class="appointmentTimeline" />
+
                 <div
                   class="resizer se"
                   @mousedown="resizingOnMouseDown($event, apt.id)"
                 ></div>
+              </div>
+            </div>
+            <div v-for="apt in appointments" :key="apt.id">
+              <div class="carer_timeLine" :id="'apt-' + apt.id">
+                <hr class="appointmentTimeline" />
               </div>
             </div>
           </template>

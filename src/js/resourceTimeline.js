@@ -16,57 +16,57 @@ export default {
         {
           id: "lorem",
           name: "Lorem ispum",
-          designation: "Designation",
+          designation: "Doctor",
         },
         {
           id: "lorem1",
           name: "Lorem ispum1",
-          designation: "Designation",
+          designation: "Nurse",
         },
         {
           id: "lorem2",
           name: "Lorem ispum2",
-          designation: "Designation",
+          designation: "Laboratory Guy",
         },
         {
           id: "lorem3",
           name: "Lorem ispum3",
-          designation: "Designation",
+          designation: "Oncologist",
         },
         {
           id: "lorem4",
           name: "Lorem ispum4",
-          designation: "Designation",
+          designation: "Optician",
         },
         {
           id: "lorem5",
           name: "Lorem ispum5",
-          designation: "Designation",
+          designation: "Skin Doctor",
         },
         {
           id: "lorem6",
           name: "Lorem ispum6",
-          designation: "Designation",
+          designation: "Lungs",
         },
         {
           id: "lorem7",
           name: "Lorem ispum7",
-          designation: "Designation",
+          designation: "Liver",
         },
         {
           id: "lorem8",
           name: "Lorem ispum8",
-          designation: "Designation",
+          designation: "ENT",
         },
         {
           id: "lorem9",
           name: "Lorem ispum9",
-          designation: "Designation",
+          designation: "Physician",
         },
         {
           id: "lorem10",
           name: "Lorem ispum10",
-          designation: "Designation",
+          designation: "Child Specialist",
         },
       ],
       carers: [],
@@ -235,16 +235,17 @@ export default {
         },
       ],
       appointments: [],
-      date: "",
       timeRanges: [],
-      carerSearchString: "",
       appointmentForPopup: {},
-      showAppointmentPopup: false,
-      appointmentFixed: true,
-      isResizing: false,
-      firstInitializationOfDate: true,
+      date: "",
+      view: "today",
+      carerSearchString: "",
       slotStartTime: "",
       slotEndTime: "",
+      appointmentFixed: true,
+      firstInitializationOfDate: true,
+      showAppointmentPopup: false,
+      isResizing: false,
       existingAppointment: false,
     };
   },
@@ -661,13 +662,13 @@ export default {
           _this.$nextTick(() => {
             _this.dataShaper();
           });
-        } else if (_this.carerSearchString.length == 0) {
-          _this.carers = _.cloneDeep(_this.allCarers);
-          _this.filterAppointments();
-          _this.$nextTick(() => {
-            _this.dataShaper();
-          });
         }
+      } else if (_this.carerSearchString.length == 0) {
+        _this.carers = _.cloneDeep(_this.allCarers);
+        _this.filterAppointments();
+        _this.$nextTick(() => {
+          _this.dataShaper();
+        });
       }
     },
   },

@@ -71,6 +71,10 @@ table th, table td .dates {
   /* Standard */
 }
 
+.carer_timeLine {
+  position: absolute;
+}
+
 .resizer {
   position: absolute;
   width: 5px;
@@ -163,8 +167,8 @@ table th, table td .dates {
 }
 
 .content {
-  margin-left: -15px;
-  min-width: 250px;
+  margin-left: 22px;
+  min-width: 300px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.562);
 }
 
@@ -177,7 +181,7 @@ table th, table td .dates {
   margin-left: 30px;
   margin-right: 20px;
   /* padding: 0.6em 1em 0.6em 0.6em; */
-  padding: 0.6em 2em -0.4em 1.6em;
+  padding: 0.8em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
   border-radius: 0.7em;
   /* box-shadow: silver 12px 6px 8px; */
@@ -193,7 +197,7 @@ table th, table td .dates {
   background: linear-gradient(to bottom, black 0%, black 100%);
   opacity: 0.7;
   /* margin: 0 0.6em 0 0; */
-  margin: 6px -0.4em 1px 10px;
+  margin: 10px -3em 1px 10px;
   border: solid 1px black;
 }
 
@@ -356,7 +360,7 @@ table th, table td .dates {
 }
 
 .vue__time-picker input.vue__time-picker-input {
-  height: 2.0em !important;
+  height: 2em !important;
   font-size: 14px !important;
 }
 
@@ -389,7 +393,7 @@ table th, table td .dates {
   background-color: floralwhite;
   cursor: pointer;
   border: ridge;
-  border-color: bisque
+  border-color: bisque;
 }
 
 .shadow_select {
@@ -515,7 +519,7 @@ table th, table td .dates {
   margin-left: 50px;
 }
 
-.carer_name {
+.carerContent {
   margin-left: 30px;
   line-height: 45px;
 }
@@ -532,6 +536,7 @@ table th, table td .dates {
   border: solid 1px #ccc;
   width: 330px;
 }
+
 p {
   font-family: ITC Avant Garde Gothic Std;
 }
@@ -616,10 +621,10 @@ p {
 
 .appointmentTimeline {
   width: 200%;
-  position: absolute;
+  position: relative;
   margin-left: -23%;
   margin-top: 4px;
-  border: 2px solid #EA7E57;
+  border: 2px solid #a411c2;
   border-radius: 5px;
 }
 
@@ -635,6 +640,32 @@ p {
 .patientsName {
   margin-top: -4px;
 }
+
 body .inner-content {
   background-color: white !important;
+}
+
+.moreBtn {
+  background-color: #43da9f;
+  width: 7%;
+  color: white;
+  border-radius: 15px;
+  font-size: larger;
+}
+
+.settingBtn {
+  background-color: #028fa9;
+  width: 7%;
+  color: white;
+  border-radius: 15px;
+  font-size: 35px;
+}
+
+.threeVerticalDots {
+  font-size: 35px;
+  color: #42b983;
+}
+
+select#view-selector {
+  border: none;
 }
