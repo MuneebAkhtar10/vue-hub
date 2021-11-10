@@ -669,3 +669,59 @@ body .inner-content {
 select#view-selector {
   border: none;
 }
+
+.sortByBox {
+  display: flex;
+  margin-left: 30px;
+  padding: 0.6em 2em -0.4em 1.6em;
+  margin-bottom: 0.5em;
+  border-radius: 0.7em;
+  border: solid 1px #ccc;
+  width: 340px;
+  height: 55px;
+  background-color: white;
+}
+
+#selectBox {
+  min-width: 230px;
+  text-align: left;
+  padding-left: 20px;
+  height: 55px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.06px;
+  background-color: white;
+}
+
+.sortSelect {
+  background-color: white;
+  min-width: 300px;
+  font-weight: bolder;
+  color: gray;
+  font-size: larger;
+}
+
+.weekday {
+  display: flex;
+  margin-left: 20px;
+  margin-right: 10px;
+  /* padding: 0.6em 1em 0.6em 0.6em; */
+  padding: 0.6em 2em -0.4em 1.6em;
+  margin-bottom: 0.5em;
+  border-radius: 0.7em;
+  box-shadow: silver 12px 6px 8px;
+  border: solid 1px #ccc;
+  min-width: 50px;
+  width: 330px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.dayname {
+  justify-content: center;
+}

@@ -9,7 +9,12 @@
         <div class="calender_container">
           <!-- <label><p>Group by:</p></label> -->
           <div class="card_head" id="card1">
-            <select id="view-selector" v-model="view" style="min-width: 200px;">
+            <select
+              id="view-selector"
+              class="sortSelect"
+              v-model="view"
+              style="min-width: 200px;"
+            >
               <option value="today">Today</option>
               <option value="week">Week</option>
               <option value="month">Month</option>
@@ -25,26 +30,26 @@
             <td style="min-width: 200px;"><p>Monday, 1 November 2021</p></td>
           </div> -->
           <template v-if="view == 'week'">
-            <div class="card_head">
-              <span>Mo</span>
+            <div class="weekday" @click="addToWeekday(1)">
+              <span class="dayname">Mo</span>
             </div>
-            <div class="card_head">
-              <td>Tu</td>
+            <div class="weekday" @click="addToWeekday(2)">
+              <span class="dayname">Tu</span>
             </div>
-            <div class="card_head">
-              <td>We</td>
+            <div class="weekday" @click="addToWeekday(3)">
+              <span class="dayname">We</span>
             </div>
-            <div class="card_head">
-              <td>Th</td>
+            <div class="weekday" @click="addToWeekday(4)">
+              <span class="dayname">Th</span>
             </div>
-            <div class="card_head">
-              <td>Fr</td>
+            <div class="weekday" @click="addToWeekday(5)">
+              <span class="dayname">Fr</span>
             </div>
-            <div class="card_head">
-              <td>Sa</td>
+            <div class="weekday" @click="addToWeekday(6)">
+              <span class="dayname">Sa</span>
             </div>
-            <div class="card_head">
-              <td>Su</td>
+            <div class="weekday" @click="addToWeekday(0)">
+              <span class="dayname">Su</span>
             </div>
           </template>
           <div class="card_head" id="card2">
@@ -112,6 +117,22 @@
                 >
                   {{ time }}
                 </th>
+              </tr>
+              <tr>
+                <div class="container">
+                  <div class="sortByBox" id="selectBox">
+                    <select
+                      class="sortSelect"
+                      id="view-selector"
+                      v-model="sortByAttributeName"
+                      @change="sortBy"
+                    >
+                      <option value="">Sort by</option>
+                      <option value="name">Name</option>
+                      <option value="designation">Designation</option>
+                    </select>
+                  </div>
+                </div>
               </tr>
             </thead>
             <tbody>

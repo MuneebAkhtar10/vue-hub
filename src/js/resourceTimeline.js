@@ -235,6 +235,7 @@ export default {
         },
       ],
       appointments: [],
+      weekday: [],
       timeRanges: [],
       appointmentForPopup: {},
       date: "",
@@ -242,11 +243,22 @@ export default {
       carerSearchString: "",
       slotStartTime: "",
       slotEndTime: "",
+      sortByAttributeName: "",
       appointmentFixed: true,
       firstInitializationOfDate: true,
       showAppointmentPopup: false,
       isResizing: false,
       existingAppointment: false,
+      sortAsc: true,
+      currentWeek: [
+        new Date("Oct 25 2021"),
+        new Date("Oct 26 2021"),
+        new Date("Oct 27 2021"),
+        new Date("Oct 28 2021"),
+        new Date("Oct 29 2021"),
+        new Date("Oct 30 2021"),
+        new Date("Oct 31 2021"),
+      ],
     };
   },
   watch: {
@@ -273,7 +285,7 @@ export default {
       date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
       date.setMinutes(0, 0, 0);
       return date.toLocaleTimeString([], {
-        hour12: false,
+        hourCycle: "h23",
         hour: "2-digit",
         minute: "2-digit",
       });
@@ -288,8 +300,8 @@ export default {
   created() {
     var _this = this;
     _this.createTimeInterval();
-    _this.date = ref(new Date("Oct 29 2021"));
-    _this.date.setHours(0, 0, 0);
+    _this.date = new Date("Oct 29 2021");
+    // _this.date.setHours(0, 0, 0);
     _this.carers = _.cloneDeep(_this.allCarers);
     _this.filterAppointments();
   },
@@ -670,6 +682,49 @@ export default {
           _this.dataShaper();
         });
       }
+    },
+    addToWeekday: function(day) {
+      var _this = this;
+      if (_this.weekday.indexOf(day) === -1) {
+        _this.weekday.push(day);
+      }
+      _this.filterAppointmentsBySelectedWeekdays();
+    },
+    filterAppointmentsBySelectedWeekdays: function() {
+      var _this = this;
+      var weekdaysString = _.map(_this.currentWeek, (day) => {
+        return day.toDateString();
+      });
+      console.log(weekdaysString);
+    },
+    sortBy: function() {
+      var _this = this;
+      _this.appointments = [];
+      var carerAppointmentMap = {};
+      _this.carers = _.sortBy(_this.carers, [_this.sortByAttributeName]);
+      _.each(_this.allAppointments, (apt) => {
+        if (
+          apt.carer?.id &&
+          apt.date?.toDateString() === _this.date.toDateString()
+        ) {
+          if (carerAppointmentMap[apt.carer.id]) {
+            carerAppointmentMap[apt.carer.id].push(apt);
+          } else {
+            carerAppointmentMap[apt.carer.id] = [];
+            carerAppointmentMap[apt.carer.id].push(apt);
+          }
+        }
+      });
+      _.each(_this.carers, (carer) => {
+        if (carerAppointmentMap[carer.id]) {
+          _this.appointments = _this.appointments.concat(
+            carerAppointmentMap[carer.id]
+          );
+        }
+      });
+      _this.$nextTick(() => {
+        _this.dataShaper();
+      });
     },
   },
 };
