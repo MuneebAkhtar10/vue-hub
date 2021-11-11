@@ -109,6 +109,20 @@
                                 NcwYc7vlhlAgZYJsaaOmDOgmqgbVSZAxgLf5D/qJkV+COkR3AAAAAElFTkSuQmCC"
                   />
                   <!-- </div> -->
+                  <div>
+                    <div class="sortByBox" id="selectBox">
+                      <select
+                        class="sortSelect"
+                        id="view-selector"
+                        v-model="sortByAttributeName"
+                        @change="sortBy"
+                      >
+                        <option value="">Sort by</option>
+                        <option value="name">Name</option>
+                        <option value="designation">Designation</option>
+                      </select>
+                    </div>
+                  </div>
                 </th>
 
                 <th
@@ -117,22 +131,6 @@
                 >
                   {{ time }}
                 </th>
-              </tr>
-              <tr>
-                <div class="container">
-                  <div class="sortByBox" id="selectBox">
-                    <select
-                      class="sortSelect"
-                      id="view-selector"
-                      v-model="sortByAttributeName"
-                      @change="sortBy"
-                    >
-                      <option value="">Sort by</option>
-                      <option value="name">Name</option>
-                      <option value="designation">Designation</option>
-                    </select>
-                  </div>
-                </div>
               </tr>
             </thead>
             <tbody>
@@ -154,6 +152,9 @@
                     </div>
                   </div>
                 </main>
+                <div class="carer_timeLine">
+                  <hr class="appointmentTimeline" />
+                </div>
                 <td
                   class="data-cell"
                   v-for="(time, timeIndex) in timeRanges"
@@ -185,11 +186,6 @@
                   class="resizer se"
                   @mousedown="resizingOnMouseDown($event, apt.id)"
                 ></div>
-              </div>
-            </div>
-            <div v-for="apt in appointments" :key="apt.id">
-              <div class="carer_timeLine" :id="'apt-' + apt.id">
-                <hr class="appointmentTimeline" />
               </div>
             </div>
           </template>

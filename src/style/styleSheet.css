@@ -61,6 +61,7 @@ table th, table td .dates {
   background-color: #ea7a57;
   letter-spacing: 0.06px;
   font-weight: bolder;
+  margin-top: 10px;
   -webkit-user-select: none;
   /* Safari */
   -moz-user-select: none;
@@ -69,10 +70,6 @@ table th, table td .dates {
   /* IE10+/Edge */
   user-select: none;
   /* Standard */
-}
-
-.carer_timeLine {
-  position: absolute;
 }
 
 .resizer {
@@ -620,11 +617,10 @@ p {
 }
 
 .appointmentTimeline {
-  width: 200%;
-  position: relative;
-  margin-left: -23%;
-  margin-top: 4px;
-  border: 2px solid #a411c2;
+  width: 20%;
+  position: absolute;
+  margin-left: 35%;
+  border: 2px solid #e3165b;
   border-radius: 5px;
 }
 
@@ -672,7 +668,7 @@ select#view-selector {
 
 .sortByBox {
   display: flex;
-  margin-left: 30px;
+  margin-left: -40px;
   padding: 0.6em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
   border-radius: 0.7em;
@@ -680,6 +676,7 @@ select#view-selector {
   width: 340px;
   height: 55px;
   background-color: white;
+  margin-top: 5px;
 }
 
 #selectBox {
