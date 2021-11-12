@@ -529,7 +529,7 @@ table th, table td .dates {
   padding: 0.6em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
   border-radius: 0.7em;
-  box-shadow: silver 12px 6px 8px;
+  /* box-shadow: silver 12px 6px 8px; */
   border: solid 1px #ccc;
   width: 330px;
 }
@@ -666,6 +666,15 @@ select#view-selector {
   border: none;
 }
 
+select#view-selector2 {
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(67, 218, 159, 1);
+  padding-left: 12px;
+  color: white;
+  font-family: ITC Avant Garde Gothic Std;
+}
+
 .sortByBox {
   display: flex;
   margin-left: -40px;
@@ -706,19 +715,21 @@ select#view-selector {
 .weekday {
   display: flex;
   margin-left: 20px;
-  margin-right: 10px;
-  /* padding: 0.6em 1em 0.6em 0.6em; */
+  margin-right: -10px;
+  margin-top: 6px;
   padding: 0.6em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
   border-radius: 0.7em;
-  box-shadow: silver 12px 6px 8px;
   border: solid 1px #ccc;
-  min-width: 50px;
+  min-width: 57px;
+  max-height: 55px;
   width: 330px;
+  line-height: 55px;
   text-align: center;
   vertical-align: middle;
 }
 
 .dayname {
   justify-content: center;
+  padding-left: 10px;
 }

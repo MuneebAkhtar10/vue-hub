@@ -8,9 +8,9 @@
       <div class="inner-content">
         <div class="calender_container">
           <!-- <label><p>Group by:</p></label> -->
-          <div class="card_head" id="card1">
+          <div class="card_head">
             <select
-              id="view-selector"
+              id="view-selector2"
               class="sortSelect"
               v-model="view"
               style="min-width: 200px;"
@@ -31,25 +31,25 @@
           </div> -->
           <template v-if="view == 'week'">
             <div class="weekday" @click="addToWeekday(1)">
-              <span class="dayname">Mo</span>
+              <span class="dayname">Mon</span>
             </div>
             <div class="weekday" @click="addToWeekday(2)">
-              <span class="dayname">Tu</span>
+              <span class="dayname">Tue</span>
             </div>
             <div class="weekday" @click="addToWeekday(3)">
-              <span class="dayname">We</span>
+              <span class="dayname">Wed</span>
             </div>
             <div class="weekday" @click="addToWeekday(4)">
-              <span class="dayname">Th</span>
+              <span class="dayname">Thur</span>
             </div>
             <div class="weekday" @click="addToWeekday(5)">
-              <span class="dayname">Fr</span>
+              <span class="dayname">Fri</span>
             </div>
             <div class="weekday" @click="addToWeekday(6)">
-              <span class="dayname">Sa</span>
+              <span class="dayname">Sat</span>
             </div>
             <div class="weekday" @click="addToWeekday(0)">
-              <span class="dayname">Su</span>
+              <span class="dayname">Sun</span>
             </div>
           </template>
           <div class="card_head" id="card2">
