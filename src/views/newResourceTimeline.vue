@@ -144,8 +144,10 @@
                     <div class="img"></div>
                     <div class="content">
                       <div className="carerContent" style="min-width: 200px;">
-                        <div style="font-size:18px">{{ carer.name }}</div>
-                        <div style="margin-top:-9%">
+                        <div class="carerName" style="font-size:18px">
+                          <p>{{ carer.name }}</p>
+                        </div>
+                        <div class="carerDesignation" style="margin-top:-9%">
                           {{ carer.designation }}
                         </div>
                       </div>
@@ -169,6 +171,11 @@
                     <div class="border-4" />
                   </div>
                 </td>
+              </tr>
+              <tr>
+                <div
+                  style="background-color: #028fa9;width: 365px;height: 60px;margin-top: -5px;"
+                />
               </tr>
             </tbody>
           </table>
