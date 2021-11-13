@@ -7,28 +7,44 @@
 
       <div class="inner-content">
         <div class="calender_container">
-          <!-- <label><p>Group by:</p></label> -->
-          <div class="card_head">
-            <select
-              id="view-selector2"
-              class="sortSelect"
-              v-model="view"
-              style="min-width: 200px;"
+          <div class="timelineViewName">
+            <i class="calendarIcon" />
+            <p
+              style="color:white;margin-left:12px;font-size:20px;font-weight:bolder"
             >
-              <option value="today">Today</option>
-              <option value="week">Week</option>
-              <option value="month">Month</option>
-            </select>
+              {{ view.charAt(0).toUpperCase() + view.slice(1) }}
+            </p>
+            <a href="javascript:void(0);" @click="viewChange('up')">
+              <i
+                class="bi bi-chevron-down"
+                style="color:white;margin: 2px 0px 0px 15px;font-size:25px;"
+              />
+            </a>
+            <a href="javascript:void(0);" @click="viewChange('down')">
+              <i
+                class="bi bi-chevron-up"
+                style="color:white;margin: 2px 5px 0px 3px;font-size:25px;"
+              />
+            </a>
           </div>
           <datepicker
+            v-if="view != 'week'"
             @selected="onChangeDate"
             class="group_calender"
             v-model="date"
           />
           <!-- <i class="fas fa-caret-down"></i> -->
-          <!-- <div class="card_head" id="card1">
-            <td style="min-width: 200px;"><p>Monday, 1 November 2021</p></td>
-          </div> -->
+          <div v-if="view == 'week'" class="weekSelector" id="weekCard">
+            <i
+              class="bi bi-chevron-left"
+              style="color:#43da9f;cursor:pointer"
+            ></i>
+            <p style="margin: 0px 5px 0px 5px">1st Sep - 7th Sep</p>
+            <i
+              class="bi bi-chevron-right"
+              style="color:#43da9f;cursor:pointer;"
+            ></i>
+          </div>
           <template v-if="view == 'week'">
             <div class="weekday" @click="addToWeekday(1)">
               <span class="dayname">Mon</span>
@@ -108,28 +124,39 @@
                                 7WEAqkkuKspnVAst6xt1YQCKR2NaZiOIk9ThoaPwIBWTyiQMtaZhtnmSpOSjLHNbHzickEoRcrukKSUPSHj
                                 NcwYc7vlhlAgZYJsaaOmDOgmqgbVSZAxgLf5D/qJkV+COkR3AAAAAElFTkSuQmCC"
                   />
-                  <!-- </div> -->
-                  <div>
-                    <div class="sortByBox" id="selectBox">
-                      <select
-                        class="sortSelect"
-                        id="view-selector"
-                        v-model="sortByAttributeName"
-                        @change="sortBy"
-                      >
-                        <option value="">Sort by</option>
-                        <option value="name">Name</option>
-                        <option value="designation">Designation</option>
-                      </select>
-                    </div>
+                  <div
+                    @click="sortBy"
+                    :class="
+                      sortCarers
+                        ? 'filterContainerSelected'
+                        : 'filterContainerUnSelected'
+                    "
+                  >
+                    <i class="bi bi-funnel filterIcon"></i>
                   </div>
                 </th>
-
                 <th
                   v-for="(time, timeIndex) in timeRanges"
                   :key="time + '-' + timeIndex"
                 >
-                  {{ time }}
+                  <div v-if="time == currentTimeSlot">
+                    <i
+                      style="font-size:40px;margin-top:-40px;position:absolute"
+                      class="bi bi-caret-down-fill"
+                    ></i>
+                  </div>
+
+                  <div>
+                    {{ time }}
+                  </div>
+                  <template
+                    v-for="carer in carers"
+                    :key="'slot-line-' + carer.id"
+                  >
+                    <div v-if="time == currentTimeSlot">
+                      <div class="verticalLine" />
+                    </div>
+                  </template>
                 </th>
               </tr>
             </thead>
@@ -138,8 +165,15 @@
                 v-for="(carer, carerIndex) in carers"
                 :key="carer.id + '-' + carerIndex"
                 class="tableRow"
+                @click="selectCarer(carer.id)"
               >
-                <main class="container">
+                <main
+                  class="container"
+                  :class="{
+                    'selected-carer':
+                      carer.id == selectedCarerId && view == 'week',
+                  }"
+                >
                   <div class="card">
                     <div class="img"></div>
                     <div class="content">
@@ -164,13 +198,7 @@
                   @dblclick="
                     openAppointmentPopupForNewAppointment(time, timeIndex)
                   "
-                >
-                  <div v-if="time == currentTimeSlot" class="border">
-                    <div class="border-2" />
-                    <div class="border-3" />
-                    <div class="border-4" />
-                  </div>
-                </td>
+                ></td>
               </tr>
               <tr>
                 <div

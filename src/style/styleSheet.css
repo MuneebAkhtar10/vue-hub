@@ -163,13 +163,13 @@ table th, table td .dates {
   margin-bottom: -5px;
 }
 
-.container:hover {
+.selected-carer {
   background-color: #fff;
   position: relative;
   border-radius: 0px 0px 0px 0px;
 }
 
-.container:hover::before {
+.selected-carer::before {
   content: "";
   position: absolute;
   background-color: #028fa9;
@@ -181,23 +181,23 @@ table th, table td .dates {
   margin-left: 375px;
 }
 
-.container .card:hover::before {
+.selected-carer .card::before {
   content: "";
   position: absolute;
   background-color: #028fa9;
   bottom: 70px;
   height: 50px;
-  width: 15px;
+  width: 14px;
   border-bottom-right-radius: 25px;
   box-shadow: 0 25px 0 0 #ffffff;
   margin-left: 345px;
 }
 
-.container:hover .carerName {
+.selected-carer .carerName {
   color: #50b2ed;
 }
 
-.container:hover .carerDesignation {
+.selected-carer .carerDesignation {
   color: #9792a3;
 }
 
@@ -444,15 +444,12 @@ table th, table td .dates {
 }
 
 .search {
-  height: 50px;
-  /* width: 270px;
-  margin-left: -20px; */
+  height: 56px;
   border-radius: 10px;
   border-color: white;
   border: none;
-  width: 340px;
-  margin-left: -40px;
-  /* box-shadow: silver 30px 6px 8px; */
+  width: 240px;
+  margin-left: -30px;
 }
 
 .search:focus-visible {
@@ -461,14 +458,41 @@ table th, table td .dates {
 
 .search_icon {
   position: absolute;
-  top: 12px;
-  width: 52px;
-  height: 50px;
-  left: 300px;
+  top: 11px;
+  height: 57px;
+  left: 210px;
   overflow: visible;
   padding: 11px;
   border-radius: 10px;
   background-color: rgba(67, 218, 159, 1);
+}
+
+.filterContainerSelected {
+  position: absolute;
+  top: 11px;
+  height: 57px;
+  left: 280px;
+  overflow: visible;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+  background-color: rgba(67, 218, 159, 1);
+  cursor: pointer;
+  font-size: 35px;
+  color: white;
+}
+
+.filterContainerUnSelected {
+  position: absolute;
+  top: 11px;
+  height: 57px;
+  left: 280px;
+  overflow: visible;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 35px;
+  color: #028fa9;
 }
 
 #searchId::placeholder {
@@ -487,12 +511,12 @@ table th, table td .dates {
   letter-spacing: 0.06px;
 }
 
-.calender_container {
+/* .calender_container {
   display: flex;
   padding-top: 20px;
   padding-left: 20px;
   line-height: 70px;
-}
+} */
 
 .group_calender {
   margin-left: 20px;
@@ -506,7 +530,10 @@ table th, table td .dates {
 }
 
 .calender_container {
-  /* position: absolute; */
+  display: flex;
+  padding-top: 20px;
+  padding-left: 20px;
+  line-height: 70px;
   overflow: visible;
   white-space: nowrap;
   text-align: left;
@@ -559,17 +586,55 @@ table th, table td .dates {
   line-height: 45px;
 }
 
+.timelineViewName {
+  display: flex;
+  margin-left: 30px;
+  margin-right: 20px;
+  padding: 0.6em 2em -0.4em 1.6em;
+  margin-bottom: 0.5em;
+  border-radius: 0.7em;
+  border: solid 1px #ccc;
+  width: 330px;
+  height: 70px;
+  background-color: #43da9f;
+}
+
 .card_head {
   display: flex;
   margin-left: 30px;
   margin-right: 20px;
-  /* padding: 0.6em 1em 0.6em 0.6em; */
   padding: 0.6em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
   border-radius: 0.7em;
-  /* box-shadow: silver 12px 6px 8px; */
   border: solid 1px #ccc;
   width: 330px;
+}
+
+.weekSelector {
+  display: flex;
+  margin-left: 30px;
+  margin-right: 20px;
+  padding: 0.6em 2em -0.4em 1.6em;
+  margin-bottom: 0.5em;
+  border-radius: 0.7em;
+  border: solid 1px #ccc;
+  min-width: 190px;
+  justify-content: center;
+}
+
+#card1 {
+  min-width: 230px;
+  text-align: left;
+  padding-left: 20px;
+  height: 70px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(97, 104, 115, 1);
+  letter-spacing: 0.06px;
 }
 
 p {
@@ -596,62 +661,19 @@ p {
   height: 60px;
 }
 
-.border {
+.verticalLine {
   position: absolute;
   z-index: 1;
-  height: 15px;
-  background-color: #041669;
-  width: 4px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-}
-
-.border:before {
-  content: ".";
-  visibility: hidden;
-}
-
-.border-2 {
-  position: absolute;
-  z-index: 1;
-  height: 15px;
-  background-color: #041669;
-  width: 2px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-}
-
-.border-2:before {
-  content: ".";
-  visibility: hidden;
-}
-
-.border-3 {
-  position: absolute;
-  z-index: 1;
-  height: 15px;
-  background-color: #041669;
-  width: 2px;
-  margin-top: 23px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-}
-
-.border-3:before {
-  content: ".";
-  visibility: hidden;
-}
-
-.border-4 {
-  position: absolute;
-  z-index: 1;
-  height: 15px;
-  background-color: #041669;
-  width: 2px;
-  margin-top: 40px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-}
-
-.border-4:before {
-  content: ".";
-  visibility: hidden;
+  height: 100%;
+  border-style: dashed;
+  margin-left: 18px;
+  border-width: 2px;
+  margin-top: -19px;
+  line-height: 100px;
+  background: linear-gradient(to right, orange 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: right;
+  background-size: 5px 15px;
+  background-repeat: repeat-y;
 }
 
 .appointmentTimeline {
@@ -770,4 +792,13 @@ select#view-selector2 {
 .dayname {
   justify-content: center;
   padding-left: 10px;
+}
+
+.calendarIcon {
+  background: url("../images/icons/Calendar_bc.png");
+  height: 2.5rem;
+  width: 2.5rem;
+  display: block;
+  background-size: contain;
+  margin: 15px 0px 0px 15px;
 }

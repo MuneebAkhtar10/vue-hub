@@ -234,22 +234,6 @@ export default {
           carerId: "lorem10",
         },
       ],
-      appointments: [],
-      weekday: [],
-      timeRanges: [],
-      appointmentForPopup: {},
-      date: "",
-      view: "today",
-      carerSearchString: "",
-      slotStartTime: "",
-      slotEndTime: "",
-      sortByAttributeName: "",
-      appointmentFixed: true,
-      firstInitializationOfDate: true,
-      showAppointmentPopup: false,
-      isResizing: false,
-      existingAppointment: false,
-      sortAsc: true,
       currentWeek: [
         new Date("Oct 25 2021"),
         new Date("Oct 26 2021"),
@@ -259,6 +243,24 @@ export default {
         new Date("Oct 30 2021"),
         new Date("Oct 31 2021"),
       ],
+      viewsList: ["today", "week", "month"],
+      viewsIndex: 0,
+      appointments: [],
+      weekday: [],
+      timeRanges: [],
+      appointmentForPopup: {},
+      date: "",
+      view: "today",
+      carerSearchString: "",
+      slotStartTime: "",
+      slotEndTime: "",
+      selectedCarerId: "",
+      appointmentFixed: true,
+      firstInitializationOfDate: true,
+      showAppointmentPopup: false,
+      isResizing: false,
+      existingAppointment: false,
+      sortCarers: false,
     };
   },
   watch: {
@@ -302,6 +304,7 @@ export default {
     _this.createTimeInterval();
     _this.date = new Date("Oct 29 2021");
     // _this.date.setHours(0, 0, 0);
+    _this.view = _this.viewsList[_this.viewsIndex];
     _this.carers = _.cloneDeep(_this.allCarers);
     _this.filterAppointments();
   },
@@ -313,7 +316,6 @@ export default {
       let items = [];
       for (var hour = 0; hour < 24; hour++) {
         items.push([hour, 0]);
-        // items.push([hour, 30]);
       }
 
       var date = new Date();
@@ -348,37 +350,6 @@ export default {
         var colSpan = duration[0] + duration[1] / 60;
         _this.jQueryForArea(apt.cell, apt.id, colSpan);
       });
-    },
-    dragStart: function(event, apIndex, crIndex) {
-      this.draggedAppointmentIndex = apIndex;
-      this.draggedAppointmentCarerIndex = crIndex;
-      // console.log("Drag started");
-    },
-    dragEnd: function() {
-      // console.log("Drag ended");
-    },
-    dragOver: function(e) {
-      e.preventDefault();
-    },
-    dragEnter: function() {
-      // console.log("DragEnter");
-    },
-    dragLeave: function() {
-      // console.log("DragLeave");
-    },
-    drop: function(e) {
-      console.log("Drop");
-      var _this = this;
-      const dragableAppointment = document.querySelector(
-        "#dragged-appointment-" +
-          _this.draggedAppointmentIndex +
-          "-" +
-          _this.draggedAppointmentCarerIndex
-      );
-      e.target.append(dragableAppointment);
-    },
-    newDragOver: function(e, carerIndex) {
-      console.log(" New dragOver", e, carerIndex);
     },
     jQueryForArea: function(cellNumber, aptId, colSpan) {
       var _this = this;
@@ -434,7 +405,6 @@ export default {
             reposition(jQuerycurrentCell);
           }
         }
-        // console.log("Dragging in selected cell", e);
       }
 
       function reposition(jQuerycell) {
@@ -447,7 +417,6 @@ export default {
           jQueryselected.css("top", jQuerycell.position().top);
           jQueryselected.css("left", jQuerycell.position().left);
         }
-        // console.log("New cell", jQuerycell);
       }
     },
     resizingOnMouseDown: function(e, aptId) {
@@ -470,12 +439,8 @@ export default {
 
       function mousemove(e) {
         const rect = el.getBoundingClientRect();
-        // console.log("rect.width", rect.width);
-        // console.log("el.style.width", el.style.width);
 
         if (currentResizer.classList.contains("se")) {
-          el.style.width = rect.width - (prevX - e.clientX) + "px";
-        } else if (currentResizer.classList.contains("ne")) {
           el.style.width = rect.width - (prevX - e.clientX) + "px";
         }
         prevX = e.clientX;
@@ -486,7 +451,6 @@ export default {
         window.removeEventListener("mouseup", mouseup);
         _this.isResizing = false;
         if (prevX > e.clientX) {
-          console.log("increase", el.style.width);
           var minsToAdd = parseInt(
             (parseFloat(el.style.width) - oldWidth) / pxPerMin
           );
@@ -504,7 +468,6 @@ export default {
           );
         }
         if (prevX < e.clientX) {
-          console.log("decrease", el.style.width);
           var minsToAdd =
             parseInt(oldWidth - parseFloat(el.style.width)) / pxPerMin;
           var time = _this.appointments[index].endTime;
@@ -570,6 +533,10 @@ export default {
           );
         } else {
           var aptIndex = _.findIndex(_this.appointments, { id: event.id });
+          var aptIndexInAllApts = _.findIndex(_this.allAppointments, {
+            id: event.id,
+          });
+          _this.allAppointments[aptIndexInAllApts] = event;
           _this.appointments.splice(aptIndex, 1);
         }
       } else {
@@ -699,32 +666,63 @@ export default {
     },
     sortBy: function() {
       var _this = this;
+      _this.sortCarers = !_this.sortCarers;
       _this.appointments = [];
       var carerAppointmentMap = {};
-      _this.carers = _.sortBy(_this.carers, [_this.sortByAttributeName]);
-      _.each(_this.allAppointments, (apt) => {
-        if (
-          apt.carer?.id &&
-          apt.date?.toDateString() === _this.date.toDateString()
-        ) {
-          if (carerAppointmentMap[apt.carer.id]) {
-            carerAppointmentMap[apt.carer.id].push(apt);
-          } else {
-            carerAppointmentMap[apt.carer.id] = [];
-            carerAppointmentMap[apt.carer.id].push(apt);
+      if (_this.sortCarers) {
+        _this.carers = _.sortBy(_this.carers, ["name", "designation"]);
+        _.each(_this.allAppointments, (apt) => {
+          if (
+            apt.carer?.id &&
+            apt.date?.toDateString() === _this.date.toDateString()
+          ) {
+            if (carerAppointmentMap[apt.carer.id]) {
+              carerAppointmentMap[apt.carer.id].push(apt);
+            } else {
+              carerAppointmentMap[apt.carer.id] = [];
+              carerAppointmentMap[apt.carer.id].push(apt);
+            }
           }
-        }
-      });
-      _.each(_this.carers, (carer) => {
-        if (carerAppointmentMap[carer.id]) {
-          _this.appointments = _this.appointments.concat(
-            carerAppointmentMap[carer.id]
-          );
-        }
-      });
-      _this.$nextTick(() => {
-        _this.dataShaper();
-      });
+        });
+        _.each(_this.carers, (carer) => {
+          if (carerAppointmentMap[carer.id]) {
+            _this.appointments = _this.appointments.concat(
+              carerAppointmentMap[carer.id]
+            );
+          }
+        });
+        _this.$nextTick(() => {
+          _this.dataShaper();
+        });
+      } else {
+        _this.carers = _.cloneDeep(_this.allCarers);
+        _this.filterAppointments();
+        _this.$nextTick(() => {
+          _this.dataShaper();
+        });
+      }
+    },
+    timelineViewChange: function() {
+      var _this = this;
+      _this.selectedCarerId = _this.carers[0].id;
+    },
+    selectCarer: function(carerId) {
+      var _this = this;
+      _this.selectedCarerId = carerId;
+    },
+    viewChange: function(type) {
+      var _this = this;
+      if (type == "up") {
+        _this.viewsIndex =
+          _this.viewsIndex < 2 ? _this.viewsIndex + 1 : _this.viewsIndex;
+        _this.view = _this.viewsList[_this.viewsIndex];
+        _this.timelineViewChange();
+      } else if (type == "down") {
+        _this.viewsIndex =
+          _this.viewsIndex > 0 ? _this.viewsIndex - 1 : _this.viewsIndex;
+        _this.view = _this.viewsList[_this.viewsIndex];
+        _this.timelineViewChange();
+      }
     },
   },
 };
