@@ -285,6 +285,15 @@
               </div>
             </div>
           </template>
+          <!-- <div
+            v-for="carer in carers"
+            :key="carer.id"
+            :id="'timeline-length-' + carer.id"
+          >
+            <div class="carer_timeLine">
+              <hr class="appointmentTimeline" />
+            </div>
+          </div> -->
         </div>
       </div>
     </div>

@@ -244,15 +244,19 @@ export default {
         "#b8c740",
         "#936b11",
       ],
-      // currentWeek: [
-      //   new Date("Oct 25 2021"),
-      //   new Date("Oct 26 2021"),
-      //   new Date("Oct 27 2021"),
-      //   new Date("Oct 28 2021"),
-      //   new Date("Oct 29 2021"),
-      //   new Date("Oct 30 2021"),
-      //   new Date("Oct 31 2021"),
-      // ],
+      carerTimeSlots: {
+        lorem: { startTime: "02:00", endTime: "07:00" },
+        lorem1: { startTime: "05:00", endTime: "12:00" },
+        lorem2: { startTime: "04:00", endTime: "08:00" },
+        lorem3: { startTime: "06:05", endTime: "10:45" },
+        lorem4: { startTime: "07:10", endTime: "12:00" },
+        lorem5: { startTime: "01:15", endTime: "08:15" },
+        lorem6: { startTime: "00:00", endTime: "04:00" },
+        lorem7: { startTime: "14:54", endTime: "22:00" },
+        lorem8: { startTime: "15:00", endTime: "19:20" },
+        lorem9: { startTime: "18:00", endTime: "23:00" },
+        lorem10: { startTime: "11:00", endTime: "22:30" },
+      },
       viewsList: ["today", "week", "month"],
       viewsIndex: 0,
       appointments: [],
@@ -368,6 +372,15 @@ export default {
         var colSpan = duration[0] + duration[1] / 60;
         _this.jQueryForArea(apt.cell, apt.id, colSpan);
       });
+      // _.each(_this.carers, (carer, carerIndex) => {
+      //   var startTime = _this.carerTimeSlots[carer.id].startTime;
+      //   var timeCell = startTime.split(":");
+      //   var endTime = _this.carerTimeSlots[carer.id].endTime;
+      //   var duration = _this.calculateDuration(startTime, endTime);
+      //   var cell = carerIndex * 24 + parseInt(timeCell[0]);
+      //   var colSpan = duration[0] + duration[1] / 60;
+      //   _this.jQueryForCarerSlots(cell, carer.id, colSpan);
+      // });
     },
     jQueryForArea: function(cellNumber, aptId, colSpan) {
       var _this = this;
@@ -795,6 +808,22 @@ export default {
       );
       this.firstWeekday = startOfWeek(nextweek, { weekStartsOn: 1 });
       this.lastWeekday = endOfWeek(nextweek, { weekStartsOn: 1 });
+    },
+    jQueryForCarerSlots: function(cellNumber, carerId, colSpan) {
+      var _this = this;
+      var isDragging = false;
+      var jQueryselected = jQuery("#timeline-length-" + carerId);
+
+      var jQuerycells = jQuery("table").find(".data-cell");
+      if (!colSpan) {
+        colSpan = 1;
+      }
+      var jQuerycurrentCell = jQuery(jQuerycells[cellNumber]);
+      var cellWidth = jQuerycurrentCell.outerWidth();
+      jQueryselected.css("width", cellWidth * colSpan);
+      // jQueryselected.css("position", "absolute");
+      // jQueryselected.css("border", "2px solid #e3165b");
+      // jQueryselected.css("border-radius", "5px");
     },
   },
 };
