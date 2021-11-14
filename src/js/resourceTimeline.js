@@ -6,6 +6,7 @@ import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import sidebar from "../components/sidebar";
 import "../scss/pages/_dashboard.scss";
+import { startOfWeek, endOfWeek } from "date-fns";
 
 export default {
   name: "resource-timeline",
@@ -234,15 +235,24 @@ export default {
           carerId: "lorem10",
         },
       ],
-      currentWeek: [
-        new Date("Oct 25 2021"),
-        new Date("Oct 26 2021"),
-        new Date("Oct 27 2021"),
-        new Date("Oct 28 2021"),
-        new Date("Oct 29 2021"),
-        new Date("Oct 30 2021"),
-        new Date("Oct 31 2021"),
+      dayColors: [
+        "#5973a1",
+        "#931d95",
+        "#b70d4b",
+        "#40c1c7",
+        "#40c744",
+        "#b8c740",
+        "#936b11",
       ],
+      // currentWeek: [
+      //   new Date("Oct 25 2021"),
+      //   new Date("Oct 26 2021"),
+      //   new Date("Oct 27 2021"),
+      //   new Date("Oct 28 2021"),
+      //   new Date("Oct 29 2021"),
+      //   new Date("Oct 30 2021"),
+      //   new Date("Oct 31 2021"),
+      // ],
       viewsList: ["today", "week", "month"],
       viewsIndex: 0,
       appointments: [],
@@ -255,6 +265,8 @@ export default {
       slotStartTime: "",
       slotEndTime: "",
       selectedCarerId: "",
+      firstWeekday: "",
+      lastWeekday: "",
       appointmentFixed: true,
       firstInitializationOfDate: true,
       showAppointmentPopup: false,
@@ -292,6 +304,11 @@ export default {
         minute: "2-digit",
       });
     },
+    dayExists: function() {
+      return function(dayNumber) {
+        return this.weekday.indexOf(dayNumber) > -1;
+      };
+    },
   },
   components: {
     "appointment-popup": APPOINTMENT_POPUP,
@@ -310,6 +327,7 @@ export default {
   },
   mounted() {
     this.dataShaper();
+    this.getCurrentWeekDayRange();
   },
   methods: {
     createTimeInterval: function() {
@@ -652,18 +670,21 @@ export default {
     },
     addToWeekday: function(day) {
       var _this = this;
-      if (_this.weekday.indexOf(day) === -1) {
+      var dayIndex = _this.weekday.indexOf(day);
+      if (dayIndex === -1) {
         _this.weekday.push(day);
+      } else {
+        _this.weekday.splice(dayIndex, 1);
       }
-      _this.filterAppointmentsBySelectedWeekdays();
+      // _this.filterAppointmentsBySelectedWeekdays();
     },
-    filterAppointmentsBySelectedWeekdays: function() {
-      var _this = this;
-      var weekdaysString = _.map(_this.currentWeek, (day) => {
-        return day.toDateString();
-      });
-      console.log(weekdaysString);
-    },
+    // filterAppointmentsBySelectedWeekdays: function() {
+    //   var _this = this;
+    //   var weekdaysString = _.map(_this.currentWeek, (day) => {
+    //     return day.toDateString();
+    //   });
+    //   console.log(weekdaysString);
+    // },
     sortBy: function() {
       var _this = this;
       _this.sortCarers = !_this.sortCarers;
@@ -723,6 +744,57 @@ export default {
         _this.view = _this.viewsList[_this.viewsIndex];
         _this.timelineViewChange();
       }
+    },
+    getCurrentWeekDayRange: function() {
+      var curr = new Date(); // get current date
+      this.firstWeekday = startOfWeek(curr, { weekStartsOn: 1 });
+      this.lastWeekday = endOfWeek(curr, { weekStartsOn: 1 });
+    },
+    dateFormatter: function(date) {
+      // date = new Date(date);
+      if (typeof date == "number") {
+        date = new Date(date);
+      }
+      var shortMonth = date.toLocaleString("en-us", { month: "short" });
+      const english_ordinal_rules = new Intl.PluralRules("en", {
+        type: "ordinal",
+      });
+      const suffixes = {
+        one: "st",
+        two: "nd",
+        few: "rd",
+        other: "th",
+      };
+      var dayOfMonth = date.getDate();
+      const suffix = suffixes[english_ordinal_rules.select(dayOfMonth)];
+      return dayOfMonth + suffix + " " + shortMonth;
+    },
+    getPreviousWeekDayRange: function() {
+      var date;
+      if (typeof this.firstWeekday == "number") {
+        date = new Date(this.firstWeekday);
+      } else {
+        date = this.firstWeekday;
+      }
+      var dummy = date.getDay();
+      dummy = dummy + 6;
+      this.firstWeekday = date.setDate(date.getDate() - dummy);
+      this.lastWeekday = date.setDate(date.getDate() + 6);
+    },
+    getNextWeekDayRange: function() {
+      var date;
+      if (typeof this.firstWeekday == "number") {
+        date = new Date(this.firstWeekday);
+      } else {
+        date = this.firstWeekday;
+      }
+      var nextweek = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 7
+      );
+      this.firstWeekday = startOfWeek(nextweek, { weekStartsOn: 1 });
+      this.lastWeekday = endOfWeek(nextweek, { weekStartsOn: 1 });
     },
   },
 };

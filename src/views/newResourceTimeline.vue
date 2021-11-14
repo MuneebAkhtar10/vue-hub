@@ -38,34 +38,95 @@
             <i
               class="bi bi-chevron-left"
               style="color:#43da9f;cursor:pointer"
+              @click="getPreviousWeekDayRange"
             ></i>
-            <p style="margin: 0px 5px 0px 5px">1st Sep - 7th Sep</p>
+            <p style="margin: 0px 5px 0px 5px">
+              {{ dateFormatter(firstWeekday) }} -
+              {{ dateFormatter(lastWeekday) }}
+            </p>
             <i
               class="bi bi-chevron-right"
               style="color:#43da9f;cursor:pointer;"
+              @click="getNextWeekDayRange"
             ></i>
           </div>
           <template v-if="view == 'week'">
-            <div class="weekday" @click="addToWeekday(1)">
-              <span class="dayname">Mon</span>
+            <div
+              class="weekday"
+              @click="addToWeekday(1)"
+              :style="{ background: dayExists(1) ? dayColors[0] : '' }"
+            >
+              <span
+                class="dayname"
+                :style="{ color: dayExists(1) ? 'white' : '' }"
+                >Mon</span
+              >
             </div>
-            <div class="weekday" @click="addToWeekday(2)">
-              <span class="dayname">Tue</span>
+            <div
+              class="weekday"
+              @click="addToWeekday(2)"
+              :style="{ background: dayExists(2) ? dayColors[1] : '' }"
+            >
+              <span
+                class="dayname"
+                :style="{ color: dayExists(2) ? 'white' : '' }"
+                >Tue</span
+              >
             </div>
-            <div class="weekday" @click="addToWeekday(3)">
-              <span class="dayname">Wed</span>
+            <div
+              class="weekday"
+              @click="addToWeekday(3)"
+              :style="{ background: dayExists(3) ? dayColors[2] : '' }"
+            >
+              <span
+                class="dayname"
+                :style="{ color: dayExists(3) ? 'white' : '' }"
+                >Wed</span
+              >
             </div>
-            <div class="weekday" @click="addToWeekday(4)">
-              <span class="dayname">Thur</span>
+            <div
+              class="weekday"
+              @click="addToWeekday(4)"
+              :style="{ background: dayExists(4) ? dayColors[3] : '' }"
+            >
+              <span
+                class="dayname"
+                :style="{ color: dayExists(4) ? 'white' : '' }"
+                >Thur</span
+              >
             </div>
-            <div class="weekday" @click="addToWeekday(5)">
-              <span class="dayname">Fri</span>
+            <div
+              class="weekday"
+              @click="addToWeekday(5)"
+              :style="{ background: dayExists(5) ? dayColors[4] : '' }"
+            >
+              <span
+                class="dayname"
+                :style="{ color: dayExists(5) ? 'white' : '' }"
+                >Fri</span
+              >
             </div>
-            <div class="weekday" @click="addToWeekday(6)">
-              <span class="dayname">Sat</span>
+            <div
+              class="weekday"
+              @click="addToWeekday(6)"
+              :style="{ background: dayExists(6) ? dayColors[5] : '' }"
+            >
+              <span
+                class="dayname"
+                :style="{ color: dayExists(6) ? 'white' : '' }"
+                >Sat</span
+              >
             </div>
-            <div class="weekday" @click="addToWeekday(0)">
-              <span class="dayname">Sun</span>
+            <div
+              class="weekday"
+              @click="addToWeekday(0)"
+              :style="{ background: dayExists(0) ? dayColors[6] : '' }"
+            >
+              <span
+                class="dayname"
+                :style="{ color: dayExists(0) ? 'white' : '' }"
+                >Sun</span
+              >
             </div>
           </template>
           <div class="card_head" id="card2">
