@@ -1,5 +1,5 @@
 .mainContainer {
-  margin-top: 5%;
+  margin-top: 3%;
   max-width: 100%;
   overflow-x: scroll;
   position: relative;
@@ -444,13 +444,24 @@ table th, table td .dates {
 }
 
 .search {
-  height: 56px;
+  height: 52px;
   border-radius: 10px;
   border-color: white;
   border: none;
   width: 240px;
   margin-left: -30px;
 }
+input.search{
+  white-space: nowrap;
+  text-align: left;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgba(32,79,113,1);
+  letter-spacing: 0.06px;
+}
+
 
 .search:focus-visible {
   border-color: white !important;
@@ -458,11 +469,11 @@ table th, table td .dates {
 
 .search_icon {
   position: absolute;
-  top: 11px;
-  height: 57px;
+  top: 12px;
+  height: 52px;
   left: 210px;
   overflow: visible;
-  padding: 11px;
+  padding: 13px;
   border-radius: 10px;
   background-color: rgba(67, 218, 159, 1);
 }
@@ -483,8 +494,8 @@ table th, table td .dates {
 
 .filterContainerUnSelected {
   position: absolute;
-  top: 11px;
-  height: 57px;
+  top: 13px;
+  height: 52px;
   left: 280px;
   overflow: visible;
   padding: 5px 10px 5px 10px;
@@ -520,19 +531,24 @@ table th, table td .dates {
 
 .group_calender {
   margin-left: 20px;
-  background-color: rgba(2, 143, 169, 1);
+  background-color:white;
   padding: 20px;
   max-width: 200px;
-  color: white;
-  border-radius: 10px;
-  height: 70px;
-  border-color: white;
+  color: rgba(97, 104, 115, 1);
+  height: 60px;
+  display: flex;
+  margin-left: 30px;
+  margin-right: 20px;
+  padding: 0.6em 2em -0.4em 1.6em;
+  margin-bottom: 0.5em;
+  border-radius: 0.7em;
+  border: solid 1px #ccc;
+  width: 330px;
 }
 
 .calender_container {
   display: flex;
   padding-top: 20px;
-  padding-left: 20px;
   line-height: 70px;
   overflow: visible;
   white-space: nowrap;
@@ -558,7 +574,8 @@ table th, table td .dates {
   min-width: 230px;
   text-align: left;
   padding-left: 20px;
-  height: 70px;
+  line-height: 60px;
+  height: 60px;
   white-space: nowrap;
   text-align: left;
   font-family: ITC Avant Garde Gothic Std;
@@ -582,7 +599,7 @@ table th, table td .dates {
 }
 
 .carerContent {
-  margin-left: 30px;
+  margin-left: 35px;
   line-height: 45px;
 }
 
@@ -592,10 +609,12 @@ table th, table td .dates {
   margin-right: 20px;
   padding: 0.6em 2em -0.4em 1.6em;
   margin-bottom: 0.5em;
+  line-height: 61px;
   border-radius: 0.7em;
   border: solid 1px #ccc;
   width: 330px;
-  height: 70px;
+  /* min-width: 210px; */
+  height: 60px;
   background-color: #43da9f;
 }
 
@@ -612,6 +631,8 @@ table th, table td .dates {
 
 .weekSelector {
   display: flex;
+  height: 60px;
+  line-height: 60px;
   margin-left: 30px;
   margin-right: 20px;
   padding: 0.6em 2em -0.4em 1.6em;
@@ -663,12 +684,12 @@ p {
 
 .verticalLine {
   position: absolute;
-  z-index: 1;
+  /* z-index: 1; */
   height: 100%;
   border-style: dashed;
-  margin-left: 18px;
-  border-width: 2px;
-  margin-top: -19px;
+  margin-left: 14px;
+  border-width: 1px;
+  margin-top: -29px;
   line-height: 100px;
   background: linear-gradient(to right, orange 50%, rgba(255, 255, 255, 0) 0%);
   background-position: right;
@@ -702,19 +723,36 @@ body .inner-content {
 }
 
 .moreBtn {
+  height: 60px;
   background-color: #43da9f;
   width: 7%;
+  border: none;
   color: white;
-  border-radius: 15px;
-  font-size: larger;
+  border-radius: 10px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  padding: 10px;
 }
 
 .settingBtn {
   background-color: #028fa9;
+  margin-left: 10px;
+  height: 60px;
   width: 7%;
+  border: none;
   color: white;
-  border-radius: 15px;
-  font-size: 35px;
+  border-radius: 10px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  padding: 10px;
 }
 
 .threeVerticalDots {
@@ -796,9 +834,56 @@ select#view-selector2 {
 
 .calendarIcon {
   background: url("../images/icons/Calendar_bc.png");
-  height: 2.5rem;
-  width: 2.5rem;
   display: block;
   background-size: contain;
-  margin: 15px 0px 0px 15px;
+  margin: 14px 0px 0px 15px;
+  width: 29px;
+  height: 29px;
+  overflow: visible;
+}
+
+.carerName {
+  white-space: nowrap;
+  text-align: left;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgba(255,255,255,1);
+  letter-spacing: 0.06px;
+}
+.carerDesignation {
+  white-space: nowrap;
+  text-align: left;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  color: rgba(255,255,255,1);
+  letter-spacing: 0.06px;
+}
+.calender_text {
+  margin-left:12px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(255,255,255,1);
+  letter-spacing: 0.06px;
+}
+.bi-chevron-down {
+  width: 15.788px;
+  height: 9px;
+  color:white;
+  margin: 2px 5px 0px 38px;
+  font-size:20px;
+}
+.bi-chevron-up {
+  width: 15.788px;
+  height: 9px;
+  color:white;
+  margin: 2px 5px 0px 3px;
+  font-size:20px;
 }

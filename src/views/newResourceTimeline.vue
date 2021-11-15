@@ -9,22 +9,14 @@
         <div class="calender_container">
           <div class="timelineViewName">
             <i class="calendarIcon" />
-            <p
-              style="color:white;margin-left:12px;font-size:20px;font-weight:bolder"
-            >
+            <p class="calender_text">
               {{ view.charAt(0).toUpperCase() + view.slice(1) }}
             </p>
             <a href="javascript:void(0);" @click="viewChange('up')">
-              <i
-                class="bi bi-chevron-down"
-                style="color:white;margin: 2px 0px 0px 15px;font-size:25px;"
-              />
+              <i class="bi bi-chevron-down" />
             </a>
             <a href="javascript:void(0);" @click="viewChange('down')">
-              <i
-                class="bi bi-chevron-up"
-                style="color:white;margin: 2px 5px 0px 3px;font-size:25px;"
-              />
+              <i class="bi bi-chevron-up" />
             </a>
           </div>
           <datepicker
@@ -202,7 +194,7 @@
                 >
                   <div v-if="time == currentTimeSlot">
                     <i
-                      style="font-size:40px;margin-top:-40px;position:absolute"
+                      style="font-size:30px;color:darkgray;margin-top:-40px;position:absolute"
                       class="bi bi-caret-down-fill"
                     ></i>
                   </div>
@@ -239,7 +231,7 @@
                     <div class="img"></div>
                     <div class="content">
                       <div className="carerContent" style="min-width: 200px;">
-                        <div class="carerName" style="font-size:18px">
+                        <div class="carerName">
                           <p>{{ carer.name }}</p>
                         </div>
                         <div class="carerDesignation" style="margin-top:-9%">
