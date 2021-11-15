@@ -214,6 +214,7 @@
               </tr>
             </thead>
             <tbody>
+              <!-- <template v-if="view == 'today'"> -->
               <tr
                 v-for="(carer, carerIndex) in carers"
                 :key="carer.id + '-' + carerIndex"
@@ -241,18 +242,31 @@
                     </div>
                   </div>
                 </main>
-                <div class="carer_timeLine">
+                <div class="carer_timeLine" v-if="view == 'today'">
                   <hr class="appointmentTimeline" />
                 </div>
-                <td
-                  class="data-cell"
-                  v-for="(time, timeIndex) in timeRanges"
-                  :key="time + '-' + timeIndex"
-                  @dblclick="
-                    openAppointmentPopupForNewAppointment(time, timeIndex)
-                  "
-                ></td>
+                <template v-if="view == 'today'">
+                  <td
+                    class="data-cell"
+                    v-for="(time, timeIndex) in timeRanges"
+                    :key="time + '-' + timeIndex"
+                    @dblclick="
+                      openAppointmentPopupForNewAppointment(time, timeIndex)
+                    "
+                  ></td>
+                </template>
+                <template v-else-if="view == 'week' && carerIndex < 7">
+                  <td
+                    class="data-cell"
+                    v-for="(time, timeIndex) in timeRanges"
+                    :key="time + '-' + timeIndex"
+                    @dblclick="
+                      openAppointmentPopupForNewAppointment(time, timeIndex)
+                    "
+                  ></td>
+                </template>
               </tr>
+
               <tr>
                 <div
                   style="background-color: #028fa9;width: 365px;height: 60px;margin-top: -5px;"

@@ -287,7 +287,7 @@ export default {
           if (_this.date && _this.date != "") {
             _this.filterAppointments();
             _this.$nextTick(() => {
-              _this.dataShaper();
+              _this.dataShaperForTodayView();
             });
           }
         } else {
@@ -330,7 +330,7 @@ export default {
     _this.filterAppointments();
   },
   mounted() {
-    this.dataShaper();
+    this.dataShaperForTodayView();
     this.getCurrentWeekDayRange();
   },
   methods: {
@@ -362,7 +362,7 @@ export default {
       timeString = h + timeString.substr(2, 3) + ampm;
       return timeString;
     },
-    dataShaper: function() {
+    dataShaperForTodayView: function() {
       var _this = this;
       _.each(_this.appointments, (apt, aptIndex) => {
         var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
@@ -622,7 +622,7 @@ export default {
     onChangeDate: function() {
       var _this = this;
       _this.filterAppointments();
-      _this.dataShaper();
+      _this.dataShaperForTodayView();
     },
     filterAppointments: function() {
       var _this = this;
@@ -670,14 +670,14 @@ export default {
             }
           });
           _this.$nextTick(() => {
-            _this.dataShaper();
+            _this.dataShaperForTodayView();
           });
         }
       } else if (_this.carerSearchString.length == 0) {
         _this.carers = _.cloneDeep(_this.allCarers);
         _this.filterAppointments();
         _this.$nextTick(() => {
-          _this.dataShaper();
+          _this.dataShaperForTodayView();
         });
       }
     },
@@ -726,23 +726,52 @@ export default {
           }
         });
         _this.$nextTick(() => {
-          _this.dataShaper();
+          _this.dataShaperForTodayView();
         });
       } else {
         _this.carers = _.cloneDeep(_this.allCarers);
         _this.filterAppointments();
         _this.$nextTick(() => {
-          _this.dataShaper();
+          _this.dataShaperForTodayView();
         });
       }
     },
     timelineViewChange: function() {
       var _this = this;
-      _this.selectedCarerId = _this.carers[0].id;
+      if (_this.view === "week") {
+        _this.selectedCarerId = _this.carers[0].id;
+        _this.appointments = _.filter(_this.allAppointments, function(o) {
+          return (
+            o.date.getTime() <= _this.lastWeekday.getTime() &&
+            o.date.getTime() >= _this.firstWeekday.getTime() &&
+            // o.date.toDateString() === _this.date.toDateString() &&
+            o.carer.id === _this.selectedCarerId
+          );
+        });
+        // _this.appointments = _.filter(_this.appointments, (apt) => {
+        //   return apt.carer.id === _this.selectedCarerId;
+        // });
+        _this.$nextTick(() => {
+          _this.dataShaperForTodayView();
+        });
+      }
     },
     selectCarer: function(carerId) {
       var _this = this;
-      _this.selectedCarerId = carerId;
+      if (_this.view === "week") {
+        _this.selectedCarerId = carerId;
+        _this.appointments = _.filter(_this.allAppointments, function(o) {
+          return (
+            o.date.getTime() <= _this.lastWeekday.getTime() &&
+            o.date.getTime() >= _this.firstWeekday.getTime() &&
+            // o.date.toDateString() === _this.date.toDateString() &&
+            o.carer.id === _this.selectedCarerId
+          );
+        });
+        _this.$nextTick(() => {
+          _this.dataShaperForTodayView();
+        });
+      }
     },
     viewChange: function(type) {
       var _this = this;
@@ -783,31 +812,59 @@ export default {
       return dayOfMonth + suffix + " " + shortMonth;
     },
     getPreviousWeekDayRange: function() {
+      var _this = this;
       var date;
-      if (typeof this.firstWeekday == "number") {
-        date = new Date(this.firstWeekday);
+      if (typeof _this.firstWeekday == "number") {
+        date = new Date(_this.firstWeekday);
       } else {
-        date = this.firstWeekday;
+        date = _this.firstWeekday;
       }
       var dummy = date.getDay();
       dummy = dummy + 6;
-      this.firstWeekday = date.setDate(date.getDate() - dummy);
-      this.lastWeekday = date.setDate(date.getDate() + 6);
+      _this.firstWeekday = date.setDate(date.getDate() - dummy);
+      _this.lastWeekday = date.setDate(date.getDate() + 6);
+
+      _this.firstWeekday = new Date(_this.firstWeekday);
+      _this.lastWeekday = new Date(_this.lastWeekday);
+
+      _this.appointments = _.filter(_this.allAppointments, function(o) {
+        return (
+          o.date.getTime() <= _this.lastWeekday.getTime() &&
+          o.date.getTime() >= _this.firstWeekday.getTime() &&
+          // o.date.toDateString() === _this.date.toDateString() &&
+          o.carer.id === _this.selectedCarerId
+        );
+      });
+      _this.$nextTick(() => {
+        _this.dataShaperForTodayView();
+      });
     },
     getNextWeekDayRange: function() {
+      var _this = this;
       var date;
-      if (typeof this.firstWeekday == "number") {
-        date = new Date(this.firstWeekday);
+      if (typeof _this.firstWeekday == "number") {
+        date = new Date(_this.firstWeekday);
       } else {
-        date = this.firstWeekday;
+        date = _this.firstWeekday;
       }
       var nextweek = new Date(
         date.getFullYear(),
         date.getMonth(),
         date.getDate() + 7
       );
-      this.firstWeekday = startOfWeek(nextweek, { weekStartsOn: 1 });
-      this.lastWeekday = endOfWeek(nextweek, { weekStartsOn: 1 });
+      _this.firstWeekday = startOfWeek(nextweek, { weekStartsOn: 1 });
+      _this.lastWeekday = endOfWeek(nextweek, { weekStartsOn: 1 });
+      _this.appointments = _.filter(_this.allAppointments, function(o) {
+        return (
+          o.date.getTime() <= _this.lastWeekday.getTime() &&
+          o.date.getTime() >= _this.firstWeekday.getTime() &&
+          // o.date.toDateString() === _this.date.toDateString() &&
+          o.carer.id === _this.selectedCarerId
+        );
+      });
+      _this.$nextTick(() => {
+        _this.dataShaperForTodayView();
+      });
     },
     jQueryForCarerSlots: function(cellNumber, carerId, colSpan) {
       var _this = this;
@@ -824,6 +881,18 @@ export default {
       // jQueryselected.css("position", "absolute");
       // jQueryselected.css("border", "2px solid #e3165b");
       // jQueryselected.css("border-radius", "5px");
+    },
+    dataShaperForWeekView: function() {
+      var _this = this;
+      _.each(_this.appointments, (apt, aptIndex) => {
+        //Instead of carer index we use day number to get the timeslot
+        var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
+        var timeCell = apt.startTime.split(":");
+        apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
+        var duration = _this.calculateDuration(apt.startTime, apt.endTime);
+        var colSpan = duration[0] + duration[1] / 60;
+        _this.jQueryForArea(apt.cell, apt.id, colSpan);
+      });
     },
   },
 };
