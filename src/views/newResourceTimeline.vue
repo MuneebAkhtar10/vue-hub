@@ -140,7 +140,7 @@
         </div>
 
         <div class="table-area mainContainer">
-          <appointment-popup
+          <!-- <appointment-popup
             v-if="showAppointmentPopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
@@ -150,7 +150,11 @@
             @close="onCloseAppointmentPopup"
             @delete="deleteAppointment"
             @save="saveAppointment"
-          ></appointment-popup>
+          ></appointment-popup> -->
+          <allocate-new-client-popup
+            v-if="showAppointmentPopup"
+          ></allocate-new-client-popup>
+
           <table class="dates">
             <thead>
               <tr>

@@ -2,6 +2,8 @@ import _ from "lodash";
 import jQuery from "jquery";
 import { ref } from "vue";
 import APPOINTMENT_POPUP from "../views/appointmentPopup.vue";
+import ALLOCATE_NEW_CLIENT_POPUP from "../views/allocateNewClientPopup.vue";
+
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import sidebar from "../components/sidebar";
@@ -199,40 +201,275 @@ export default {
           endTime: "03:00",
           cell: -1,
         },
-      ],
-      carerAvailability: [
         {
-          carerId: "lorem",
+          id: "dolore10",
+          carer: { id: "lorem" },
+          patient: { id: "patient", name: "Sit Amet" },
+          date: new Date("Oct 30 2021"),
+          startTime: "06:00",
+          endTime: "07:00",
+          cell: -1,
         },
         {
-          carerId: "lorem1",
+          id: "dolore11",
+          carer: { id: "lorem1" },
+          patient: { id: "patient1", name: "Sit Amet1" },
+          date: new Date("Oct 29 2021"),
+          startTime: "05:00",
+          endTime: "06:00",
+          cell: -1,
         },
         {
-          carerId: "lorem2",
+          id: "dolore12",
+          carer: { id: "lorem2" },
+          patient: { id: "patient2", name: "Sit Amet2" },
+          date: new Date("Oct 29 2021"),
+          startTime: "08:00",
+          endTime: "09:00",
+          cell: -1,
         },
         {
-          carerId: "lorem3",
+          id: "dolore13",
+          carer: { id: "lorem3" },
+          patient: { id: "patient3", name: "Sit Amet3" },
+          date: new Date("Oct 29 2021"),
+          startTime: "07:00",
+          endTime: "07:35",
+          cell: -1,
         },
         {
-          carerId: "lorem4",
+          id: "dolore14",
+          carer: { id: "lorem4" },
+          patient: { id: "patient4", name: "Sit Amet4" },
+          date: new Date("Oct 29 2021"),
+          startTime: "00:00",
+          endTime: "02:00",
+          cell: -1,
         },
         {
-          carerId: "lorem5",
+          id: "dolore15",
+          carer: { id: "lorem5" },
+          patient: { id: "patient5", name: "Sit Amet5" },
+          date: new Date("Oct 29 2021"),
+          startTime: "10:00",
+          endTime: "11:30",
+          cell: -1,
         },
         {
-          carerId: "lorem6",
+          id: "dolore16",
+          carer: { id: "lorem6" },
+          patient: { id: "patient6", name: "Muneeb" },
+          date: new Date("Oct 29 2021"),
+          startTime: "01:00",
+          endTime: "03:00",
+          cell: -1,
         },
         {
-          carerId: "lorem7",
+          id: "dolore17",
+          carer: { id: "lorem7" },
+          patient: { id: "patient7", name: "Sit Amet7" },
+          date: new Date("Oct 29 2021"),
+          startTime: "05:00",
+          endTime: "06:10",
+          cell: -1,
         },
         {
-          carerId: "lorem8",
+          id: "dolore18",
+          carer: { id: "lorem8" },
+          patient: { id: "patient8", name: "Sit Amet8" },
+          date: new Date("Oct 29 2021"),
+          startTime: "02:00",
+          endTime: "04:00",
+          cell: -1,
         },
         {
-          carerId: "lorem9",
+          id: "dolore19",
+          carer: { id: "lorem9" },
+          patient: { id: "patient9", name: "Sit Amet9" },
+          date: new Date("Oct 29 2021"),
+          startTime: "05:00",
+          endTime: "06:00",
+          cell: -1,
         },
         {
-          carerId: "lorem10",
+          id: "dolore20",
+          carer: { id: "lorem" },
+          patient: { id: "patient", name: "Sit Amet" },
+          date: new Date("Oct 25 2021"),
+          startTime: "06:00",
+          endTime: "07:00",
+          cell: -1,
+        },
+        {
+          id: "dolore21",
+          carer: { id: "lorem1" },
+          patient: { id: "patient1", name: "Sit Amet1" },
+          date: new Date("Oct 25 2021"),
+          startTime: "05:00",
+          endTime: "06:00",
+          cell: -1,
+        },
+        {
+          id: "dolore22",
+          carer: { id: "lorem2" },
+          patient: { id: "patient2", name: "Sit Amet2" },
+          date: new Date("Oct 25 2021"),
+          startTime: "08:00",
+          endTime: "09:00",
+          cell: -1,
+        },
+        {
+          id: "dolore23",
+          carer: { id: "lorem3" },
+          patient: { id: "patient3", name: "Sit Amet3" },
+          date: new Date("Oct 25 2021"),
+          startTime: "07:00",
+          endTime: "07:35",
+          cell: -1,
+        },
+        {
+          id: "dolore24",
+          carer: { id: "lorem4" },
+          patient: { id: "patient4", name: "Sit Amet4" },
+          date: new Date("Oct 25 2021"),
+          startTime: "00:00",
+          endTime: "02:00",
+          cell: -1,
+        },
+        {
+          id: "dolore25",
+          carer: { id: "lorem5" },
+          patient: { id: "patient5", name: "Sit Amet5" },
+          date: new Date("Oct 25 2021"),
+          startTime: "10:00",
+          endTime: "11:30",
+          cell: -1,
+        },
+        {
+          id: "dolore26",
+          carer: { id: "lorem6" },
+          patient: { id: "patient6", name: "Muneeb" },
+          date: new Date("Oct 25 2021"),
+          startTime: "01:00",
+          endTime: "03:00",
+          cell: -1,
+        },
+        {
+          id: "dolore27",
+          carer: { id: "lorem7" },
+          patient: { id: "patient7", name: "Sit Amet7" },
+          date: new Date("Oct 25 2021"),
+          startTime: "05:00",
+          endTime: "06:10",
+          cell: -1,
+        },
+        {
+          id: "dolore28",
+          carer: { id: "lorem8" },
+          patient: { id: "patient8", name: "Sit Amet8" },
+          date: new Date("Oct 25 2021"),
+          startTime: "02:00",
+          endTime: "04:00",
+          cell: -1,
+        },
+        {
+          id: "dolore29",
+          carer: { id: "lorem9" },
+          patient: { id: "patient9", name: "Sit Amet9" },
+          date: new Date("Oct 25 2021"),
+          startTime: "05:00",
+          endTime: "06:00",
+          cell: -1,
+        },
+        {
+          id: "dolore30",
+          carer: { id: "lorem" },
+          patient: { id: "patient", name: "Sit Amet" },
+          date: new Date("Oct 26 2021"),
+          startTime: "02:00",
+          endTime: "04:00",
+          cell: -1,
+        },
+        {
+          id: "dolore31",
+          carer: { id: "lorem1" },
+          patient: { id: "patient1", name: "Sit Amet1" },
+          date: new Date("Oct 26 2021"),
+          startTime: "04:00",
+          endTime: "05:00",
+          cell: -1,
+        },
+        {
+          id: "dolore32",
+          carer: { id: "lorem2" },
+          patient: { id: "patient2", name: "Sit Amet2" },
+          date: new Date("Oct 26 2021"),
+          startTime: "00:00",
+          endTime: "01:00",
+          cell: -1,
+        },
+        {
+          id: "dolore33",
+          carer: { id: "lorem3" },
+          patient: { id: "patient3", name: "Sit Amet3" },
+          date: new Date("Oct 26 2021"),
+          startTime: "08:00",
+          endTime: "09:35",
+          cell: -1,
+        },
+        {
+          id: "dolore34",
+          carer: { id: "lorem4" },
+          patient: { id: "patient4", name: "Sit Amet4" },
+          date: new Date("Oct 26 2021"),
+          startTime: "00:00",
+          endTime: "02:00",
+          cell: -1,
+        },
+        {
+          id: "dolore35",
+          carer: { id: "lorem5" },
+          patient: { id: "patient5", name: "Sit Amet5" },
+          date: new Date("Oct 26 2021"),
+          startTime: "10:00",
+          endTime: "11:30",
+          cell: -1,
+        },
+        {
+          id: "dolore36",
+          carer: { id: "lorem6" },
+          patient: { id: "patient6", name: "Muneeb" },
+          date: new Date("Oct 26 2021"),
+          startTime: "01:00",
+          endTime: "03:00",
+          cell: -1,
+        },
+        {
+          id: "dolore37",
+          carer: { id: "lorem7" },
+          patient: { id: "patient7", name: "Sit Amet7" },
+          date: new Date("Oct 26 2021"),
+          startTime: "05:00",
+          endTime: "06:10",
+          cell: -1,
+        },
+        {
+          id: "dolore38",
+          carer: { id: "lorem8" },
+          patient: { id: "patient8", name: "Sit Amet8" },
+          date: new Date("Oct 26 2021"),
+          startTime: "02:00",
+          endTime: "04:00",
+          cell: -1,
+        },
+        {
+          id: "dolore39",
+          carer: { id: "lorem9" },
+          patient: { id: "patient9", name: "Sit Amet9" },
+          date: new Date("Oct 26 2021"),
+          startTime: "05:00",
+          endTime: "06:00",
+          cell: -1,
         },
       ],
       dayColors: [
@@ -316,6 +553,7 @@ export default {
   },
   components: {
     "appointment-popup": APPOINTMENT_POPUP,
+    "allocate-new-client-popup": ALLOCATE_NEW_CLIENT_POPUP,
     Datepicker,
     navbar: navbar,
     sidebar: sidebar,
@@ -632,10 +870,10 @@ export default {
     },
     openAppointmentPopupForNewAppointment: function(time, timeIndex) {
       var _this = this;
-      _this.existingAppointment = false;
-      _this.slotStartTime = time;
-      _this.slotEndTime =
-        timeIndex != 23 ? _this.timeRanges[timeIndex + 1] : "23:45";
+      // _this.existingAppointment = false;
+      // _this.slotStartTime = time;
+      // _this.slotEndTime =
+      //   timeIndex != 23 ? _this.timeRanges[timeIndex + 1] : "23:45";
       _this.showAppointmentPopup = true;
     },
     filterAppointmentsByCarer: function() {
@@ -691,13 +929,6 @@ export default {
       }
       // _this.filterAppointmentsBySelectedWeekdays();
     },
-    // filterAppointmentsBySelectedWeekdays: function() {
-    //   var _this = this;
-    //   var weekdaysString = _.map(_this.currentWeek, (day) => {
-    //     return day.toDateString();
-    //   });
-    //   console.log(weekdaysString);
-    // },
     sortBy: function() {
       var _this = this;
       _this.sortCarers = !_this.sortCarers;
@@ -752,7 +983,7 @@ export default {
         //   return apt.carer.id === _this.selectedCarerId;
         // });
         _this.$nextTick(() => {
-          _this.dataShaperForTodayView();
+          _this.dataShaperForWeekView();
         });
       }
     },
@@ -769,7 +1000,7 @@ export default {
           );
         });
         _this.$nextTick(() => {
-          _this.dataShaperForTodayView();
+          _this.dataShaperForWeekView();
         });
       }
     },
@@ -836,7 +1067,7 @@ export default {
         );
       });
       _this.$nextTick(() => {
-        _this.dataShaperForTodayView();
+        _this.dataShaperForWeekView();
       });
     },
     getNextWeekDayRange: function() {
@@ -863,7 +1094,7 @@ export default {
         );
       });
       _this.$nextTick(() => {
-        _this.dataShaperForTodayView();
+        _this.dataShaperForWeekView();
       });
     },
     jQueryForCarerSlots: function(cellNumber, carerId, colSpan) {
@@ -886,9 +1117,11 @@ export default {
       var _this = this;
       _.each(_this.appointments, (apt, aptIndex) => {
         //Instead of carer index we use day number to get the timeslot
-        var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
+        var dayIndex = apt.date.getDay();
+        dayIndex = dayIndex == 0 ? 6 : dayIndex - 1;
+        // var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
         var timeCell = apt.startTime.split(":");
-        apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
+        apt.cell = dayIndex * 24 + parseInt(timeCell[0]);
         var duration = _this.calculateDuration(apt.startTime, apt.endTime);
         var colSpan = duration[0] + duration[1] / 60;
         _this.jQueryForArea(apt.cell, apt.id, colSpan);
