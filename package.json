@@ -30,11 +30,13 @@
     "v-calendar": "^3.0.0-alpha.3",
     "vue": "^3.0.0",
     "vue-apexcharts": "^1.6.1",
+    "vue-js-popover": "^1.2.1",
     "vue-router": "^4.0.0-0",
     "vue-signature": "^2.5.1",
     "vue-slider-component": "^4.0.0-beta.4",
     "vue3-apexcharts": "^1.2.1",
     "vue3-datepicker": "^0.2.5",
+    "vue3-popper": "^1.4.0",
     "vue3-timepicker": "^1.0.0-beta.2"
   },
   "devDependencies": {

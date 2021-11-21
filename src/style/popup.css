@@ -1,0 +1,233 @@
+.popoverContainer {
+  background-color: rgb(255, 255, 255);
+  width: 290%;
+  border-radius: 20px;
+  height: auto;
+  margin-left: 50px;
+  box-shadow: 10px 10px 5px gray;
+}
+
+.firstHeader {
+  /* background-color: rgb(252, 247, 247); */
+  margin: 0px 10px 0px 10px;
+}
+
+.firstHeaderHeading {
+  font-size: 20px;
+  color: gray;
+  font-weight: bolder;
+}
+
+.popoverCross {
+  color: gray;
+  text-align: end;
+  font-size: 30px;
+  font-weight: bolder;
+  /* background-color: rgb(248, 247, 247);
+  border-radius: 50%; */
+}
+
+.SecondHeader {
+  background-color: rgb(248, 247, 247);
+  color: gray;
+}
+
+.personIcon {
+  font-size: 25px;
+  color: rgb(17, 219, 152);
+}
+
+.search_box {
+  margin-top: 8px;
+}
+
+.search {
+  height: 50px;
+  border-radius: 5px;
+  border-color: rgb(238, 235, 235);
+  width: 80%;
+  margin-left: -30px;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: gray;
+}
+
+.search:focus {
+  outline: none;
+}
+
+.search_icon {
+  color: white;
+  height: 50px;
+  margin-top: 12px;
+  overflow: visible;
+  padding: 10px 15px 10px 12px;
+  border-radius: 5px;
+  background-color: rgba(67, 218, 159, 1);
+  margin-left: -45px;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+.timeRow {
+  background-color: aqua;
+}
+
+.clientTableContainer {
+  height: 150px;
+  overflow-y: scroll;
+  width: 98%;
+  margin-left: 15px;
+}
+
+.clientDetailsTable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: gray;
+}
+
+.clientDetailsTableHeader {
+  font-size: 20px;
+}
+
+.downChivronStyle {
+  color: rgba(67, 218, 159, 1);
+  margin-left: 8px;
+}
+
+.upChivronStyle {
+  color: rgba(67, 218, 159, 1);
+  margin-left: 2px;
+}
+
+.clientTableHeader,
+.clientTableData {
+  text-align: center;
+  padding: 16px;
+  border-right: 1px solid rgb(221, 221, 221);
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.clientTableRow:nth-child(even) {
+  --stripe: #cfd8dc;
+  --bg: #e1e1e1;
+
+  background: linear-gradient(135deg, var(--bg) 25%, transparent 25%) -50px 0,
+    linear-gradient(225deg, var(--bg) 25%, transparent 25%) -50px 0,
+    linear-gradient(315deg, var(--bg) 25%, transparent 25%),
+    linear-gradient(45deg, var(--bg) 25%, transparent 25%);
+  background-size: 100px 100px;
+  background-color: var(--stripe);
+}
+
+.availabilityIcon {
+  color: rgba(67, 218, 159, 1);
+  font-size: 25px;
+}
+
+.assignClientBtn {
+  font-size: 18px;
+  font-weight: bolder;
+  padding: 5px 50px 5px 50px;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: rgb(177, 174, 174);
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: rgba(67, 218, 159, 1);
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+/* table th,
+table td {
+  padding: 10px 50px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  color: rgba(32, 79, 113, 1);
+  letter-spacing: 0.06px;
+  border-bottom-style: dotted;
+  border-block-color: #eee;
+  background-color: white;
+}
+
+table th,
+table td .dates {
+  color: rgba(97, 104, 115, 1);
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.table-area-selected {
+  position: absolute;
+  background: rgba(242, 235, 251, 1);
+  border: 0.3px dashed silver;
+  cursor: pointer;
+  border-radius: 7px;
+  border-color: gray;
+  padding: 5px;
+  height: 50px !important;
+  text-align: center;
+  line-height: 50px;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  background-color: #ea7a57;
+  letter-spacing: 0.06px;
+  font-weight: bolder;
+  margin-top: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tableRowStyle {
+  height: 50px;
+}
+
+.verticalLine {
+  position: absolute;
+  height: 100%;
+  border-style: dashed;
+  margin-left: 14px;
+  border-width: 1px;
+  margin-top: -29px;
+  line-height: 100px;
+  background: linear-gradient(to right, orange 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: right;
+  background-size: 5px 15px;
+  background-repeat: repeat-y;
+}
+.data-cell {
+  border-bottom: 2pt dotted lightgray;
+  background-color: white;
+}
+.patientsName {
+  margin-top: -4px;
+} */
