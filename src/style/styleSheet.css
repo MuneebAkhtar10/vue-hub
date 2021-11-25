@@ -6,7 +6,8 @@
   margin-left: -3px;
 }
 
-table th, table td {
+.mainContainer>table th,
+table td {
   padding: 10px 50px;
   /* color: black; */
   white-space: nowrap;
@@ -32,7 +33,7 @@ table th, table td {
   /* margin-left: -2px; */
 }
 
-table th, table td .dates {
+.mainContainer>.dates {
   color: rgba(97, 104, 115, 1);
   white-space: nowrap;
   text-align: left;
@@ -236,40 +237,6 @@ table th, table td .dates {
   border: solid 1px black;
 }
 
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
-}
-
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.modal-container {
-  margin: 0px auto;
-  padding: 10px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
-  font-family: Helvetica, Arial, sans-serif;
-  max-height: 929px;
-  z-index: 1005;
-  width: 500px;
-  left: 0px;
-  top: 0px;
-  min-height: 300px;
-  position: relative;
-}
-
 .modal-header h3 {
   margin-top: 0;
   color: #42b983;
@@ -310,7 +277,8 @@ table th, table td .dates {
   opacity: 0;
 }
 
-.modal-enter .modal-container, .modal-leave-active .modal-container {
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
@@ -320,6 +288,7 @@ table th, table td .dates {
     min-width: auto;
     display: block;
   }
+
   .card {
     width: 100%;
   }
@@ -451,17 +420,17 @@ table th, table td .dates {
   width: 240px;
   margin-left: -30px;
 }
-input.search{
+
+input.search {
   white-space: nowrap;
   text-align: left;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
-  color: rgba(32,79,113,1);
+  color: rgba(32, 79, 113, 1);
   letter-spacing: 0.06px;
 }
-
 
 .search:focus-visible {
   border-color: white !important;
@@ -531,7 +500,7 @@ input.search{
 
 .group_calender {
   margin-left: 20px;
-  background-color:white;
+  background-color: white;
   padding: 20px;
   max-width: 200px;
   color: rgba(97, 104, 115, 1);
@@ -570,7 +539,9 @@ input.search{
   /* overflow: visible; */
 }
 
-#card1, #card2, #card3 {
+#card1,
+#card2,
+#card3 {
   min-width: 230px;
   text-align: left;
   padding-left: 20px;
@@ -718,7 +689,7 @@ p {
   margin-top: -4px;
 }
 
-body .inner-content {
+.inner-content {
   background-color: white !important;
 }
 
@@ -849,9 +820,10 @@ select#view-selector2 {
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
-  color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
   letter-spacing: 0.06px;
 }
+
 .carerDesignation {
   white-space: nowrap;
   text-align: left;
@@ -859,31 +831,34 @@ select#view-selector2 {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
   letter-spacing: 0.06px;
 }
+
 .calender_text {
-  margin-left:12px;
+  margin-left: 12px;
   white-space: nowrap;
   text-align: left;
   font-family: ITC Avant Garde Gothic Std;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
   letter-spacing: 0.06px;
 }
-.bi-chevron-down {
+
+.downIcon {
   width: 15.788px;
   height: 9px;
-  color:white;
+  color: white;
   margin: 2px 5px 0px 38px;
-  font-size:20px;
+  font-size: 20px;
 }
-.bi-chevron-up {
+
+.upIcon {
   width: 15.788px;
   height: 9px;
-  color:white;
+  color: white;
   margin: 2px 5px 0px 3px;
-  font-size:20px;
+  font-size: 20px;
 }

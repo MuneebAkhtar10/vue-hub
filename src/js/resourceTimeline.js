@@ -2,8 +2,7 @@ import _ from "lodash";
 import jQuery from "jquery";
 import { ref } from "vue";
 import APPOINTMENT_POPUP from "../views/appointmentPopup.vue";
-import ALLOCATE_NEW_CLIENT_POPUP from "../views/allocateNewClientPopup.vue";
-
+import POPUP_APPOINTMENT from "../views/popupAppointment.vue";
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import sidebar from "../components/sidebar";
@@ -500,6 +499,7 @@ export default {
       weekday: [],
       timeRanges: [],
       appointmentForPopup: {},
+      slotCarer: {},
       date: "",
       view: "today",
       carerSearchString: "",
@@ -553,7 +553,7 @@ export default {
   },
   components: {
     "appointment-popup": APPOINTMENT_POPUP,
-    "allocate-new-client-popup": ALLOCATE_NEW_CLIENT_POPUP,
+    "popup-appointment": POPUP_APPOINTMENT,
     Datepicker,
     navbar: navbar,
     sidebar: sidebar,
@@ -868,12 +868,17 @@ export default {
         return o.date.toDateString() === _this.date.toDateString();
       });
     },
-    openAppointmentPopupForNewAppointment: function(time, timeIndex) {
+    openAppointmentPopupForNewAppointment: function(
+      time,
+      timeIndex,
+      carerIndex
+    ) {
       var _this = this;
-      // _this.existingAppointment = false;
-      // _this.slotStartTime = time;
-      // _this.slotEndTime =
-      //   timeIndex != 23 ? _this.timeRanges[timeIndex + 1] : "23:45";
+      _this.existingAppointment = false;
+      _this.slotStartTime = time;
+      _this.slotEndTime =
+        timeIndex != 23 ? _this.timeRanges[timeIndex + 1] : "23:45";
+      _this.slotCarer = _this.carers[carerIndex];
       _this.showAppointmentPopup = true;
     },
     filterAppointmentsByCarer: function() {

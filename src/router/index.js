@@ -71,11 +71,6 @@ const routes = [
     name: "newResourceTimeline",
     component: () => import("../views/newResourceTimeline.vue"),
   },
-  {
-    path: "/popup",
-    name: "allocateNewClientPopup",
-    component: () => import("../views/allocateNewClientPopup.vue"),
-  },
 ];
 
 const router = createRouter({

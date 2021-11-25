@@ -1,14 +1,18 @@
 .popoverContainer {
-  background-color: rgb(255, 255, 255);
-  width: 290%;
-  border-radius: 20px;
+  position: fixed;
+  z-index: 5;
+  top: 20;
+  width: 60%;
   height: auto;
-  margin-left: 50px;
+  background-color: rgb(255, 255, 255);
+  display: table;
+  transition: opacity 0.3s ease;
   box-shadow: 10px 10px 5px gray;
+  border-radius: 20px;
+  opacity: 20;
 }
 
 .firstHeader {
-  /* background-color: rgb(252, 247, 247); */
   margin: 0px 10px 0px 10px;
 }
 
@@ -30,6 +34,8 @@
 .SecondHeader {
   background-color: rgb(248, 247, 247);
   color: gray;
+  width: 99%;
+  margin-left: 10px;
 }
 
 .personIcon {
@@ -37,11 +43,11 @@
   color: rgb(17, 219, 152);
 }
 
-.search_box {
+.search_input {
   margin-top: 8px;
 }
 
-.search {
+.searchInput {
   height: 50px;
   border-radius: 5px;
   border-color: rgb(238, 235, 235);
@@ -53,16 +59,16 @@
   color: gray;
 }
 
-.search:focus {
+.searchInput:focus {
   outline: none;
 }
 
-.search_icon {
+.search_input_icon {
   color: white;
   height: 50px;
   margin-top: 12px;
   overflow: visible;
-  padding: 10px 15px 10px 12px;
+  padding: 11px 15px 10px 12px;
   border-radius: 5px;
   background-color: rgba(67, 218, 159, 1);
   margin-left: -45px;
@@ -72,7 +78,7 @@
 }
 
 .timeRow {
-  background-color: aqua;
+  width: 100%;
 }
 
 .clientTableContainer {
@@ -154,15 +160,46 @@
   background-color: #ddd;
 }
 
-/* table th,
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  margin: 0px auto;
+  padding: 10px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+  max-height: 929px;
+  z-index: 1005;
+  width: 500px;
+  left: 0px;
+  top: 0px;
+  min-height: 300px;
+  position: relative;
+}
+
+.mainContainer2 {
+  margin-top: 3%;
+  max-width: 98%;
+  overflow-x: scroll;
+  position: relative;
+  scroll-padding: -10px;
+  height: 150px;
+}
+
+.mainContainer2>table th,
 table td {
-  padding: 10px 50px;
+  padding: 10px 10px;
   white-space: nowrap;
   text-align: left;
   font-family: Poppins;
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
+  font-size: 12px;
   color: rgba(32, 79, 113, 1);
   letter-spacing: 0.06px;
   border-bottom-style: dotted;
@@ -170,8 +207,7 @@ table td {
   background-color: white;
 }
 
-table th,
-table td .dates {
+.mainContainer2>.dates {
   color: rgba(97, 104, 115, 1);
   white-space: nowrap;
   text-align: left;
@@ -181,38 +217,9 @@ table td .dates {
   font-size: 14px;
 }
 
-.table-area-selected {
-  position: absolute;
-  background: rgba(242, 235, 251, 1);
-  border: 0.3px dashed silver;
-  cursor: pointer;
-  border-radius: 7px;
-  border-color: gray;
-  padding: 5px;
-  height: 50px !important;
-  text-align: center;
-  line-height: 50px;
-  font-family: ITC Avant Garde Gothic Std;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  color: rgb(255, 255, 255);
-  background-color: #ea7a57;
-  letter-spacing: 0.06px;
-  font-weight: bolder;
-  margin-top: 10px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.tableRowStyle {
-  height: 50px;
-}
-
 .verticalLine {
   position: absolute;
+  /* z-index: 1; */
   height: 100%;
   border-style: dashed;
   margin-left: 14px;
@@ -224,10 +231,3 @@ table td .dates {
   background-size: 5px 15px;
   background-repeat: repeat-y;
 }
-.data-cell {
-  border-bottom: 2pt dotted lightgray;
-  background-color: white;
-}
-.patientsName {
-  margin-top: -4px;
-} */

@@ -13,10 +13,10 @@
               {{ view.charAt(0).toUpperCase() + view.slice(1) }}
             </p>
             <a href="javascript:void(0);" @click="viewChange('up')">
-              <i class="bi bi-chevron-down" />
+              <i class="bi bi-chevron-down downIcon" />
             </a>
             <a href="javascript:void(0);" @click="viewChange('down')">
-              <i class="bi bi-chevron-up" />
+              <i class="bi bi-chevron-up upIcon" />
             </a>
           </div>
           <datepicker
@@ -140,7 +140,7 @@
         </div>
 
         <div class="table-area mainContainer">
-          <appointment-popup
+          <!-- <appointment-popup
             v-if="showAppointmentPopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
@@ -150,7 +150,20 @@
             @close="onCloseAppointmentPopup"
             @delete="deleteAppointment"
             @save="saveAppointment"
-          ></appointment-popup>
+          ></appointment-popup> -->
+
+          <popup-appointment
+            v-if="showAppointmentPopup"
+            :appointment="appointmentForPopup"
+            :is-existing="existingAppointment"
+            :slot-start-time="slotStartTime"
+            :slot-end-time="slotEndTime"
+            :slot-date="date"
+            :slot-carer="slotCarer"
+            @close="onCloseAppointmentPopup"
+            @delete="deleteAppointment"
+            @save="saveAppointment"
+          ></popup-appointment>
           <!-- <allocate-new-client-popup
             v-if="showAppointmentPopup"
           ></allocate-new-client-popup> -->
@@ -158,7 +171,7 @@
           <table class="dates">
             <thead>
               <tr>
-                <th class="search_box">
+                <th class="search_box table_header">
                   <input
                     class="search"
                     id="searchId"
@@ -195,6 +208,7 @@
                 <th
                   v-for="(time, timeIndex) in timeRanges"
                   :key="time + '-' + timeIndex"
+                  class=" table_header"
                 >
                   <div v-if="time == currentTimeSlot">
                     <i
@@ -255,7 +269,11 @@
                     v-for="(time, timeIndex) in timeRanges"
                     :key="time + '-' + timeIndex"
                     @dblclick="
-                      openAppointmentPopupForNewAppointment(time, timeIndex)
+                      openAppointmentPopupForNewAppointment(
+                        time,
+                        timeIndex,
+                        carerIndex
+                      )
                     "
                   ></td>
                 </template>
@@ -265,7 +283,11 @@
                     v-for="(time, timeIndex) in timeRanges"
                     :key="time + '-' + timeIndex"
                     @dblclick="
-                      openAppointmentPopupForNewAppointment(time, timeIndex)
+                      openAppointmentPopupForNewAppointment(
+                        time,
+                        timeIndex,
+                        carerIndex
+                      )
                     "
                   ></td>
                 </template>
