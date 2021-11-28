@@ -231,3 +231,7 @@ table td {
   background-size: 5px 15px;
   background-repeat: repeat-y;
 }
+
+.tableRow {
+  height: 60px;
+}

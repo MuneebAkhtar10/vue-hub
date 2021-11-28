@@ -47,23 +47,29 @@
                   <div>
                     {{ time }}
                   </div>
-                  <!-- <template
-                    v-for="carer in carers"
-                    :key="'slot-line-' + carer.id"
-                  > -->
                   <div v-if="time == currentTimeSlot">
                     <div class="verticalLine" />
                   </div>
-                  <!-- </template> -->
                 </th>
               </tr>
             </thead>
+            <tbody>
+              <tr classs="tableRow">
+                <td
+                  class="data-cell-popup"
+                  v-for="(time, timeIndex) in timeRanges"
+                  :key="time + '-' + timeIndex"
+                ></td>
+              </tr>
+            </tbody>
           </table>
-          <!-- <div class="carer_timeLine" v-if="view == 'today'">
-            <hr class="appointmentTimeline" />
-          </div> -->
-          <div class="table-area-selected">
-            <p class="patientsName">Sit Amet 2</p>
+          <div
+            v-for="apt in carerAppointments"
+            :id="'popup-apt-' + apt.id"
+            :key="'popup-apt-' + apt.id"
+            class="table-area-selected"
+          >
+            <p class="patientsName">{{ apt.patient.name }}</p>
           </div>
         </div>
       </div>
@@ -164,6 +170,7 @@ import VueTimepicker from "vue3-timepicker/src/VueTimepicker.vue";
 import Datepicker from "vue3-datepicker";
 import { ref } from "vue";
 import _ from "lodash";
+import jQuery from "jquery";
 
 export default {
   name: "popup-appointment",
@@ -215,6 +222,7 @@ export default {
       patient: {},
       selectedClient: {},
       timeRanges: [],
+      carerAppointments: [],
     };
   },
   components: {
@@ -226,6 +234,7 @@ export default {
   },
   mounted() {
     this.modelData();
+    this.filterAppointments();
   },
   emits: ["close", "delete", "save"],
   computed: {
@@ -355,6 +364,81 @@ export default {
       var _this = this;
       _this.selectedClient = client;
       _this.$forceUpdate();
+    },
+    dataShaperForTodayView: function() {
+      var _this = this;
+      _.each(_this.appointments, (apt, aptIndex) => {
+        var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
+        var timeCell = apt.startTime.split(":");
+        apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
+        var duration = _this.calculateDuration(apt.startTime, apt.endTime);
+        var colSpan = duration[0] + duration[1] / 60;
+        _this.jQueryForArea(apt.cell, apt.id, colSpan);
+      });
+      // _.each(_this.carers, (carer, carerIndex) => {
+      //   var startTime = _this.carerTimeSlots[carer.id].startTime;
+      //   var timeCell = startTime.split(":");
+      //   var endTime = _this.carerTimeSlots[carer.id].endTime;
+      //   var duration = _this.calculateDuration(startTime, endTime);
+      //   var cell = carerIndex * 24 + parseInt(timeCell[0]);
+      //   var colSpan = duration[0] + duration[1] / 60;
+      //   _this.jQueryForCarerSlots(cell, carer.id, colSpan);
+      // });
+    },
+    filterAppointments: function() {
+      var _this = this;
+      _this.carerAppointments = _.filter(
+        _this.$parent.allAppointments,
+        function(o) {
+          return (
+            o.date.toDateString() === _this.date.toDateString() &&
+            o.carer.id == _this.slotCarer.id
+          );
+        }
+      );
+      _this.$nextTick(() => {
+        _.each(_this.carerAppointments, (apt, aptIndex) => {
+          var timeCell = apt.startTime.split(":");
+          apt.cell = parseInt(timeCell[0]);
+          var duration = _this.calculateDuration(apt.startTime, apt.endTime);
+          var colSpan = duration[0] + duration[1] / 60;
+          _this.jQueryForArea(apt.cell, apt.id, colSpan);
+        });
+      });
+    },
+    jQueryForArea: function(cellNumber, aptId, colSpan) {
+      var jQueryselected = jQuery("#popup-apt-" + aptId);
+
+      var jQuerycells = jQuery("table").find(".data-cell-popup");
+      if (!colSpan) {
+        colSpan = 1;
+      }
+      var jQuerycurrentCell = jQuery(jQuerycells[cellNumber]);
+      var cellWidth = jQuerycurrentCell.outerWidth();
+
+      jQueryselected.css("width", cellWidth * colSpan);
+      jQueryselected.css("height", jQuerycurrentCell.outerHeight() - 2); // fiddle factor
+      jQueryselected.css("top", jQuerycurrentCell.position().top);
+      jQueryselected.css("left", jQuerycurrentCell.position().left);
+    },
+    calculateDuration: function(startTime, endTime) {
+      var ary1 = startTime;
+      ary1 = ary1.split(":");
+      var ary2 = endTime;
+      ary2 = ary2.split(":");
+      var minsdiff =
+        parseInt(ary2[0], 10) * 60 +
+        parseInt(ary2[1], 10) -
+        parseInt(ary1[0], 10) * 60 -
+        parseInt(ary1[1], 10);
+      var duration =
+        String(100 + Math.floor(minsdiff / 60)).substr(1) +
+        ":" +
+        String(100 + (minsdiff % 60)).substr(1);
+      duration = duration.split(":");
+      duration[0] = parseInt(duration[0]);
+      duration[1] = parseInt(duration[1]);
+      return duration;
     },
   },
 };
