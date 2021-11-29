@@ -769,6 +769,11 @@ export default {
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};
     },
+    deleteAppointmentConfirm: function(event) {
+      var _this = this;
+      var html = "This will delete the appointment.";
+      _this.showSweetAlert(html, _this.deleteAppointment, event);
+    },
     deleteAppointment: function(event) {
       var _this = this;
       _this.appointmentFixed = false;
@@ -779,6 +784,11 @@ export default {
       _this.slotStartTime = "";
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};
+    },
+    saveAppointmentConfirm: function(event) {
+      var _this = this;
+      var html = "This will save the appointment.";
+      _this.showSweetAlert(html, _this.saveAppointment, event);
     },
     saveAppointment: function(event) {
       var _this = this;
@@ -1022,6 +1032,26 @@ export default {
         _this.view = _this.viewsList[_this.viewsIndex];
         _this.timelineViewChange();
       }
+    },
+    showSweetAlert: function(html, successCallback, event) {
+      var _this = this;
+      _this
+        .$swal({
+          title: "<strong>Are You Sure?</strong>",
+          icon: "info",
+          html: html,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+        })
+        .then(function(result) {
+          if (result.value) {
+            successCallback(event);
+          } else if (result.dismiss == "cancel") {
+            console.log("cancel");
+          }
+        });
     },
     getCurrentWeekDayRange: function() {
       var curr = new Date(); // get current date

@@ -161,12 +161,16 @@
             :slot-date="date"
             :slot-carer="slotCarer"
             @close="onCloseAppointmentPopup"
-            @delete="deleteAppointment"
-            @save="saveAppointment"
+            @delete="deleteAppointmentConfirm"
+            @save="saveAppointmentConfirm"
           ></popup-appointment>
           <!-- <allocate-new-client-popup
             v-if="showAppointmentPopup"
           ></allocate-new-client-popup> -->
+
+          <!-- <button @click="showSweetAlert('Hello World Showing', testFunction)">
+            Hello world
+          </button> -->
 
           <table class="dates">
             <thead>

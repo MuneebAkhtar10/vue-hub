@@ -1,11 +1,11 @@
 .popoverContainer {
-  position: fixed;
+  position: relative;
   z-index: 5;
   top: 20;
   width: 60%;
   height: auto;
   background-color: rgb(255, 255, 255);
-  display: table;
+  /* display: table; */
   transition: opacity 0.3s ease;
   box-shadow: 10px 10px 5px gray;
   border-radius: 20px;
@@ -234,4 +234,9 @@ table td {
 
 .tableRow {
   height: 60px;
+}
+
+.data-cell-popup {
+  border-bottom: 2pt dotted lightgray;
+  background-color: white;
 }

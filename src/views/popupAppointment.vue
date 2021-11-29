@@ -23,7 +23,13 @@
           }}</span>
         </div>
         <div class="col-4 search_input">
-          <input class="searchInput" type="text" placeholder="Search" />
+          <input
+            v-model="searchQuery"
+            class="searchInput"
+            type="text"
+            placeholder="Search"
+            @input="filterPatients"
+          />
           <i class="bi bi-search search_input_icon"></i>
         </div>
       </div>
@@ -54,7 +60,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr classs="tableRow">
+              <tr class="tableRow">
                 <td
                   class="data-cell-popup"
                   v-for="(time, timeIndex) in timeRanges"
@@ -107,7 +113,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="(patient, patientIndex) in $parent.patients"
+              v-for="(patient, patientIndex) in filteredPatients"
               :key="patient.id + '-' + patientIndex"
               class="clientTableRow"
               @click="selectClient(patient, patientIndex)"
@@ -218,11 +224,14 @@ export default {
       endTime: "",
       carerId: "",
       duration: "",
+      searchQuery: "",
       date: ref(new Date()),
       patient: {},
       selectedClient: {},
       timeRanges: [],
       carerAppointments: [],
+      allPatients: [],
+      filteredPatients: [],
     };
   },
   components: {
@@ -230,7 +239,10 @@ export default {
     Datepicker,
   },
   created() {
-    this.createTimeInterval();
+    var _this = this;
+    _this.createTimeInterval();
+    _this.allPatients = _this.$parent.patients;
+    _this.filteredPatients = _.cloneDeep(_this.allPatients);
   },
   mounted() {
     this.modelData();
@@ -365,26 +377,6 @@ export default {
       _this.selectedClient = client;
       _this.$forceUpdate();
     },
-    dataShaperForTodayView: function() {
-      var _this = this;
-      _.each(_this.appointments, (apt, aptIndex) => {
-        var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
-        var timeCell = apt.startTime.split(":");
-        apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
-        var duration = _this.calculateDuration(apt.startTime, apt.endTime);
-        var colSpan = duration[0] + duration[1] / 60;
-        _this.jQueryForArea(apt.cell, apt.id, colSpan);
-      });
-      // _.each(_this.carers, (carer, carerIndex) => {
-      //   var startTime = _this.carerTimeSlots[carer.id].startTime;
-      //   var timeCell = startTime.split(":");
-      //   var endTime = _this.carerTimeSlots[carer.id].endTime;
-      //   var duration = _this.calculateDuration(startTime, endTime);
-      //   var cell = carerIndex * 24 + parseInt(timeCell[0]);
-      //   var colSpan = duration[0] + duration[1] / 60;
-      //   _this.jQueryForCarerSlots(cell, carer.id, colSpan);
-      // });
-    },
     filterAppointments: function() {
       var _this = this;
       _this.carerAppointments = _.filter(
@@ -439,6 +431,14 @@ export default {
       duration[0] = parseInt(duration[0]);
       duration[1] = parseInt(duration[1]);
       return duration;
+    },
+    filterPatients: function() {
+      var _this = this;
+      _this.filteredPatients = _.filter(_this.allPatients, (patient) => {
+        var patientName = patient.name.toLowerCase();
+        var searchString = _this.searchQuery.toLowerCase();
+        return patientName.includes(searchString);
+      });
     },
   },
 };
