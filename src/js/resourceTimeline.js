@@ -3,6 +3,7 @@ import jQuery from "jquery";
 import { ref } from "vue";
 import APPOINTMENT_POPUP from "../views/appointmentPopup.vue";
 import POPUP_APPOINTMENT from "../views/popupAppointment.vue";
+import ALLOCATE_CARER from "../views/allocateCarerPopup.vue";
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import sidebar from "../components/sidebar";
@@ -511,6 +512,7 @@ export default {
       appointmentFixed: true,
       firstInitializationOfDate: true,
       showAppointmentPopup: false,
+      showAllocatePopup: false,
       isResizing: false,
       existingAppointment: false,
       sortCarers: false,
@@ -554,6 +556,7 @@ export default {
   components: {
     "appointment-popup": APPOINTMENT_POPUP,
     "popup-appointment": POPUP_APPOINTMENT,
+    "allocate-carer": ALLOCATE_CARER,
     Datepicker,
     navbar: navbar,
     sidebar: sidebar,
@@ -759,12 +762,23 @@ export default {
       _this.appointmentForPopup = _.find(_this.appointments, {
         id: appointmentId,
       });
+      var carerIndex = _.findIndex(_this.carers, {
+        id: this.appointmentForPopup.carer.id,
+      });
+      _this.slotCarer = _this.carers[carerIndex];
       _this.existingAppointment = true;
-      _this.showAppointmentPopup = true;
+      _this.showAllocatePopup = true;
     },
     onCloseAppointmentPopup: function() {
       var _this = this;
       _this.showAppointmentPopup = false;
+      _this.slotStartTime = "";
+      _this.slotEndTime = "";
+      _this.appointmentForPopup = {};
+    },
+    onCloseAllocatePopup: function() {
+      var _this = this;
+      _this.showAllocatePopup = false;
       _this.slotStartTime = "";
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};
@@ -804,12 +818,14 @@ export default {
             _this.appointments[aptIndex].endTime
           );
           var colSpan = duration[0] + duration[1] / 60;
-
-          _this.jQueryForArea(
-            _this.appointments[aptIndex].cell,
-            _this.appointments[aptIndex].id,
-            colSpan
-          );
+          _this.$forceUpdate();
+          _this.$nextTick(() => {
+            _this.jQueryForArea(
+              _this.appointments[aptIndex].cell,
+              _this.appointments[aptIndex].id,
+              colSpan
+            );
+          });
         } else {
           var aptIndex = _.findIndex(_this.appointments, { id: event.id });
           var aptIndexInAllApts = _.findIndex(_this.allAppointments, {
@@ -818,6 +834,7 @@ export default {
           _this.allAppointments[aptIndexInAllApts] = event;
           _this.appointments.splice(aptIndex, 1);
         }
+        _this.showAllocatePopup = false;
       } else {
         if (this.date.toDateString() === event.date.toDateString()) {
           var carerIndex = _.findIndex(_this.carers, { id: event.carer.id });
@@ -842,8 +859,8 @@ export default {
         } else {
           _this.allAppointments.push(event);
         }
+        _this.showAppointmentPopup = false;
       }
-      _this.showAppointmentPopup = false;
       _this.slotStartTime = "";
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};

@@ -140,7 +140,7 @@
         </div>
 
         <div class="table-area mainContainer">
-          <!-- <appointment-popup
+          <popup-appointment
             v-if="showAppointmentPopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
@@ -150,27 +150,19 @@
             @close="onCloseAppointmentPopup"
             @delete="deleteAppointment"
             @save="saveAppointment"
-          ></appointment-popup> -->
+          ></popup-appointment>
 
-          <popup-appointment
-            v-if="showAppointmentPopup"
+          <allocate-carer
+            v-if="showAllocatePopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
             :slot-start-time="slotStartTime"
             :slot-end-time="slotEndTime"
             :slot-date="date"
             :slot-carer="slotCarer"
-            @close="onCloseAppointmentPopup"
-            @delete="deleteAppointmentConfirm"
+            @close="onCloseAllocatePopup"
             @save="saveAppointmentConfirm"
-          ></popup-appointment>
-          <!-- <allocate-new-client-popup
-            v-if="showAppointmentPopup"
-          ></allocate-new-client-popup> -->
-
-          <!-- <button @click="showSweetAlert('Hello World Showing', testFunction)">
-            Hello world
-          </button> -->
+          ></allocate-carer>
 
           <table class="dates">
             <thead>
