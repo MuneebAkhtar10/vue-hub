@@ -83,7 +83,7 @@
       <div class="row justify-content-center clientTableContainer mt-2">
         <table class="clientDetailsTable">
           <thead class="clientDetailsTableHeader">
-            <tr class="clientTableRow">
+            <tr>
               <th class="clientTableHeader">
                 Clients<i class="bi bi-chevron-down downChivronStyle" /><i
                   class="bi bi-chevron-up upChivronStyle"
@@ -115,7 +115,6 @@
             <tr
               v-for="(patient, patientIndex) in filteredPatients"
               :key="patient.id + '-' + patientIndex"
-              class="clientTableRow"
               @click="selectClient(patient, patientIndex)"
               :style="[
                 selectedClient && selectedClient.id == patient.id
@@ -123,13 +122,51 @@
                   : '',
               ]"
             >
-              <td class="clientTableData">{{ patient.name }}</td>
-              <td class="clientTableData">
+              <td
+                class="clientTableData"
+                :class="{
+                  clientTableRow:
+                    selectedClient && selectedClient.id == patient.id,
+                }"
+              >
+                {{ patient.name }}
+              </td>
+              <td
+                class="clientTableData"
+                :class="{
+                  clientTableRow:
+                    selectedClient && selectedClient.id == patient.id,
+                }"
+              >
                 <i class="bi bi-check-circle availabilityIcon"></i>
               </td>
-              <td class="clientTableData">0%</td>
-              <td class="clientTableData">2 hours</td>
-              <td class="clientTableData">1.2 miles</td>
+              <td
+                class="clientTableData"
+                :class="{
+                  clientTableRow:
+                    selectedClient && selectedClient.id == patient.id,
+                }"
+              >
+                0%
+              </td>
+              <td
+                class="clientTableData"
+                :class="{
+                  clientTableRow:
+                    selectedClient && selectedClient.id == patient.id,
+                }"
+              >
+                2 hours
+              </td>
+              <td
+                class="clientTableData"
+                :class="{
+                  clientTableRow:
+                    selectedClient && selectedClient.id == patient.id,
+                }"
+              >
+                1.2 miles
+              </td>
             </tr>
           </tbody>
         </table>

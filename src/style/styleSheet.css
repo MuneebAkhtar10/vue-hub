@@ -4,6 +4,7 @@
   overflow-x: scroll;
   position: relative;
   margin-left: -3px;
+  overflow-y: hidden;
 }
 
 .mainContainer>table th,
