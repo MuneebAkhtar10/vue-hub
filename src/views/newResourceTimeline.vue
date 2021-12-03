@@ -164,6 +164,11 @@
             @save="saveAppointmentConfirm"
           ></allocate-carer>
 
+          <div
+            v-if="showAllocatePopup || showAppointmentPopup"
+            class="cover"
+          ></div>
+
           <table class="dates">
             <thead>
               <tr>
