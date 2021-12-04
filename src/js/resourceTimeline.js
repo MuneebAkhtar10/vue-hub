@@ -1,7 +1,7 @@
 import _ from "lodash";
 import jQuery from "jquery";
 import { ref } from "vue";
-import APPOINTMENT_POPUP from "../views/appointmentPopup.vue";
+import moment from "moment";
 import POPUP_APPOINTMENT from "../views/popupAppointment.vue";
 import ALLOCATE_CARER from "../views/allocateCarerPopup.vue";
 import Datepicker from "vue3-datepicker";
@@ -554,7 +554,6 @@ export default {
     },
   },
   components: {
-    "appointment-popup": APPOINTMENT_POPUP,
     "popup-appointment": POPUP_APPOINTMENT,
     "allocate-carer": ALLOCATE_CARER,
     Datepicker,
@@ -641,53 +640,76 @@ export default {
       jQueryselected.css("left", jQuerycurrentCell.position().left);
 
       // drag start
-      jQueryselected.mousedown(dragStart);
+      if (_this.view == "today") {
+        jQueryselected.mousedown(dragStart);
 
-      // drag end
-      jQuery(window).mouseup(dragEnd);
+        // drag end
+        jQuery(window).mouseup(dragEnd);
 
-      // drag over cells
-      jQuerycells.mouseenter(draggingIntoNewCell);
-      jQueryselected.mousemove(draggingInSelectedCell);
+        // drag over cells
+        jQuerycells.mouseenter(draggingIntoNewCell);
+        jQueryselected.mousemove(draggingInSelectedCell);
 
-      function dragStart() {
-        isDragging = true;
-      }
-
-      function dragEnd() {
-        isDragging = false;
-      }
-
-      function draggingIntoNewCell() {
-        if (!_this.isResizing) {
-          jQuerycurrentCell = jQuery(this);
-          reposition(jQuerycurrentCell);
+        function dragStart() {
+          isDragging = true;
         }
-      }
 
-      // find if we've moved into the next column under this selection
-      function draggingInSelectedCell(e) {
-        if (isDragging && !_this.isResizing) {
-          // find relative position within selection div
-          var relativeXPosition = e.pageX - jQuery(this).offset().left;
+        function dragEnd() {
+          if (isDragging) {
+            isDragging = false;
+            var cellNumber = jQuerycurrentCell[0].__vnode.key;
+            var time = cellNumber % 24;
+            var carerIndex = (cellNumber - time) / 24;
+            var aptIndex = _.findIndex(_this.appointments, { id: aptId });
+            var apt = _this.appointments[aptIndex];
+            var duration = _this.calculateDuration(apt.startTime, apt.endTime);
+            apt.startTime = moment.utc(time * 3600 * 1000).format("HH:mm");
+            var endTimeHours = time + duration[0] + duration[1] / 60;
+            apt.endTime = moment
+              .utc(endTimeHours * 3600 * 1000)
+              .format("HH:mm");
+            apt.carer = { id: _this.carers[carerIndex].id };
+            _this.appointments[aptIndex] = apt;
+            console.log("Updated Appointment", _this.appointments[aptIndex]);
+            console.log("Reposition", jQuerycurrentCell[0].__vnode.key);
+          }
+        }
 
-          if (relativeXPosition > cellWidth) {
-            // moved into next column
-            jQuerycurrentCell = jQuerycurrentCell.next();
+        function draggingIntoNewCell() {
+          if (!_this.isResizing) {
+            jQuerycurrentCell = jQuery(this);
+            // console.log("dragging into new cell", jQuerycurrentCell);
             reposition(jQuerycurrentCell);
           }
         }
-      }
 
-      function reposition(jQuerycell) {
-        // only reposition if not the last cell in the table (otherwise can't span 2 cols)
-        if (
-          isDragging &&
-          jQuerycell.hasClass("data-cell") &&
-          !_this.isResizing
-        ) {
-          jQueryselected.css("top", jQuerycell.position().top);
-          jQueryselected.css("left", jQuerycell.position().left);
+        // find if we've moved into the next column under this selection
+        function draggingInSelectedCell(e) {
+          if (isDragging && !_this.isResizing) {
+            // find relative position within selection div
+            var relativeXPosition = e.pageX - jQuery(this).offset().left;
+
+            if (relativeXPosition > cellWidth) {
+              // moved into next column
+              jQuerycurrentCell = jQuerycurrentCell.next();
+              console.log("dragging in selected cell", jQuerycurrentCell);
+              reposition(jQuerycurrentCell);
+            }
+          }
+        }
+
+        function reposition(jQuerycell) {
+          // only reposition if not the last cell in the table (otherwise can't span 2 cols)
+          if (
+            isDragging &&
+            jQuerycell.hasClass("data-cell") &&
+            !_this.isResizing
+          ) {
+            // console.log("Reposition", jQuerycurrentCell);
+            jQueryselected.css("top", jQuerycell.position().top);
+            jQueryselected.css("left", jQuerycell.position().left);
+            // console.log("Elemnt key", jQuerycurrentCell[0].$vnode.key);
+          }
         }
       }
     },
@@ -1178,6 +1200,11 @@ export default {
         var colSpan = duration[0] + duration[1] / 60;
         _this.jQueryForArea(apt.cell, apt.id, colSpan);
       });
+    },
+    calculateKey: function(carerIndex, time) {
+      var timeCell = time.split(":");
+      var cell = carerIndex * 24 + parseInt(timeCell[0]);
+      return cell;
     },
   },
 };

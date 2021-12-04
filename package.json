@@ -25,6 +25,7 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "date-fns": "^2.25.0",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "signature_pad": "^3.0.0-beta.4",
     "v-calendar": "^3.0.0-alpha.3",

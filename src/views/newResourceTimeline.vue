@@ -268,7 +268,7 @@
                   <td
                     class="data-cell"
                     v-for="(time, timeIndex) in timeRanges"
-                    :key="time + '-' + timeIndex"
+                    :key="calculateKey(carerIndex, time)"
                     @dblclick="
                       openAppointmentPopupForNewAppointment(
                         time,
