@@ -169,6 +169,10 @@
             class="cover"
           ></div>
 
+          <div class="loaderOverlay">
+            <div class="loader"></div>
+          </div>
+
           <table class="dates">
             <thead>
               <tr>
@@ -293,14 +297,68 @@
                   ></td>
                 </template>
               </tr>
-
-              <tr>
-                <div
-                  style="background-color: #028fa9;width: 365px;height: 60px;margin-top: -5px;"
-                />
-              </tr>
             </tbody>
+
+            <div v-if="view == 'week'" class="statsContainer row">
+              <div class="leftStatsContainerSide col-2"></div>
+              <div class="rightStatsContainerSide col">
+                <div class="row pt-4">
+                  <div class="col border-end border-2">
+                    <div class="row justify-content-center statsValue">12</div>
+                    <div class="row justify-content-center">
+                      <hr class="statsTextUnderline" />
+                    </div>
+                    <div class="row justify-content-center statsText">
+                      Shifts Drop
+                    </div>
+                  </div>
+                  <div class="col border-end border-2">
+                    <div class="row justify-content-center statsValue">200</div>
+                    <div class="row justify-content-center">
+                      <hr class="statsTextUnderline" />
+                    </div>
+                    <div class="row justify-content-center statsText">
+                      Total Shifts
+                    </div>
+                  </div>
+                  <div class="col border-end border-2">
+                    <div class="row justify-content-center statsValue">50</div>
+                    <div class="row justify-content-center">
+                      <hr class="statsTextUnderline" />
+                    </div>
+                    <div class="row justify-content-center statsText">
+                      Cancelled
+                    </div>
+                  </div>
+                  <div class="col border-end border-2">
+                    <div class="row justify-content-center">
+                      <img
+                        class="statsMeter"
+                        src="../images/icons/blueMeter.png"
+                        alt="blueMeter"
+                      />
+                    </div>
+                    <div class="row justify-content-center statsText">
+                      Punctuality
+                    </div>
+                  </div>
+                  <div class="col ">
+                    <div class="row justify-content-center">
+                      <img
+                        class="statsMeter"
+                        src="../images/icons/greenMeter.png"
+                        alt="blueMeter"
+                      />
+                    </div>
+                    <div class="row justify-content-center statsText">
+                      Duration Spent
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </table>
+
           <template v-if="appointmentFixed">
             <div v-for="apt in appointments" :key="apt.id">
               <div
@@ -318,15 +376,6 @@
               </div>
             </div>
           </template>
-          <!-- <div
-            v-for="carer in carers"
-            :key="carer.id"
-            :id="'timeline-length-' + carer.id"
-          >
-            <div class="carer_timeLine">
-              <hr class="appointmentTimeline" />
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -335,3 +384,4 @@
 
 <script src="../js/resourceTimeline.js"></script>
 <style src="../style/styleSheet.css" />
+<style src="../style/stats.css" />
