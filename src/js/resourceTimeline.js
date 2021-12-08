@@ -640,76 +640,81 @@ export default {
       jQueryselected.css("left", jQuerycurrentCell.position().left);
 
       // drag start
-      if (_this.view == "today") {
-        jQueryselected.mousedown(dragStart);
+      jQueryselected.mousedown(dragStart);
 
-        // drag end
-        jQuery(window).mouseup(dragEnd);
+      // drag end
+      jQuery(window).mouseup(dragEnd);
 
-        // drag over cells
-        jQuerycells.mouseenter(draggingIntoNewCell);
-        jQueryselected.mousemove(draggingInSelectedCell);
+      // drag over cells
+      jQuerycells.mouseenter(draggingIntoNewCell);
+      jQueryselected.mousemove(draggingInSelectedCell);
 
-        function dragStart() {
-          isDragging = true;
-        }
+      function dragStart() {
+        isDragging = true;
+      }
 
-        function dragEnd() {
-          if (isDragging) {
-            isDragging = false;
-            var cellNumber = jQuerycurrentCell[0].__vnode.key;
-            var time = cellNumber % 24;
-            var carerIndex = (cellNumber - time) / 24;
-            var aptIndex = _.findIndex(_this.appointments, { id: aptId });
-            var apt = _this.appointments[aptIndex];
-            var duration = _this.calculateDuration(apt.startTime, apt.endTime);
-            apt.startTime = moment.utc(time * 3600 * 1000).format("HH:mm");
-            var endTimeHours = time + duration[0] + duration[1] / 60;
-            apt.endTime = moment
-              .utc(endTimeHours * 3600 * 1000)
-              .format("HH:mm");
-            apt.carer = { id: _this.carers[carerIndex].id };
-            _this.appointments[aptIndex] = apt;
-            console.log("Updated Appointment", _this.appointments[aptIndex]);
-            console.log("Reposition", jQuerycurrentCell[0].__vnode.key);
+      function dragEnd() {
+        if (isDragging) {
+          isDragging = false;
+          var cellNumber = jQuerycurrentCell[0].__vnode.key;
+          var time = cellNumber % 24;
+          var carerIndex = (cellNumber - time) / 24;
+          var aptIndex = _.findIndex(_this.appointments, { id: aptId });
+          var apt = _this.appointments[aptIndex];
+          var duration = _this.calculateDuration(apt.startTime, apt.endTime);
+          apt.startTime = moment.utc(time * 3600 * 1000).format("HH:mm");
+          var endTimeHours = time + duration[0] + duration[1] / 60;
+          apt.endTime = moment.utc(endTimeHours * 3600 * 1000).format("HH:mm");
+          if (carerIndex > 0) {
+            var aptDate = new Date(_this.firstWeekday);
+            aptDate.setDate = aptDate.setDate(aptDate.getDate() + carerIndex);
+            apt.date = aptDate;
+          } else if (carerIndex == 0) {
+            apt.date = _this.firstWeekday;
           }
+          if (_this.view == "today") {
+            apt.carer = { id: _this.carers[carerIndex].id };
+          }
+          _this.appointments[aptIndex] = apt;
+          console.log("Updated Appointment", _this.appointments[aptIndex]);
+          console.log("Reposition", jQuerycurrentCell[0].__vnode.key);
         }
+      }
 
-        function draggingIntoNewCell() {
-          if (!_this.isResizing) {
-            jQuerycurrentCell = jQuery(this);
-            // console.log("dragging into new cell", jQuerycurrentCell);
+      function draggingIntoNewCell() {
+        if (!_this.isResizing) {
+          jQuerycurrentCell = jQuery(this);
+          // console.log("dragging into new cell", jQuerycurrentCell);
+          reposition(jQuerycurrentCell);
+        }
+      }
+
+      // find if we've moved into the next column under this selection
+      function draggingInSelectedCell(e) {
+        if (isDragging && !_this.isResizing) {
+          // find relative position within selection div
+          var relativeXPosition = e.pageX - jQuery(this).offset().left;
+
+          if (relativeXPosition > cellWidth) {
+            // moved into next column
+            jQuerycurrentCell = jQuerycurrentCell.next();
+            console.log("dragging in selected cell", jQuerycurrentCell);
             reposition(jQuerycurrentCell);
           }
         }
+      }
 
-        // find if we've moved into the next column under this selection
-        function draggingInSelectedCell(e) {
-          if (isDragging && !_this.isResizing) {
-            // find relative position within selection div
-            var relativeXPosition = e.pageX - jQuery(this).offset().left;
-
-            if (relativeXPosition > cellWidth) {
-              // moved into next column
-              jQuerycurrentCell = jQuerycurrentCell.next();
-              console.log("dragging in selected cell", jQuerycurrentCell);
-              reposition(jQuerycurrentCell);
-            }
-          }
-        }
-
-        function reposition(jQuerycell) {
-          // only reposition if not the last cell in the table (otherwise can't span 2 cols)
-          if (
-            isDragging &&
-            jQuerycell.hasClass("data-cell") &&
-            !_this.isResizing
-          ) {
-            // console.log("Reposition", jQuerycurrentCell);
-            jQueryselected.css("top", jQuerycell.position().top);
-            jQueryselected.css("left", jQuerycell.position().left);
-            // console.log("Elemnt key", jQuerycurrentCell[0].$vnode.key);
-          }
+      function reposition(jQuerycell) {
+        // only reposition if not the last cell in the table (otherwise can't span 2 cols)
+        if (
+          isDragging &&
+          jQuerycell.hasClass("data-cell") &&
+          !_this.isResizing
+        ) {
+          // console.log("Reposition", jQuerycurrentCell);
+          jQueryselected.css("top", jQuerycell.position().top);
+          jQueryselected.css("left", jQuerycell.position().left);
+          // console.log("Elemnt key", jQuerycurrentCell[0].$vnode.key);
         }
       }
     },
@@ -1193,7 +1198,6 @@ export default {
         //Instead of carer index we use day number to get the timeslot
         var dayIndex = apt.date.getDay();
         dayIndex = dayIndex == 0 ? 6 : dayIndex - 1;
-        // var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
         var timeCell = apt.startTime.split(":");
         apt.cell = dayIndex * 24 + parseInt(timeCell[0]);
         var duration = _this.calculateDuration(apt.startTime, apt.endTime);

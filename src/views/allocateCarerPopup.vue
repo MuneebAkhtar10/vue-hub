@@ -102,46 +102,53 @@
               :key="carer.id + '-' + carerIndex"
               @click="selectCarer(carer, carerIndex)"
             >
-              <td
-                class="clientTableData "
-                :class="{
-                  clientTableRow: selectedCarer && selectedCarer.id == carer.id,
-                }"
-              >
-                {{ carer.name }}
-              </td>
-              <td
-                class="clientTableData"
-                :class="{
-                  clientTableRow: selectedCarer && selectedCarer.id == carer.id,
-                }"
-              >
-                <i class="bi bi-check-circle availabilityIcon"></i>
-              </td>
-              <td
-                class="clientTableData"
-                :class="{
-                  clientTableRow: selectedCarer && selectedCarer.id == carer.id,
-                }"
-              >
-                0%
-              </td>
-              <td
-                class="clientTableData"
-                :class="{
-                  clientTableRow: selectedCarer && selectedCarer.id == carer.id,
-                }"
-              >
-                2 hours
-              </td>
-              <td
-                class="clientTableData"
-                :class="{
-                  clientTableRow: selectedCarer && selectedCarer.id == carer.id,
-                }"
-              >
-                1.2 miles
-              </td>
+              <template v-if="slotCarer.id != carer.id">
+                <td
+                  class="clientTableData "
+                  :class="{
+                    clientTableRow:
+                      selectedCarer && selectedCarer.id == carer.id,
+                  }"
+                >
+                  {{ carer.name }}
+                </td>
+                <td
+                  class="clientTableData"
+                  :class="{
+                    clientTableRow:
+                      selectedCarer && selectedCarer.id == carer.id,
+                  }"
+                >
+                  <i class="bi bi-check-circle availabilityIcon"></i>
+                </td>
+                <td
+                  class="clientTableData"
+                  :class="{
+                    clientTableRow:
+                      selectedCarer && selectedCarer.id == carer.id,
+                  }"
+                >
+                  0%
+                </td>
+                <td
+                  class="clientTableData"
+                  :class="{
+                    clientTableRow:
+                      selectedCarer && selectedCarer.id == carer.id,
+                  }"
+                >
+                  2 hours
+                </td>
+                <td
+                  class="clientTableData"
+                  :class="{
+                    clientTableRow:
+                      selectedCarer && selectedCarer.id == carer.id,
+                  }"
+                >
+                  1.2 miles
+                </td>
+              </template>
             </tr>
           </tbody>
         </table>

@@ -45,78 +45,78 @@
           <template v-if="view == 'week'">
             <div
               class="weekday"
-              @click="addToWeekday(1)"
-              :style="{ background: dayExists(1) ? dayColors[0] : '' }"
+              @click="addToWeekday(0)"
+              :style="{ background: dayExists(0) ? dayColors[0] : '' }"
             >
               <span
                 class="dayname"
-                :style="{ color: dayExists(1) ? 'white' : '' }"
+                :style="{ color: dayExists(0) ? 'white' : '' }"
                 >Mon</span
               >
             </div>
             <div
               class="weekday"
-              @click="addToWeekday(2)"
-              :style="{ background: dayExists(2) ? dayColors[1] : '' }"
+              @click="addToWeekday(1)"
+              :style="{ background: dayExists(1) ? dayColors[1] : '' }"
             >
               <span
                 class="dayname"
-                :style="{ color: dayExists(2) ? 'white' : '' }"
+                :style="{ color: dayExists(1) ? 'white' : '' }"
                 >Tue</span
               >
             </div>
             <div
               class="weekday"
-              @click="addToWeekday(3)"
-              :style="{ background: dayExists(3) ? dayColors[2] : '' }"
+              @click="addToWeekday(2)"
+              :style="{ background: dayExists(2) ? dayColors[2] : '' }"
             >
               <span
                 class="dayname"
-                :style="{ color: dayExists(3) ? 'white' : '' }"
+                :style="{ color: dayExists(2) ? 'white' : '' }"
                 >Wed</span
               >
             </div>
             <div
               class="weekday"
-              @click="addToWeekday(4)"
-              :style="{ background: dayExists(4) ? dayColors[3] : '' }"
+              @click="addToWeekday(3)"
+              :style="{ background: dayExists(3) ? dayColors[3] : '' }"
             >
               <span
                 class="dayname"
-                :style="{ color: dayExists(4) ? 'white' : '' }"
+                :style="{ color: dayExists(3) ? 'white' : '' }"
                 >Thur</span
               >
             </div>
             <div
               class="weekday"
-              @click="addToWeekday(5)"
-              :style="{ background: dayExists(5) ? dayColors[4] : '' }"
+              @click="addToWeekday(4)"
+              :style="{ background: dayExists(4) ? dayColors[4] : '' }"
             >
               <span
                 class="dayname"
-                :style="{ color: dayExists(5) ? 'white' : '' }"
+                :style="{ color: dayExists(4) ? 'white' : '' }"
                 >Fri</span
               >
             </div>
             <div
               class="weekday"
-              @click="addToWeekday(6)"
-              :style="{ background: dayExists(6) ? dayColors[5] : '' }"
+              @click="addToWeekday(5)"
+              :style="{ background: dayExists(5) ? dayColors[5] : '' }"
             >
               <span
                 class="dayname"
-                :style="{ color: dayExists(6) ? 'white' : '' }"
+                :style="{ color: dayExists(5) ? 'white' : '' }"
                 >Sat</span
               >
             </div>
             <div
               class="weekday"
-              @click="addToWeekday(0)"
-              :style="{ background: dayExists(0) ? dayColors[6] : '' }"
+              @click="addToWeekday(6)"
+              :style="{ background: dayExists(6) ? dayColors[6] : '' }"
             >
               <span
                 class="dayname"
-                :style="{ color: dayExists(0) ? 'white' : '' }"
+                :style="{ color: dayExists(6) ? 'white' : '' }"
                 >Sun</span
               >
             </div>
@@ -147,6 +147,7 @@
             :slot-start-time="slotStartTime"
             :slot-end-time="slotEndTime"
             :slot-date="date"
+            :slot-carer="slotCarer"
             @close="onCloseAppointmentPopup"
             @delete="deleteAppointment"
             @save="saveAppointment"
@@ -169,9 +170,9 @@
             class="cover"
           ></div>
 
-          <div class="loaderOverlay">
+          <!-- <div class="loaderOverlay">
             <div class="loader"></div>
-          </div>
+          </div> -->
 
           <table class="dates">
             <thead>
@@ -286,7 +287,8 @@
                   <td
                     class="data-cell"
                     v-for="(time, timeIndex) in timeRanges"
-                    :key="time + '-' + timeIndex"
+                    :class="dayExists(carerIndex) ? 'data-cell-selected' : ''"
+                    :key="calculateKey(carerIndex, time)"
                     @dblclick="
                       openAppointmentPopupForNewAppointment(
                         time,

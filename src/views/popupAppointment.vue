@@ -425,6 +425,20 @@ export default {
           );
         }
       );
+      var slotApt = {
+        id: "slotApt",
+        // carer: { id: "lorem" },
+        patient: {
+          id: "patient",
+          name: _this.slotStartTime + "-" + _this.slotEndTime,
+        },
+        date: _this.slotDate,
+        startTime: _this.slotStartTime,
+        endTime: _this.slotEndTime,
+        cell: -1,
+      };
+      _this.carerAppointments.push(slotApt);
+
       _this.$nextTick(() => {
         _.each(_this.carerAppointments, (apt, aptIndex) => {
           var timeCell = apt.startTime.split(":");
