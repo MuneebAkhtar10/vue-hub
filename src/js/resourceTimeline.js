@@ -4,6 +4,7 @@ import { ref } from "vue";
 import moment from "moment";
 import POPUP_APPOINTMENT from "../views/popupAppointment.vue";
 import ALLOCATE_CARER from "../views/allocateCarerPopup.vue";
+import CARER_PROFILE_POPUP from "../views/carerProfilePopup.vue";
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import sidebar from "../components/sidebar";
@@ -556,6 +557,7 @@ export default {
   components: {
     "popup-appointment": POPUP_APPOINTMENT,
     "allocate-carer": ALLOCATE_CARER,
+    "carer-profile-popup": CARER_PROFILE_POPUP,
     Datepicker,
     navbar: navbar,
     sidebar: sidebar,

@@ -153,7 +153,7 @@
             @save="saveAppointment"
           ></popup-appointment>
 
-          <allocate-carer
+          <!-- <allocate-carer
             v-if="showAllocatePopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
@@ -163,7 +163,19 @@
             :slot-carer="slotCarer"
             @close="onCloseAllocatePopup"
             @save="saveAppointmentConfirm"
-          ></allocate-carer>
+          ></allocate-carer> -->
+
+          <carer-profile-popup
+            v-if="showAllocatePopup"
+            :appointment="appointmentForPopup"
+            :is-existing="existingAppointment"
+            :slot-start-time="slotStartTime"
+            :slot-end-time="slotEndTime"
+            :slot-date="date"
+            :slot-carer="slotCarer"
+            @close="onCloseAllocatePopup"
+            @save="saveAppointmentConfirm"
+          ></carer-profile-popup>
 
           <div
             v-if="showAllocatePopup || showAppointmentPopup"

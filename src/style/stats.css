@@ -15,10 +15,12 @@
   height: 180px;
   margin-left: auto;
 }
+
 .statsValue {
   font-size: 45px;
   font-weight: bolder;
 }
+
 hr.statsTextUnderline {
   border: 3px solid rgba(67, 218, 159, 1);
   border-radius: 5px;
@@ -26,11 +28,13 @@ hr.statsTextUnderline {
   margin-top: 15px;
   margin-left: 5px;
 }
+
 .statsText {
   font-size: 20px;
   margin-top: 15px;
   margin-left: 1px;
 }
+
 .statsMeter {
   width: 70%;
   margin-top: -12px;

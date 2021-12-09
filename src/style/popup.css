@@ -241,3 +241,55 @@ table td {
   border-bottom: 2pt dotted lightgray;
   background-color: white;
 }
+
+.carerPopoverContainer {
+  position: absolute;
+  z-index: 10;
+  top: -4%;
+  width: 28%;
+  height: auto;
+  background-color: rgb(255, 255, 255);
+  transition: opacity 0.3s ease;
+  box-shadow: 1px 1px 5px gray;
+  border-radius: 20px;
+  opacity: 20;
+  left: 35%;
+}
+
+.profileImage {
+  width: 30%;
+}
+
+.carerNameHead {
+  text-align: center;
+  font-size: 23px;
+  font-weight: bolder;
+  color: rgba(2, 143, 169, 1);
+}
+
+.carerDesignationHead {
+  text-align: center;
+  font-size: 13px;
+  font-weight: bolder;
+  color: rgb(132, 132, 133);
+}
+
+hr.profileTextUnderline {
+  border: 0.3px solid rgb(231, 231, 231);
+  width: 80%;
+  margin-top: 15px;
+}
+
+.phoneIcon {
+  width: 90%;
+}
+
+.carerPhoneNumber {
+  font-size: 17px;
+  font-weight: bolder;
+  color: rgb(70, 70, 71);
+}
+
+.locationIcon {
+  width: 70%;
+}
