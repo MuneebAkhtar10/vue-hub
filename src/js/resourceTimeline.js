@@ -5,6 +5,8 @@ import moment from "moment";
 import POPUP_APPOINTMENT from "../views/popupAppointment.vue";
 import ALLOCATE_CARER from "../views/allocateCarerPopup.vue";
 import CARER_PROFILE_POPUP from "../views/carerProfilePopup.vue";
+import OPTIONAL_POPUP from "../views/optionalPopup.vue";
+import WEEKLY_VIEW_POPUP from "../views/weeklyPopupView.vue";
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import sidebar from "../components/sidebar";
@@ -514,6 +516,8 @@ export default {
       firstInitializationOfDate: true,
       showAppointmentPopup: false,
       showAllocatePopup: false,
+      showCarerDetailPopup: false,
+      showOptionsPopup: false,
       isResizing: false,
       existingAppointment: false,
       sortCarers: false,
@@ -553,11 +557,21 @@ export default {
         return this.weekday.indexOf(dayNumber) > -1;
       };
     },
+    showCover: function() {
+      return (
+        this.showAppointmentPopup ||
+        this.showAllocatePopup ||
+        this.showCarerDetailPopup ||
+        this.showOptionsPopup
+      );
+    },
   },
   components: {
     "popup-appointment": POPUP_APPOINTMENT,
     "allocate-carer": ALLOCATE_CARER,
     "carer-profile-popup": CARER_PROFILE_POPUP,
+    "optional-popup": OPTIONAL_POPUP,
+    "weekly-view-popup": WEEKLY_VIEW_POPUP,
     Datepicker,
     navbar: navbar,
     sidebar: sidebar,
@@ -1211,6 +1225,22 @@ export default {
       var timeCell = time.split(":");
       var cell = carerIndex * 24 + parseInt(timeCell[0]);
       return cell;
+    },
+    onShowCarerDetailPopup: function() {
+      var _this = this;
+      _this.showCarerDetailPopup = true;
+    },
+    onShowOptionsPopup: function() {
+      var _this = this;
+      _this.showOptionsPopup = true;
+    },
+    onCloseCarerDetailPopup: function() {
+      var _this = this;
+      _this.showCarerDetailPopup = false;
+    },
+    onCloseOptionsPopup: function() {
+      var _this = this;
+      _this.showOptionsPopup = false;
     },
   },
 };

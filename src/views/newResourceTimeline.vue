@@ -24,6 +24,7 @@
             @selected="onChangeDate"
             class="group_calender"
             v-model="date"
+            :inputFormat="'EEEE, dd MMMM yyyy'"
           />
           <!-- <i class="fas fa-caret-down"></i> -->
           <div v-if="view == 'week'" class="weekSelector" id="weekCard">
@@ -140,7 +141,7 @@
         </div>
 
         <div class="table-area mainContainer">
-          <popup-appointment
+          <!-- <popup-appointment
             v-if="showAppointmentPopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
@@ -151,9 +152,9 @@
             @close="onCloseAppointmentPopup"
             @delete="deleteAppointment"
             @save="saveAppointment"
-          ></popup-appointment>
+          ></popup-appointment> -->
 
-          <!-- <allocate-carer
+          <allocate-carer
             v-if="showAllocatePopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
@@ -163,24 +164,46 @@
             :slot-carer="slotCarer"
             @close="onCloseAllocatePopup"
             @save="saveAppointmentConfirm"
-          ></allocate-carer> -->
+          ></allocate-carer>
 
           <carer-profile-popup
-            v-if="showAllocatePopup"
+            v-if="showCarerDetailPopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
             :slot-start-time="slotStartTime"
             :slot-end-time="slotEndTime"
             :slot-date="date"
             :slot-carer="slotCarer"
-            @close="onCloseAllocatePopup"
+            @close="onCloseCarerDetailPopup"
             @save="saveAppointmentConfirm"
           ></carer-profile-popup>
 
-          <div
-            v-if="showAllocatePopup || showAppointmentPopup"
-            class="cover"
-          ></div>
+          <optional-popup
+            v-if="showOptionsPopup"
+            :appointment="appointmentForPopup"
+            :is-existing="existingAppointment"
+            :slot-start-time="slotStartTime"
+            :slot-end-time="slotEndTime"
+            :slot-date="date"
+            :slot-carer="slotCarer"
+            @close="onCloseOptionsPopup"
+            @save="saveAppointmentConfirm"
+          ></optional-popup>
+
+          <weekly-view-popup
+            v-if="showAppointmentPopup"
+            :appointment="appointmentForPopup"
+            :is-existing="existingAppointment"
+            :slot-start-time="slotStartTime"
+            :slot-end-time="slotEndTime"
+            :slot-date="date"
+            :slot-carer="slotCarer"
+            @close="onCloseAppointmentPopup"
+            @delete="deleteAppointment"
+            @save="saveAppointment"
+          ></weekly-view-popup>
+
+          <div v-if="showCover" class="cover"></div>
 
           <!-- <div class="loaderOverlay">
             <div class="loader"></div>
@@ -265,7 +288,7 @@
                   }"
                 >
                   <div class="card">
-                    <div class="img"></div>
+                    <div @click="onShowCarerDetailPopup" class="img"></div>
                     <div class="content">
                       <div className="carerContent" style="min-width: 200px;">
                         <div class="carerName">
@@ -356,7 +379,7 @@
                       Punctuality
                     </div>
                   </div>
-                  <div class="col ">
+                  <div class="col border-end border-2">
                     <div class="row justify-content-center">
                       <img
                         class="statsMeter"
@@ -366,6 +389,41 @@
                     </div>
                     <div class="row justify-content-center statsText">
                       Duration Spent
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row justify-content-center mt-2">
+                      <div class="col-3">
+                        <img
+                          class="lastColumnIcon"
+                          src="../images/icons/blueMeter.png"
+                          alt="blueMeter"
+                        />
+                      </div>
+                      <div class="col-6 lastColumnText">Planned Time</div>
+                      <div class="col-3 lastColTime">01:30 hrs</div>
+                    </div>
+                    <div class="row justify-content-center mt-3">
+                      <div class="col-3">
+                        <img
+                          class="lastColumnIcon"
+                          src="../images/icons/blueMeter.png"
+                          alt="blueMeter"
+                        />
+                      </div>
+                      <div class="col-6 lastColumnText">Actual Time</div>
+                      <div class="col-3 lastColTime">02:20 hrs</div>
+                    </div>
+                    <div class="row justify-content-center mt-3">
+                      <div class="col-3">
+                        <img
+                          class="lastColumnIcon"
+                          src="../images/icons/blueMeter.png"
+                          alt="blueMeter"
+                        />
+                      </div>
+                      <div class="col-6 lastColumnText">Travel Time</div>
+                      <div class="col-3 lastColTime">00:04 mins</div>
                     </div>
                   </div>
                 </div>
@@ -379,7 +437,7 @@
                 class="table-area-selected"
                 :class="'se-' + apt.id"
                 :id="'apt-' + apt.id"
-                @dblclick="openAppointmentPopupForExistingAppointment(apt.id)"
+                @dblclick="onShowOptionsPopup"
               >
                 <p class="patientsName">{{ apt.patient.name }}</p>
 
