@@ -104,13 +104,24 @@
             >
               <template v-if="slotCarer.id != carer.id">
                 <td
-                  class="clientTableData "
+                  class="clientTableData carerNameCol"
                   :class="{
                     clientTableRow:
                       selectedCarer && selectedCarer.id == carer.id,
                   }"
                 >
-                  {{ carer.name }}
+                  <div class="row justify-content-center">
+                    <div class="col-3">
+                      <img
+                        class="carerIcons"
+                        src="../images/icons/user-image.png"
+                        alt="marchart"
+                      />
+                    </div>
+                    <div class="col-6 carers_name">
+                      {{ carer.name }}
+                    </div>
+                  </div>
                 </td>
                 <td
                   class="clientTableData"

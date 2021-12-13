@@ -128,7 +128,7 @@ export default {
           carer: { id: "lorem" },
           patient: { id: "patient", name: "Sit Amet" },
           date: new Date("Oct 30 2021"),
-          startTime: "05:00",
+          startTime: "05:20",
           endTime: "06:00",
           cell: -1,
         },
@@ -137,7 +137,7 @@ export default {
           carer: { id: "lorem1" },
           patient: { id: "patient1", name: "Sit Amet1" },
           date: new Date("Oct 29 2021"),
-          startTime: "02:00",
+          startTime: "02:10",
           endTime: "03:00",
           cell: -1,
         },
@@ -146,7 +146,7 @@ export default {
           carer: { id: "lorem2" },
           patient: { id: "patient2", name: "Sit Amet2" },
           date: new Date("Oct 29 2021"),
-          startTime: "03:00",
+          startTime: "03:40",
           endTime: "04:00",
           cell: -1,
         },
@@ -518,6 +518,7 @@ export default {
       showAllocatePopup: false,
       showCarerDetailPopup: false,
       showOptionsPopup: false,
+      showWeeklyViewPopup: false,
       isResizing: false,
       existingAppointment: false,
       sortCarers: false,
@@ -562,7 +563,7 @@ export default {
         this.showAppointmentPopup ||
         this.showAllocatePopup ||
         this.showCarerDetailPopup ||
-        this.showOptionsPopup
+        this.showWeeklyViewPopup
       );
     },
   },
@@ -649,12 +650,22 @@ export default {
       }
       var jQuerycurrentCell = jQuery(jQuerycells[cellNumber]);
       var cellWidth = jQuerycurrentCell.outerWidth();
+      var cellWidthPerMin = cellWidth / 60;
+      var apt = _.find(_this.appointments, { id: aptId });
+      var startTime = apt.startTime;
+      startTime = startTime.split(":");
+      var startTimeMins = parseInt(startTime[1]);
 
       jQueryselected.css("width", cellWidth * colSpan);
       jQueryselected.css("height", jQuerycurrentCell.outerHeight() - 2); // fiddle factor
       jQueryselected.css("top", jQuerycurrentCell.position().top);
-      jQueryselected.css("left", jQuerycurrentCell.position().left);
-
+      jQueryselected.css(
+        "left",
+        jQuerycurrentCell.position().left + cellWidthPerMin * startTimeMins
+      );
+      // if (_this.view == "today") {
+      //   jQuerycurrentCell.addClass("data-cell-selected");
+      // }
       // drag start
       jQueryselected.mousedown(dragStart);
 
@@ -1241,6 +1252,15 @@ export default {
     onCloseOptionsPopup: function() {
       var _this = this;
       _this.showOptionsPopup = false;
+    },
+    onShowWeeklyViewPopup: function() {
+      var _this = this;
+      _this.slotCarer = _.find(_this.carers, { id: _this.selectedCarerId });
+      _this.showWeeklyViewPopup = true;
+    },
+    onCloseWeeklyViewPopup: function() {
+      var _this = this;
+      _this.showWeeklyViewPopup = false;
     },
   },
 };

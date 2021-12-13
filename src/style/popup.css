@@ -311,16 +311,32 @@ hr.profileTextUnderline {
 .firstOption {
   font-size: 17px;
   color: gray;
+  text-align: left;
 }
 
 hr.optionalTextUnderline {
   border: 1px solid rgb(241, 241, 241);
   border-radius: 2px;
   width: 82%;
-  margin-top: 6%;
-  margin-bottom: 6%;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 
 .weeklyDaysHeader {
   border-right: 1px dashed rgb(216, 214, 214);
+}
+
+.carerNameCol {
+  width: 25%;
+}
+
+.carerIcons {
+  width: 90%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.carers_name {
+  padding-top: 8px;
+  padding-left: 0px;
 }

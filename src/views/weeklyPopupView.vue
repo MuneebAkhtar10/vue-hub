@@ -42,15 +42,17 @@
             <i
               class="bi bi-chevron-left"
               style="color:#43da9f;cursor:pointer"
+              @click="getPreviousWeekDayRange"
             ></i>
             <p style="margin: 0px 5px 0px 5px">
-              6th Dec - 12th Dec
-              <!-- {{ dateFormatter(firstWeekday) }} -
-              {{ dateFormatter(lastWeekday) }} -->
+              <!-- 6th Dec - 12th Dec -->
+              {{ dateFormatter(firstWeekday) }} -
+              {{ dateFormatter(lastWeekday) }}
             </p>
             <i
               class="bi bi-chevron-right"
               style="color:#43da9f;cursor:pointer;"
+              @click="getNextWeekDayRange"
             ></i>
           </div>
         </div>
@@ -83,22 +85,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="tableRow">
-                <td class="weeklyDaysHeader">Monday</td>
+              <tr v-for="index in 7" class="tableRow" :key="'day-' + index">
+                <td class="weeklyDaysHeader">{{ getDay(index) }}</td>
                 <td
                   class="data-cell-popup weeklyDaysHeader"
                   v-for="(time, timeIndex) in timeRanges"
                   :key="time + '-' + timeIndex"
                 ></td>
               </tr>
-              <tr class="tableRow">
+              <!-- <tr class="tableRow">
                 <td class="weeklyDaysHeader">Tuesday</td>
                 <td
                   class="data-cell-popup weeklyDaysHeader"
                   v-for="(time, timeIndex) in timeRanges"
                   :key="time + '-' + timeIndex"
                 ></td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
           <div
@@ -129,15 +131,17 @@
             <i
               class="bi bi-chevron-left"
               style="color:#43da9f;cursor:pointer"
+              @click="getPreviousApplyToWeekDayRange"
             ></i>
             <p style="margin: 0px 5px 0px 5px">
-              6th Dec - 12th Dec
-              <!-- {{ dateFormatter(firstWeekday) }} -
-              {{ dateFormatter(lastWeekday) }} -->
+              <!-- 6th Dec - 12th Dec -->
+              {{ dateFormatter(applyToFirstWeekday) }} -
+              {{ dateFormatter(applyToLastWeekday) }}
             </p>
             <i
               class="bi bi-chevron-right"
               style="color:#43da9f;cursor:pointer;"
+              @click="getNextApplyToWeekDayRange"
             ></i>
           </div>
         </div>
@@ -151,44 +155,27 @@ import Datepicker from "vue3-datepicker";
 import { ref } from "vue";
 import _ from "lodash";
 import jQuery from "jquery";
+import { startOfWeek, endOfWeek } from "date-fns";
 
 export default {
   name: "popup-appointment",
   props: {
-    appointment: {
-      type: Object,
-      default: function() {
-        return {};
-      },
-    },
     slotCarer: {
       type: Object,
       default: function() {
         return {};
       },
     },
-    isExisting: {
-      type: Boolean,
-      default: function() {
-        return false;
-      },
-    },
-    slotStartTime: {
-      type: String,
-      default: function() {
-        return "09:00";
-      },
-    },
-    slotEndTime: {
-      type: String,
-      default: function() {
-        return "17:00";
-      },
-    },
-    slotDate: {
+    weekStart: {
       type: Date,
       default: function() {
-        return new Date();
+        return "";
+      },
+    },
+    weekEnd: {
+      type: Date,
+      default: function() {
+        return "";
       },
     },
   },
@@ -198,14 +185,12 @@ export default {
       endTime: "",
       carerId: "",
       duration: "",
-      searchQuery: "",
+      firstWeekday: "",
+      lastWeekday: "",
+      applyToLastWeekday: "",
+      applyToFirstWeekday: "",
       date: ref(new Date()),
-      patient: {},
-      selectedClient: {},
       timeRanges: [],
-      carerAppointments: [],
-      allPatients: [],
-      filteredPatients: [],
     };
   },
   components: {
@@ -215,11 +200,11 @@ export default {
   created() {
     var _this = this;
     _this.createTimeInterval();
-    _this.allPatients = _this.$parent.patients;
-    _this.filteredPatients = _.cloneDeep(_this.allPatients);
+    this.modelData();
+    // _this.allPatients = _this.$parent.patients;
+    // _this.filteredPatients = _.cloneDeep(_this.allPatients);
   },
   mounted() {
-    this.modelData();
     this.filterAppointments();
   },
   emits: ["close", "delete", "save"],
@@ -238,17 +223,9 @@ export default {
   methods: {
     modelData: function() {
       var _this = this;
-      if (!_.isEmpty(_this.appointment)) {
-        _this.startTime = _this.appointment.startTime;
-        _this.endTime = _this.appointment.endTime;
-        _this.carerId = _this.appointment.carer.id;
-        _this.date = new Date(_this.appointment.date);
-        _this.calculateDuration();
-      } else {
-        _this.startTime = _this.slotStartTime;
-        _this.endTime = _this.slotEndTime;
-        _this.date = new Date(_this.slotDate);
-      }
+      _this.firstWeekday = _this.weekStart;
+      _this.lastWeekday = _this.weekEnd;
+      _this.getCurrentApplyToWeekDayRange();
     },
     timeChange: function(type) {
       if (type == "start") {
@@ -288,43 +265,6 @@ export default {
     onClosePopup: function() {
       this.$emit("close");
     },
-    deleteAppointment: function() {
-      var _this = this;
-      _this.$emit("delete", _this.appointment.id);
-    },
-    saveAppointment: function() {
-      var requestBody = {};
-      if (this.isExisting) {
-        requestBody.carer = { id: this.carerId };
-        requestBody.patient = this.appointment.patient;
-        requestBody.startTime = this.startTime;
-        requestBody.endTime = this.endTime;
-        requestBody.id = this.appointment.id;
-        requestBody.date = this.date;
-        requestBody.date.setHours(0, 0, 0);
-      } else {
-        requestBody.carer = { id: this.slotCarer.id };
-        requestBody.patient = this.selectedClient;
-        requestBody.startTime = this.startTime;
-        requestBody.endTime = this.endTime;
-        requestBody.id = this.create_UUID();
-        requestBody.date = this.date;
-        requestBody.date.setHours(0, 0, 0);
-      }
-      this.$emit("save", requestBody);
-    },
-    create_UUID: function() {
-      var dt = new Date().getTime();
-      var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-        /[xy]/g,
-        function(c) {
-          var r = (dt + Math.random() * 16) % 16 | 0;
-          dt = Math.floor(dt / 16);
-          return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-        }
-      );
-      return uuid;
-    },
     createTimeInterval: function() {
       let items = [];
       for (var hour = 0; hour < 24; hour++) {
@@ -346,11 +286,6 @@ export default {
         return formatter.format(date);
       });
     },
-    selectClient: function(client, clientIndex) {
-      var _this = this;
-      _this.selectedClient = client;
-      _this.$forceUpdate();
-    },
     filterAppointments: function() {
       var _this = this;
       _this.carerAppointments = _.filter(
@@ -362,20 +297,6 @@ export default {
           );
         }
       );
-      var slotApt = {
-        id: "slotApt",
-        // carer: { id: "lorem" },
-        patient: {
-          id: "patient",
-          name: _this.slotStartTime + "-" + _this.slotEndTime,
-        },
-        date: _this.slotDate,
-        startTime: _this.slotStartTime,
-        endTime: _this.slotEndTime,
-        cell: -1,
-      };
-      _this.carerAppointments.push(slotApt);
-
       _this.$nextTick(() => {
         _.each(_this.carerAppointments, (apt, aptIndex) => {
           var timeCell = apt.startTime.split(":");
@@ -420,13 +341,133 @@ export default {
       duration[1] = parseInt(duration[1]);
       return duration;
     },
-    filterPatients: function() {
-      var _this = this;
-      _this.filteredPatients = _.filter(_this.allPatients, (patient) => {
-        var patientName = patient.name.toLowerCase();
-        var searchString = _this.searchQuery.toLowerCase();
-        return patientName.includes(searchString);
+    dateFormatter: function(date) {
+      // date = new Date(date);
+      if (typeof date == "number") {
+        date = new Date(date);
+      }
+      var shortMonth = date.toLocaleString("en-us", { month: "short" });
+      const english_ordinal_rules = new Intl.PluralRules("en", {
+        type: "ordinal",
       });
+      const suffixes = {
+        one: "st",
+        two: "nd",
+        few: "rd",
+        other: "th",
+      };
+      var dayOfMonth = date.getDate();
+      const suffix = suffixes[english_ordinal_rules.select(dayOfMonth)];
+      return dayOfMonth + suffix + " " + shortMonth;
+    },
+    getCurrentApplyToWeekDayRange: function() {
+      var _this = this;
+      var date;
+      if (typeof _this.lastWeekday == "number") {
+        date = new Date(_this.lastWeekday);
+      } else {
+        date = _this.lastWeekday;
+      }
+      this.applyToFirstWeekday = startOfWeek(date, { weekStartsOn: 1 });
+      this.applyToLastWeekday = endOfWeek(date, { weekStartsOn: 1 });
+    },
+    getPreviousWeekDayRange: function() {
+      var _this = this;
+      var date;
+      if (typeof _this.firstWeekday == "number") {
+        date = new Date(_this.firstWeekday);
+      } else {
+        date = _this.firstWeekday;
+      }
+      var dummy = date.getDay();
+      dummy = dummy + 6;
+      _this.firstWeekday = date.setDate(date.getDate() - dummy);
+      _this.lastWeekday = date.setDate(date.getDate() + 6);
+
+      _this.firstWeekday = new Date(_this.firstWeekday);
+      _this.lastWeekday = new Date(_this.lastWeekday);
+
+      _this.appointments = _.filter(_this.allAppointments, function(o) {
+        return (
+          o.date.getTime() <= _this.lastWeekday.getTime() &&
+          o.date.getTime() >= _this.firstWeekday.getTime() &&
+          // o.date.toDateString() === _this.date.toDateString() &&
+          o.carer.id === _this.selectedCarerId
+        );
+      });
+      _this.$nextTick(() => {
+        _this.dataShaperForWeekView();
+      });
+    },
+    getNextWeekDayRange: function() {
+      var _this = this;
+      var date;
+      if (typeof _this.firstWeekday == "number") {
+        date = new Date(_this.firstWeekday);
+      } else {
+        date = _this.firstWeekday;
+      }
+      var nextweek = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 7
+      );
+      _this.firstWeekday = startOfWeek(nextweek, { weekStartsOn: 1 });
+      _this.lastWeekday = endOfWeek(nextweek, { weekStartsOn: 1 });
+      _this.appointments = _.filter(_this.allAppointments, function(o) {
+        return (
+          o.date.getTime() <= _this.lastWeekday.getTime() &&
+          o.date.getTime() >= _this.firstWeekday.getTime() &&
+          // o.date.toDateString() === _this.date.toDateString() &&
+          o.carer.id === _this.selectedCarerId
+        );
+      });
+      _this.$nextTick(() => {
+        _this.dataShaperForWeekView();
+      });
+    },
+    getPreviousApplyToWeekDayRange: function() {
+      var _this = this;
+      var date;
+      if (typeof _this.applyToFirstWeekday == "number") {
+        date = new Date(_this.applyToFirstWeekday);
+      } else {
+        date = _this.applyToFirstWeekday;
+      }
+      var dummy = date.getDay();
+      dummy = dummy + 6;
+      _this.applyToFirstWeekday = date.setDate(date.getDate() - dummy);
+      _this.applyToLastWeekday = date.setDate(date.getDate() + 6);
+
+      _this.applyToFirstWeekday = new Date(_this.applyToFirstWeekday);
+      _this.applyToLastWeekday = new Date(_this.applyToLastWeekday);
+    },
+    getNextApplyToWeekDayRange: function() {
+      var _this = this;
+      var date;
+      if (typeof _this.applyToFirstWeekday == "number") {
+        date = new Date(_this.applyToFirstWeekday);
+      } else {
+        date = _this.applyToFirstWeekday;
+      }
+      var nextweek = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + 7
+      );
+      _this.applyToFirstWeekday = startOfWeek(nextweek, { weekStartsOn: 1 });
+      _this.applyToLastWeekday = endOfWeek(nextweek, { weekStartsOn: 1 });
+    },
+    getDay: function(dayNumber) {
+      var weekday = new Array(7);
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+      weekday[7] = "Sunday";
+      return weekday[dayNumber];
     },
   },
 };

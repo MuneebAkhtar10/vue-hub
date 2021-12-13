@@ -123,13 +123,24 @@
               ]"
             >
               <td
-                class="clientTableData"
+                class="clientTableData carerNameCol"
                 :class="{
                   clientTableRow:
                     selectedClient && selectedClient.id == patient.id,
                 }"
               >
-                {{ patient.name }}
+                <div class="row justify-content-center">
+                  <div class="col-3">
+                    <img
+                      class="carerIcons"
+                      src="../images/icons/user-image.png"
+                      alt="marchart"
+                    />
+                  </div>
+                  <div class="col-6 carers_name">
+                    {{ patient.name }}
+                  </div>
+                </div>
               </td>
               <td
                 class="clientTableData"

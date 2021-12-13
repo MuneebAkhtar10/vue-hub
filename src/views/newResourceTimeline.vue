@@ -123,7 +123,9 @@
             </div>
           </template>
           <div class="card_head" id="card2">
-            <td style="min-width: 200px;">Required hours: 52h, 15m</td>
+            <td @click="onShowWeeklyViewPopup" style="min-width: 200px;">
+              Required hours: 52h, 15m
+            </td>
           </div>
           <div class="card_head" id="card3">
             <td style="min-width: 200px;">Booked hours: 48h, 0m</td>
@@ -141,7 +143,7 @@
         </div>
 
         <div class="table-area mainContainer">
-          <!-- <popup-appointment
+          <popup-appointment
             v-if="showAppointmentPopup"
             :appointment="appointmentForPopup"
             :is-existing="existingAppointment"
@@ -152,7 +154,7 @@
             @close="onCloseAppointmentPopup"
             @delete="deleteAppointment"
             @save="saveAppointment"
-          ></popup-appointment> -->
+          ></popup-appointment>
 
           <allocate-carer
             v-if="showAllocatePopup"
@@ -168,38 +170,16 @@
 
           <carer-profile-popup
             v-if="showCarerDetailPopup"
-            :appointment="appointmentForPopup"
-            :is-existing="existingAppointment"
-            :slot-start-time="slotStartTime"
-            :slot-end-time="slotEndTime"
-            :slot-date="date"
             :slot-carer="slotCarer"
             @close="onCloseCarerDetailPopup"
-            @save="saveAppointmentConfirm"
           ></carer-profile-popup>
 
-          <optional-popup
-            v-if="showOptionsPopup"
-            :appointment="appointmentForPopup"
-            :is-existing="existingAppointment"
-            :slot-start-time="slotStartTime"
-            :slot-end-time="slotEndTime"
-            :slot-date="date"
-            :slot-carer="slotCarer"
-            @close="onCloseOptionsPopup"
-            @save="saveAppointmentConfirm"
-          ></optional-popup>
-
           <weekly-view-popup
-            v-if="showAppointmentPopup"
-            :appointment="appointmentForPopup"
-            :is-existing="existingAppointment"
-            :slot-start-time="slotStartTime"
-            :slot-end-time="slotEndTime"
-            :slot-date="date"
+            v-if="showWeeklyViewPopup"
+            :week-start="firstWeekday"
+            :week-end="lastWeekday"
             :slot-carer="slotCarer"
-            @close="onCloseAppointmentPopup"
-            @delete="deleteAppointment"
+            @close="onCloseWeeklyViewPopup"
             @save="saveAppointment"
           ></weekly-view-popup>
 
@@ -434,13 +414,33 @@
           <template v-if="appointmentFixed">
             <div v-for="apt in appointments" :key="apt.id">
               <div
-                class="table-area-selected"
+                class="table-area-selected popover__wrapper "
                 :class="'se-' + apt.id"
                 :id="'apt-' + apt.id"
-                @dblclick="onShowOptionsPopup"
+                @dblclick="openAppointmentPopupForExistingAppointment(apt.id)"
               >
-                <p class="patientsName">{{ apt.patient.name }}</p>
-
+                <p class="patientsName ">{{ apt.patient.name }}</p>
+                <div class="popover__content">
+                  <div class="row justify-content-between firstHeader">
+                    <div class="col-10 mt-4 firstOption">
+                      Allocate Someone Else
+                    </div>
+                    <div class="col-2">
+                      <a href="javascript:void(0)" @click="$emit('close')">
+                        <i class="bi bi-x popoverCross ps-1"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <hr class="optionalTextUnderline" />
+                  </div>
+                  <div class="row justify-content-between firstHeader">
+                    <div class="col-10 firstOption">
+                      View Visit Details
+                    </div>
+                    <div class="col-2"></div>
+                  </div>
+                </div>
                 <div
                   class="resizer se"
                   @mousedown="resizingOnMouseDown($event, apt.id)"
