@@ -585,6 +585,16 @@ export default {
     _this.view = _this.viewsList[_this.viewsIndex];
     _this.carers = _.cloneDeep(_this.allCarers);
     _this.filterAppointments();
+    var monday = moment()
+      .startOf("month")
+      .day("Monday");
+    if (monday.date() > 7) monday.add(7, "d");
+    var month = monday.month();
+    while (month === monday.month()) {
+      // document.body.innerHTML += "<p>" + monday.toString() + "</p>";
+      monday.add(7, "d");
+    }
+    console.log(monday);
   },
   mounted() {
     this.dataShaperForTodayView();
@@ -627,7 +637,8 @@ export default {
         apt.cell = carerIndex * 24 + parseInt(timeCell[0]);
         var duration = _this.calculateDuration(apt.startTime, apt.endTime);
         var colSpan = duration[0] + duration[1] / 60;
-        _this.jQueryForArea(apt.cell, apt.id, colSpan);
+        if (_this.view != "month")
+          _this.jQueryForArea(apt.cell, apt.id, colSpan);
       });
       // _.each(_this.carers, (carer, carerIndex) => {
       //   var startTime = _this.carerTimeSlots[carer.id].startTime;
@@ -1075,8 +1086,10 @@ export default {
     },
     selectCarer: function(carerId) {
       var _this = this;
+      _this.selectedCarerId =
+        _this.view === "week" || _this.view === "month" ? carerId : "";
       if (_this.view === "week") {
-        _this.selectedCarerId = carerId;
+        // _this.selectedCarerId = carerId;
         _this.appointments = _.filter(_this.allAppointments, function(o) {
           return (
             o.date.getTime() <= _this.lastWeekday.getTime() &&
@@ -1261,6 +1274,17 @@ export default {
     onCloseWeeklyViewPopup: function() {
       var _this = this;
       _this.showWeeklyViewPopup = false;
+    },
+    getDay: function(dayNumber) {
+      var weekday = new Array(7);
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+      weekday[7] = "Sunday";
+      return weekday[dayNumber];
     },
   },
 };

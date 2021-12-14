@@ -139,7 +139,30 @@
           <button class="settingBtn">
             <i class="bi bi-gear"></i>
           </button>
-          <i class="bi bi-three-dots-vertical threeVerticalDots"></i>
+          <div class="threeVerticalDots__wrapper">
+            <i class="bi bi-three-dots-vertical threeVerticalDots ">
+              <div class="threeVerticalDots__content">
+                <div
+                  class="row justify-content-start ps-2 firstHeader firstOption"
+                  style="cursor:pointer;font-weight:bolder"
+                >
+                  Apply Template
+                </div>
+                <div
+                  class="row justify-content-center"
+                  style="margin-top:-5px;margin-bottom:-5px"
+                >
+                  <hr class="threeVerticalDotsDropDown_line" />
+                </div>
+                <div
+                  class="row justify-content-start ps-2 firstHeader firstOption"
+                  style="cursor:pointer; font-weight:bolder"
+                >
+                  Auto Assign Unallocated Visit
+                </div>
+              </div>
+            </i>
+          </div>
         </div>
 
         <div class="table-area mainContainer">
@@ -226,34 +249,47 @@
                     <i class="bi bi-funnel filterIcon"></i>
                   </div>
                 </th>
-                <th
-                  v-for="(time, timeIndex) in timeRanges"
-                  :key="time + '-' + timeIndex"
-                  class=" table_header"
-                >
-                  <div v-if="time == currentTimeSlot">
-                    <i
-                      style="font-size:30px;color:darkgray;margin-top:-40px;position:absolute"
-                      class="bi bi-caret-down-fill"
-                    ></i>
-                  </div>
-
-                  <div>
-                    {{ time }}
-                  </div>
-                  <template
-                    v-for="carer in carers"
-                    :key="'slot-line-' + carer.id"
+                <template v-if="view != 'month'">
+                  <th
+                    v-for="(time, timeIndex) in timeRanges"
+                    :key="time + '-' + timeIndex"
+                    class=" table_header"
                   >
                     <div v-if="time == currentTimeSlot">
-                      <div class="verticalLine" />
+                      <i
+                        style="font-size:30px;color:darkgray;margin-top:-40px;position:absolute"
+                        class="bi bi-caret-down-fill"
+                      ></i>
                     </div>
-                  </template>
-                </th>
+
+                    <div>
+                      {{ time }}
+                    </div>
+                    <template
+                      v-for="carer in carers"
+                      :key="'slot-line-' + carer.id"
+                    >
+                      <div v-if="time == currentTimeSlot">
+                        <div class="verticalLine" />
+                      </div>
+                    </template>
+                  </th>
+                </template>
+                <template v-else>
+                  <th
+                    v-for="dayIndex in 7"
+                    :key="dayIndex"
+                    class=" table_header"
+                  >
+                    <div>
+                      {{ getDay(dayIndex) }}
+                    </div>
+                  </th>
+                </template>
               </tr>
             </thead>
             <tbody>
-              <!-- <template v-if="view == 'today'"> -->
+              <!-- <template v-if="view != 'month'"> -->
               <tr
                 v-for="(carer, carerIndex) in carers"
                 :key="carer.id + '-' + carerIndex"
@@ -264,7 +300,8 @@
                   class="container"
                   :class="{
                     'selected-carer':
-                      carer.id == selectedCarerId && view == 'week',
+                      carer.id == selectedCarerId &&
+                      (view == 'week' || view == 'month'),
                   }"
                 >
                   <div class="card">
@@ -313,10 +350,15 @@
                     "
                   ></td>
                 </template>
+                <template v-if="view == 'month'"></template>
               </tr>
+              <!-- </template> -->
             </tbody>
 
-            <div v-if="view == 'week'" class="statsContainer row">
+            <div
+              v-if="view == 'week' || view == 'month'"
+              class="statsContainer row"
+            >
               <div class="leftStatsContainerSide col-2"></div>
               <div class="rightStatsContainerSide col">
                 <div class="row pt-4">
@@ -422,14 +464,19 @@
                 <p class="patientsName ">{{ apt.patient.name }}</p>
                 <div class="popover__content">
                   <div class="row justify-content-between firstHeader">
-                    <div class="col-10 mt-4 firstOption">
+                    <div
+                      @click="
+                        openAppointmentPopupForExistingAppointment(apt.id)
+                      "
+                      class="col-10 firstOption"
+                    >
                       Allocate Someone Else
                     </div>
-                    <div class="col-2">
+                    <!-- <div class="col-2">
                       <a href="javascript:void(0)" @click="$emit('close')">
                         <i class="bi bi-x popoverCross ps-1"></i
                       ></a>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="row justify-content-center">
                     <hr class="optionalTextUnderline" />
