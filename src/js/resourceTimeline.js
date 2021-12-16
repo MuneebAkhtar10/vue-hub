@@ -9,6 +9,7 @@ import OPTIONAL_POPUP from "../views/optionalPopup.vue";
 import WEEKLY_VIEW_POPUP from "../views/weeklyPopupView.vue";
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
+import carerHeader from "../components/carerHeader.vue";
 import sidebar from "../components/sidebar";
 import "../scss/pages/_dashboard.scss";
 import { startOfWeek, endOfWeek } from "date-fns";
@@ -502,6 +503,7 @@ export default {
       appointments: [],
       weekday: [],
       timeRanges: [],
+      daysForMonthlyView: [],
       appointmentForPopup: {},
       slotCarer: {},
       date: "",
@@ -512,6 +514,8 @@ export default {
       selectedCarerId: "",
       firstWeekday: "",
       lastWeekday: "",
+      month: "",
+      yearForMonth: 0,
       appointmentFixed: true,
       firstInitializationOfDate: true,
       showAppointmentPopup: false,
@@ -530,6 +534,10 @@ export default {
         var _this = this;
         if (!_this.firstInitializationOfDate) {
           if (_this.date && _this.date != "") {
+            _this.month = _this.date.toLocaleString("default", {
+              month: "long",
+            });
+            _this.yearForMonth = _this.date.getFullYear();
             _this.filterAppointments();
             _this.$nextTick(() => {
               _this.dataShaperForTodayView();
@@ -575,30 +583,24 @@ export default {
     "weekly-view-popup": WEEKLY_VIEW_POPUP,
     Datepicker,
     navbar: navbar,
+    carerHeader: carerHeader,
     sidebar: sidebar,
   },
   created() {
     var _this = this;
     _this.createTimeInterval();
     _this.date = new Date("Oct 29 2021");
+    _this.yearForMonth = _this.date.getFullYear();
+    _this.month = _this.date.toLocaleString("default", { month: "long" });
     // _this.date.setHours(0, 0, 0);
     _this.view = _this.viewsList[_this.viewsIndex];
     _this.carers = _.cloneDeep(_this.allCarers);
     _this.filterAppointments();
-    var monday = moment()
-      .startOf("month")
-      .day("Monday");
-    if (monday.date() > 7) monday.add(7, "d");
-    var month = monday.month();
-    while (month === monday.month()) {
-      // document.body.innerHTML += "<p>" + monday.toString() + "</p>";
-      monday.add(7, "d");
-    }
-    console.log(monday);
   },
   mounted() {
     this.dataShaperForTodayView();
     this.getCurrentWeekDayRange();
+    this.calculateMonthDays();
   },
   methods: {
     createTimeInterval: function() {
@@ -1144,22 +1146,25 @@ export default {
     },
     dateFormatter: function(date) {
       // date = new Date(date);
-      if (typeof date == "number") {
-        date = new Date(date);
+      if (this.view == "week") {
+        if (typeof date == "number") {
+          date = new Date(date);
+        }
+        var shortMonth = date.toLocaleString("en-us", { month: "short" });
+        const english_ordinal_rules = new Intl.PluralRules("en", {
+          type: "ordinal",
+        });
+        const suffixes = {
+          one: "st",
+          two: "nd",
+          few: "rd",
+          other: "th",
+        };
+        var dayOfMonth = date.getDate();
+        const suffix = suffixes[english_ordinal_rules.select(dayOfMonth)];
+        return dayOfMonth + suffix + " " + shortMonth;
+      } else if (this.view == "month") {
       }
-      var shortMonth = date.toLocaleString("en-us", { month: "short" });
-      const english_ordinal_rules = new Intl.PluralRules("en", {
-        type: "ordinal",
-      });
-      const suffixes = {
-        one: "st",
-        two: "nd",
-        few: "rd",
-        other: "th",
-      };
-      var dayOfMonth = date.getDate();
-      const suffix = suffixes[english_ordinal_rules.select(dayOfMonth)];
-      return dayOfMonth + suffix + " " + shortMonth;
     },
     getPreviousWeekDayRange: function() {
       var _this = this;
@@ -1285,6 +1290,116 @@ export default {
       weekday[6] = "Saturday";
       weekday[7] = "Sunday";
       return weekday[dayNumber];
+    },
+    calculateMonthDays: function() {
+      var _this = this;
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      var monthNumber = months.indexOf(_this.month) + 1;
+      var monday = moment(
+        "01-" + monthNumber + "-" + _this.yearForMonth,
+        "DD/MM/YYYY"
+      )
+        .startOf("month")
+        .day("Monday");
+      var previousMonthDate = monday.date();
+      if (previousMonthDate > 22) {
+        var previousMonthNumber = monday.month();
+        var daysInMonth = new Date(
+          _this.yearForMonth,
+          previousMonthNumber + 1,
+          0
+        ).getDate();
+        for (var i = previousMonthDate; i <= daysInMonth; i++) {
+          _this.daysForMonthlyView.push(i);
+        }
+        monday.add(7, "d");
+      }
+      var nextMonthNumber = monday.month();
+      var daysInMonth = new Date(
+        _this.yearForMonth,
+        nextMonthNumber + 1,
+        0
+      ).getDate();
+      for (i = 1; i <= daysInMonth; i++) {
+        _this.daysForMonthlyView.push(i);
+      }
+      var month = monday.month();
+      while (month === monday.month()) {
+        monday.add(7, "d");
+      }
+      if (monday.date() != 1) {
+        for (i = 1; i <= monday.date(); i++) {
+          _this.daysForMonthlyView.push(i);
+        }
+      }
+      console.log(monday);
+    },
+    getPreviousMonth: function() {
+      var _this = this;
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      _this.month = months[(months.indexOf(_this.month) + 12 - 1) % 12];
+      if (_this.month == "December") {
+        _this.yearForMonth -= 1;
+      }
+    },
+    getNextMonth: function() {
+      var _this = this;
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      _this.month = months[(months.indexOf(_this.month) + 12 + 1) % 12];
+      if (_this.month == "January") {
+        _this.yearForMonth += 1;
+      }
+    },
+    getCellRowForMonthView: function(carerIndex) {
+      var startDayIndex = carerIndex == 0 ? 0 : carerIndex * 6 + carerIndex;
+      var endDayIndex = carerIndex == 0 ? 6 : carerIndex * 6 + 6 + carerIndex;
+      var daysArray = [];
+      for (var i = startDayIndex; i <= endDayIndex; i++) {
+        if (!this.daysForMonthlyView[i]) {
+          break;
+        }
+        daysArray.push(this.daysForMonthlyView[i]);
+      }
+      return daysArray;
     },
   },
 };

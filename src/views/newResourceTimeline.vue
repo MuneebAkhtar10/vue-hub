@@ -4,6 +4,7 @@
 
     <div class="main-content">
       <navbar />
+      <carerHeader />
 
       <div class="inner-content">
         <div class="calender_container">
@@ -20,7 +21,7 @@
             </a>
           </div>
           <datepicker
-            v-if="view != 'week'"
+            v-if="view == 'today'"
             @selected="onChangeDate"
             class="group_calender"
             v-model="date"
@@ -41,6 +42,21 @@
               class="bi bi-chevron-right"
               style="color:#43da9f;cursor:pointer;"
               @click="getNextWeekDayRange"
+            ></i>
+          </div>
+          <div v-if="view == 'month'" class="weekSelector" id="weekCard">
+            <i
+              class="bi bi-chevron-left"
+              style="color:#43da9f;cursor:pointer"
+              @click="getPreviousMonth"
+            ></i>
+            <p style="margin: 0px 5px 0px 5px">
+              {{ month }}, {{ yearForMonth }}
+            </p>
+            <i
+              class="bi bi-chevron-right"
+              style="color:#43da9f;cursor:pointer;"
+              @click="getNextMonth"
             ></i>
           </div>
           <template v-if="view == 'week'">
@@ -350,7 +366,17 @@
                     "
                   ></td>
                 </template>
-                <template v-if="view == 'month'"></template>
+                <template v-if="view == 'month'">
+                  <td
+                    class="data-cell"
+                    v-for="(day, dayIndex) in getCellRowForMonthView(
+                      carerIndex
+                    )"
+                    :key="'day-' + dayIndex + '-' + carerIndex"
+                  >
+                    {{ day }}
+                  </td>
+                </template>
               </tr>
               <!-- </template> -->
             </tbody>
@@ -462,7 +488,7 @@
                 @dblclick="openAppointmentPopupForExistingAppointment(apt.id)"
               >
                 <p class="patientsName ">{{ apt.patient.name }}</p>
-                <div class="popover__content">
+                <!-- <div class="popover__content">
                   <div class="row justify-content-between firstHeader">
                     <div
                       @click="
@@ -472,11 +498,6 @@
                     >
                       Allocate Someone Else
                     </div>
-                    <!-- <div class="col-2">
-                      <a href="javascript:void(0)" @click="$emit('close')">
-                        <i class="bi bi-x popoverCross ps-1"></i
-                      ></a>
-                    </div> -->
                   </div>
                   <div class="row justify-content-center">
                     <hr class="optionalTextUnderline" />
@@ -486,6 +507,71 @@
                       View Visit Details
                     </div>
                     <div class="col-2"></div>
+                  </div>
+                </div> -->
+
+                <!-- Allocate Carer Profile -->
+                <div class="allocateCarerProfilePopover">
+                  <div class="row justify-content-end firstHeader">
+                    <div class="col-2 pt-1">
+                      <a @click="$emit('close')">
+                        <i class="bi bi-x popoverCross"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <img
+                      class="profileImage"
+                      src="../images/icons/profileImage.png"
+                      alt="profileImage"
+                    />
+                  </div>
+                  <div class="row justify-content-center carerNameHead">
+                    <h3>Emma Phillips</h3>
+                  </div>
+                  <div
+                    class="row justify-content-center carerDesignationHead"
+                    style="margin-top:-15px"
+                  >
+                    <h3>Designation here</h3>
+                  </div>
+                  <div
+                    class="row justify-content-center"
+                    style="margin-top:-15px"
+                  >
+                    <hr class="profileTextUnderline" />
+                  </div>
+                  <div class="row justify-content-center mt-2 ps-3">
+                    <div class="col-2 justify-content-start ps-4">
+                      <img
+                        class="phoneIcon"
+                        src="../images/icons/phoneIcon.png"
+                        alt="phoneIcon"
+                      />
+                    </div>
+                    <div
+                      class="col-10 justify-content-start carerPhoneNumber"
+                      style="text-align:start;"
+                    >
+                      <p style="margin-top:-10px">
+                        +44 123 4567 890
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center ps-3">
+                    <div class="col-2 justify-content-start ps-4">
+                      <img
+                        class="locationIcon"
+                        src="../images/icons/location.png"
+                        alt="locationIcon"
+                      />
+                    </div>
+                    <div
+                      class="col-10 justify-content-start carerPhoneNumber"
+                      style="text-align:start;"
+                    >
+                      <p style="margin-top:-10px">Lorem ispum ninem instant</p>
+                    </div>
                   </div>
                 </div>
                 <div
