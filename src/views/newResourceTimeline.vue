@@ -369,10 +369,8 @@
                 <template v-if="view == 'month'">
                   <td
                     class="data-cell"
-                    v-for="(day, dayIndex) in getCellRowForMonthView(
-                      carerIndex
-                    )"
-                    :key="'day-' + dayIndex + '-' + carerIndex"
+                    v-for="day in getCellRowForMonthView(carerIndex)"
+                    :key="'day-' + day"
                   >
                     {{ day }}
                   </td>
@@ -479,7 +477,7 @@
             </div>
           </table>
 
-          <template v-if="appointmentFixed">
+          <template v-if="appointmentFixed && view != 'month'">
             <div v-for="apt in appointments" :key="apt.id">
               <div
                 class="table-area-selected popover__wrapper "
@@ -580,6 +578,18 @@
                 ></div>
               </div>
             </div>
+          </template>
+          <template v-if="appointmentFixed && view == 'month'">
+            <template v-for="(apt, aptIndex) in appointmentsForMonthlyView">
+              <div
+                v-if="apt.length > 0"
+                :key="aptIndex"
+                :id="'monthly-apt-' + aptIndex"
+                class="table-area-selected"
+              >
+                <p class="patientsName ">Appointments # {{ apt.length }}</p>
+              </div>
+            </template>
           </template>
         </div>
       </div>

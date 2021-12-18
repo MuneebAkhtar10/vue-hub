@@ -498,9 +498,23 @@ export default {
         lorem9: { startTime: "18:00", endTime: "23:00" },
         lorem10: { startTime: "11:00", endTime: "22:30" },
       },
+      monthNames: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
       viewsList: ["today", "week", "month"],
-      viewsIndex: 0,
       appointments: [],
+      appointmentsForMonthlyView: [],
       weekday: [],
       timeRanges: [],
       daysForMonthlyView: [],
@@ -516,6 +530,8 @@ export default {
       lastWeekday: "",
       month: "",
       yearForMonth: 0,
+      monthlyViewKey: 0,
+      viewsIndex: 0,
       appointmentFixed: true,
       firstInitializationOfDate: true,
       showAppointmentPopup: false,
@@ -1085,6 +1101,10 @@ export default {
           _this.dataShaperForWeekView();
         });
       }
+      if (_this.view === "month") {
+        _this.selectedCarerId = _this.carers[0].id;
+        _this.filterAppointmentsForMonthlyView();
+      }
     },
     selectCarer: function(carerId) {
       var _this = this;
@@ -1103,6 +1123,8 @@ export default {
         _this.$nextTick(() => {
           _this.dataShaperForWeekView();
         });
+      } else if (_this.view === "month") {
+        _this.filterAppointmentsForMonthlyView();
       }
     },
     viewChange: function(type) {
@@ -1293,21 +1315,8 @@ export default {
     },
     calculateMonthDays: function() {
       var _this = this;
-      var months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      var monthNumber = months.indexOf(_this.month) + 1;
+      _this.daysForMonthlyView = [];
+      var monthNumber = _this.monthNames.indexOf(_this.month) + 1;
       var monday = moment(
         "01-" + monthNumber + "-" + _this.yearForMonth,
         "DD/MM/YYYY"
@@ -1341,53 +1350,32 @@ export default {
         monday.add(7, "d");
       }
       if (monday.date() != 1) {
-        for (i = 1; i <= monday.date(); i++) {
+        for (i = 1; i < monday.date(); i++) {
           _this.daysForMonthlyView.push(i);
         }
       }
-      console.log(monday);
     },
     getPreviousMonth: function() {
       var _this = this;
-      var months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      _this.month = months[(months.indexOf(_this.month) + 12 - 1) % 12];
+      _this.month =
+        _this.monthNames[(_this.monthNames.indexOf(_this.month) + 12 - 1) % 12];
       if (_this.month == "December") {
         _this.yearForMonth -= 1;
       }
+      _this.calculateMonthDays();
+      _this.filterAppointmentsForMonthlyView();
+      _this.monthlyViewKey += 1;
     },
     getNextMonth: function() {
       var _this = this;
-      var months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      _this.month = months[(months.indexOf(_this.month) + 12 + 1) % 12];
+      _this.month =
+        _this.monthNames[(_this.monthNames.indexOf(_this.month) + 12 + 1) % 12];
       if (_this.month == "January") {
         _this.yearForMonth += 1;
       }
+      _this.calculateMonthDays();
+      _this.filterAppointmentsForMonthlyView();
+      _this.monthlyViewKey += 1;
     },
     getCellRowForMonthView: function(carerIndex) {
       var startDayIndex = carerIndex == 0 ? 0 : carerIndex * 6 + carerIndex;
@@ -1400,6 +1388,60 @@ export default {
         daysArray.push(this.daysForMonthlyView[i]);
       }
       return daysArray;
+    },
+    filterAppointmentsForMonthlyView: function() {
+      var _this = this;
+      var monthNumber = _this.monthNames.indexOf(_this.month);
+      var daysInMonth = new Date(
+        _this.yearForMonth,
+        monthNumber + 1,
+        0
+      ).getDate();
+      for (var i = 0; i < daysInMonth; i++) {
+        _this.appointmentsForMonthlyView[i] = [];
+        _this.appointmentsForMonthlyView[i] = _.filter(
+          _this.allAppointments,
+          function(o) {
+            return (
+              o.date.getMonth() === monthNumber &&
+              o.date.getDate() === i + 1 &&
+              o.carer.id === _this.selectedCarerId
+            );
+          }
+        );
+        _this.$nextTick(() => {
+          _this.dataShaperForMonthlyView();
+        });
+      }
+    },
+    dataShaperForMonthlyView: function() {
+      var _this = this;
+      _.each(_this.appointmentsForMonthlyView, (apt, aptIndex) => {
+        if (!_.isEmpty(apt)) {
+          var cellNumber = _this.jQueryForAreaMonthlyView(1, aptIndex);
+        }
+      });
+    },
+    jQueryForAreaMonthlyView: function(cellNumber, aptIndex) {
+      var _this = this;
+      var jQueryselected = jQuery("#monthly-apt-" + aptIndex);
+
+      var jQuerycells = jQuery("table").find(".data-cell");
+      var colSpan = 0.75;
+      var jQuerycurrentCell = jQuery(jQuerycells[cellNumber]);
+      var cellWidth = jQuerycurrentCell.outerWidth();
+      var cellWidthPerMin = cellWidth / 60;
+
+      jQueryselected.css("width", cellWidth * colSpan);
+      jQueryselected.css("height", jQuerycurrentCell.outerHeight() - 2); // fiddle factor
+      jQueryselected.css("top", jQuerycurrentCell.position().top);
+      jQueryselected.css(
+        "left",
+        jQuerycurrentCell.position().left + cellWidthPerMin * 20
+      );
+      if (_this.view == "month") {
+        jQuerycurrentCell.addClass("data-cell-selected");
+      }
     },
   },
 };
