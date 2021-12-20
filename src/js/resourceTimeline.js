@@ -554,6 +554,8 @@ export default {
               month: "long",
             });
             _this.yearForMonth = _this.date.getFullYear();
+            _this.calculateMonthDays();
+
             _this.filterAppointments();
             _this.$nextTick(() => {
               _this.dataShaperForTodayView();
@@ -1418,7 +1420,7 @@ export default {
       var _this = this;
       _.each(_this.appointmentsForMonthlyView, (apt, aptIndex) => {
         if (!_.isEmpty(apt)) {
-          var cellNumber = _this.jQueryForAreaMonthlyView(1, aptIndex);
+          _this.jQueryForAreaMonthlyView(1, aptIndex);
         }
       });
     },
@@ -1426,8 +1428,8 @@ export default {
       var _this = this;
       var jQueryselected = jQuery("#monthly-apt-" + aptIndex);
 
-      var jQuerycells = jQuery("table").find(".data-cell");
-      var colSpan = 0.75;
+      var jQuerycells = jQuery("table").find(".monthlyDataCell");
+      var colSpan = 0.5;
       var jQuerycurrentCell = jQuery(jQuerycells[cellNumber]);
       var cellWidth = jQuerycurrentCell.outerWidth();
       var cellWidthPerMin = cellWidth / 60;

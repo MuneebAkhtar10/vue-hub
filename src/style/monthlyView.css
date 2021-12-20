@@ -1,0 +1,17 @@
+.monthlyViewHeaderText {
+  color: rgb(129, 129, 134);
+  font-size: 25px;
+  font-weight: bolder;
+  margin-left: 20px;
+}
+.monthlyDataCell {
+  color: rgb(129, 129, 134);
+  font-size: 20px;
+  font-weight: bolder;
+  border-left: dashed;
+  border-left-color: rgb(186, 186, 189);
+}
+.monthlyDataCell:last-child {
+  border-right: dashed;
+  border-right-color: rgb(186, 186, 189);
+}

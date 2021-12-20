@@ -291,13 +291,14 @@
                     </template>
                   </th>
                 </template>
+                <!-- Monthly table header -->
                 <template v-else>
                   <th
                     v-for="dayIndex in 7"
                     :key="dayIndex"
-                    class=" table_header"
+                    class="monthlyViewHeader"
                   >
-                    <div>
+                    <div class="monthlyViewHeaderText">
                       {{ getDay(dayIndex) }}
                     </div>
                   </th>
@@ -366,9 +367,10 @@
                     "
                   ></td>
                 </template>
+                <!-- monthly slots -->
                 <template v-if="view == 'month'">
                   <td
-                    class="data-cell"
+                    class="monthlyDataCell"
                     v-for="day in getCellRowForMonthView(carerIndex)"
                     :key="'day-' + day"
                   >
@@ -442,7 +444,7 @@
                       <div class="col-3">
                         <img
                           class="lastColumnIcon"
-                          src="../images/icons/blueMeter.png"
+                          src="../images/icons/Planned-Time.png"
                           alt="blueMeter"
                         />
                       </div>
@@ -453,7 +455,7 @@
                       <div class="col-3">
                         <img
                           class="lastColumnIcon"
-                          src="../images/icons/blueMeter.png"
+                          src="../images/icons/Actual-Time.png"
                           alt="blueMeter"
                         />
                       </div>
@@ -464,7 +466,7 @@
                       <div class="col-3">
                         <img
                           class="lastColumnIcon"
-                          src="../images/icons/blueMeter.png"
+                          src="../images/icons/Travel-Time.png"
                           alt="blueMeter"
                         />
                       </div>
@@ -599,4 +601,5 @@
 
 <script src="../js/resourceTimeline.js"></script>
 <style src="../style/styleSheet.css" />
+<style src="../style/monthlyView.css" />
 <style src="../style/stats.css" />
