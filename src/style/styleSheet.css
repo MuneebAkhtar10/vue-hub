@@ -7,7 +7,7 @@
   overflow-y: hidden;
 }
 
-.mainContainer>table th,
+.mainContainer > table th,
 table td {
   padding: 10px 50px;
   /* color: black; */
@@ -34,7 +34,7 @@ table td {
   /* margin-left: -2px; */
 }
 
-.mainContainer>.dates {
+.mainContainer > .dates {
   color: rgba(97, 104, 115, 1);
   white-space: nowrap;
   text-align: left;
@@ -559,7 +559,7 @@ input.search {
 }
 
 #card2 {
-  margin-left: 300px;
+  margin-left: 10%;
 }
 
 .date_pick {

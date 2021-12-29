@@ -149,6 +149,28 @@
           <div class="card_head" id="card3">
             <td style="min-width: 200px;">Carers working: 10</td>
           </div>
+          <!-- carer data -->
+          <div>
+            <div>
+              <img
+                style="width:60px"
+                src="../images/icons/profileImage.png"
+                alt="profileImage"
+              />
+            </div>
+          </div>
+          <div class="ps-2 pe-4" style="margin-top:-1%">
+            <div
+              style="text-align: center;font-size: 18px;font-weight: bold;color: rgba(2, 143, 169, 1);"
+            >
+              Emma Phillips
+            </div>
+            <div
+              style="text-align: center;font-size: 13px;font-weight: bolder;color: rgb(132, 132, 133);margin-top:-35%;margin-left:-10px"
+            >
+              Designation Here
+            </div>
+          </div>
           <button class="moreBtn">
             more<i class="bi bi-arrow-right" style="margin-left:15px"></i>
           </button>
