@@ -65,8 +65,17 @@
         </div>
       </div>
 
-      <div class="row justify-content-center clientTableContainer mt-2">
+      <div
+        class="row justify-content-center clientTableContainer mt-2"
+        style="height:500px"
+      >
         <table class="clientDetailsTable">
+          <div class="ps-2 allocateCarerDetailsContainer">
+            <allocate-carer-details
+              v-if="showAllocateCarerDetailPopup"
+            ></allocate-carer-details>
+          </div>
+
           <thead class="clientDetailsTableHeader">
             <tr>
               <th class="clientTableHeader">
@@ -208,6 +217,7 @@
 <script>
 import VueTimepicker from "vue3-timepicker/src/VueTimepicker.vue";
 import Datepicker from "vue3-datepicker";
+import ALLOCATE_CARER_DETAILS from "./allocateCarerDetailsPopup.vue";
 import { ref } from "vue";
 import _ from "lodash";
 import jQuery from "jquery";
@@ -266,11 +276,13 @@ export default {
       carerAppointments: [],
       allCarers: [],
       filteredCarers: [],
+      showAllocateCarerDetailPopup: true,
     };
   },
   components: {
     VueTimepicker,
     Datepicker,
+    "allocate-carer-details": ALLOCATE_CARER_DETAILS,
   },
   created() {
     var _this = this;

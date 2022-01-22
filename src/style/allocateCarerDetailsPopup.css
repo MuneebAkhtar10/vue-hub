@@ -1,0 +1,117 @@
+.carerDetailContainer {
+  position: absolute;
+  z-index: 10;
+  width: 65%;
+  height: auto;
+  background-color: rgb(255, 255, 255);
+  transition: opacity 0.3s ease;
+  box-shadow: 10px 10px 5px gray;
+  border-radius: 20px;
+  opacity: 20;
+}
+.profileIcon {
+  width: 80px;
+  margin-left: -30%;
+}
+.carerDetailName {
+  margin-left: -65%;
+  font-size: 24px;
+  color: rgba(2, 143, 169, 1);
+  font-weight: 900;
+}
+.belowDetails {
+  margin-left: 20%;
+  padding-left: 20%;
+}
+.singleCarerDetail {
+  font-size: 14px;
+  color: rgba(2, 143, 169, 1);
+  font-weight: bolder;
+  white-space: nowrap;
+  text-align: left;
+  margin-top: -15%;
+}
+.listCarerTime a {
+  text-decoration: none;
+  color: rgb(150, 150, 150);
+  font-size: 14px;
+  font-weight: bolder;
+  list-style: none;
+  float: left;
+  padding-left: 5px;
+}
+
+.listCarerTimeDropDown {
+  width: 160px;
+  background: #ffffff;
+  margin: -15px 0px 15px 0px;
+  border-radius: 10px;
+  box-shadow: none;
+  border: 1px solid #e6e3e3;
+}
+
+.listCarerTimeDropDownDefault {
+  padding: 0px 0px 0px 15px;
+  background: #ffffff;
+  color: rgb(150, 150, 150);
+  font-size: 14px;
+  cursor: pointer;
+  display: block;
+  font-weight: bolder;
+}
+.dropDownChevronIcon {
+  font-size: 20px;
+  display: flex;
+  margin-top: -12px;
+  float: right;
+  padding-right: 15px;
+}
+
+.slide,
+.slideTimer2,
+.slideFunder {
+  clear: both;
+  width: 100%;
+  height: 0px;
+  overflow: hidden;
+  text-align: center;
+  transition: height 0.4s ease;
+  list-style: none;
+}
+
+.slide li,
+.slideTimer2 li,
+.slideFunder li {
+  padding: 10px;
+}
+
+#touch,
+#touchTimer2,
+#touchFunder {
+  position: absolute;
+  opacity: 0;
+  height: 0px;
+}
+
+#touch:checked + .slide,
+#touchTimer2:checked + .slideTimer2,
+#touchFunder:checked + .slideFunder {
+  height: auto;
+}
+
+.editButtonStyle {
+  height: 40px;
+  background-color: white;
+  width: 70%;
+  border-radius: 7px;
+  box-shadow: none;
+  border: 1px solid #c7c6c6;
+  color: rgb(128, 128, 128);
+  white-space: nowrap;
+  text-align: left;
+  font-family: ITC Avant Garde Gothic Std;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 18px;
+  text-align: center;
+}
