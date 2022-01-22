@@ -149,28 +149,6 @@
           <div class="card_head" id="card3">
             <td style="min-width: 200px;">Carers working: 10</td>
           </div>
-          <!-- carer data -->
-          <div>
-            <div>
-              <img
-                style="width:60px"
-                src="../images/icons/profileImage.png"
-                alt="profileImage"
-              />
-            </div>
-          </div>
-          <div class="ps-2 pe-4" style="margin-top:-1%">
-            <div
-              style="text-align: center;font-size: 18px;font-weight: bold;color: rgba(2, 143, 169, 1);"
-            >
-              Emma Phillips
-            </div>
-            <div
-              style="text-align: center;font-size: 13px;font-weight: bolder;color: rgb(132, 132, 133);margin-top:-35%;margin-left:-10px"
-            >
-              Designation Here
-            </div>
-          </div>
           <button class="moreBtn">
             more<i class="bi bi-arrow-right" style="margin-left:15px"></i>
           </button>
@@ -504,7 +482,7 @@
           <template v-if="appointmentFixed && view != 'month'">
             <div v-for="apt in appointments" :key="apt.id">
               <div
-                class="table-area-selected popover__wrapper "
+                class="table-area-selected popover__wrapper"
                 :class="'se-' + apt.id"
                 :id="'apt-' + apt.id"
                 @dblclick="openAppointmentPopupForExistingAppointment(apt.id)"
@@ -532,7 +510,7 @@
                   </div>
                 </div> -->
 
-                <!-- Allocate Carer Profile -->
+                <!-- Allocate Carer Profile popover-->
                 <div class="allocateCarerProfilePopover">
                   <div class="row justify-content-end firstHeader">
                     <div class="col-2 pt-1">
@@ -603,15 +581,164 @@
               </div>
             </div>
           </template>
+          <!-- monthly appointments -->
           <template v-if="appointmentFixed && view == 'month'">
             <template v-for="(apt, aptIndex) in appointmentsForMonthlyView">
               <div
                 v-if="apt.length > 0"
                 :key="aptIndex"
                 :id="'monthly-apt-' + aptIndex"
-                class="table-area-selected"
+                class="table-area-selected popover__wrapper"
               >
                 <p class="patientsName ">Appointments # {{ apt.length }}</p>
+
+                <!-- Allocate Carer Profile popover-->
+                <div class="allocateCarerProfilePopover">
+                  <div class="row justify-content-end firstHeader">
+                    <div class="col-2 pt-1">
+                      <a @click="$emit('close')">
+                        <i class="bi bi-x popoverCross"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="row monthlyPopoverCarerContainer">
+                    <div
+                      class="justify-content-start col-3 monthlyPopoverCircularImage"
+                    >
+                      <img
+                        class="monthlyPopoverCarerImage pt-3 ms-2"
+                        src="../images/icons/profileImage.png"
+                        alt="profileImage"
+                      />
+                    </div>
+                    <div
+                      class="justify-content-start col-9 monthlyPopoverCarerData"
+                    >
+                      <div
+                        class="row justify-content-start pt-2 monthlyPopoverCarerName"
+                      >
+                        Harold Simmons
+                      </div>
+                      <div
+                        class="row justify-content-start monthlyPopoverCarerDesignation"
+                      >
+                        Designation here
+                      </div>
+                      <div
+                        class="row justify-content-center monthlyPopoverCarerTimings"
+                      >
+                        <div class="col-2">
+                          <img
+                            class="monthlyPopoverClockIcon"
+                            src="../images/icons/clock.png"
+                            alt="locationIcon"
+                          />
+                        </div>
+                        <div class="col-4 monthlyPopoverDay">
+                          <pre>Thursday 06,2021</pre>
+                        </div>
+                        <div
+                          class="col-1 ps-4"
+                          style="margin-top: -3%;font-weight: bolder;color: rgb(77, 75, 75);font-size:15px"
+                        >
+                          <pre>|</pre>
+                        </div>
+                        <div
+                          class="col-4"
+                          style="margin-top: -2%;font-weight: bolder;color: rgb(77, 75, 75);"
+                        >
+                          <pre>10:00 AM : 10:30 PM</pre>
+                        </div>
+                      </div>
+                      <div
+                        class="row justify-content-center monthlyPopoverCarerTimings"
+                      >
+                        <div class="col-2">
+                          <img
+                            class="monthlyPopoverLocationIcon"
+                            src="../images/icons/location.png"
+                            alt="locationIcon"
+                          />
+                        </div>
+                        <div class="col monthlyPopoverDescription">
+                          <pre>lorem ispum dotor hetre 123XYZ</pre>
+                        </div>
+                      </div>
+                      <div
+                        class="row"
+                        style="margin-top:-15px;margin-bottom:35px;width:130%"
+                      >
+                        <hr class="profileTextUnderline" />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 2nd carer -->
+                  <div class="row monthlyPopoverCarerContainer">
+                    <div
+                      class="justify-content-start col-3 monthlyPopoverCircularImage"
+                    >
+                      <img
+                        class="monthlyPopoverCarerImage pt-3 ms-2"
+                        src="../images/icons/profileImage.png"
+                        alt="profileImage"
+                      />
+                    </div>
+                    <div
+                      class="justify-content-start col-9 monthlyPopoverCarerData"
+                    >
+                      <div
+                        class="row justify-content-start pt-2 monthlyPopoverCarerName"
+                      >
+                        Harold Simmons
+                      </div>
+                      <div
+                        class="row justify-content-start monthlyPopoverCarerDesignation"
+                      >
+                        Designation here
+                      </div>
+                      <div
+                        class="row justify-content-center monthlyPopoverCarerTimings"
+                      >
+                        <div class="col-2">
+                          <img
+                            class="monthlyPopoverClockIcon"
+                            src="../images/icons/clock.png"
+                            alt="locationIcon"
+                          />
+                        </div>
+                        <div class="col-4 monthlyPopoverDay">
+                          <pre>Thursday 06,2021</pre>
+                        </div>
+                        <div
+                          class="col-1 ps-4"
+                          style="margin-top: -3%;font-weight: bolder;color: rgb(77, 75, 75);font-size:15px"
+                        >
+                          <pre>|</pre>
+                        </div>
+                        <div
+                          class="col-4"
+                          style="margin-top: -2%;font-weight: bolder;color: rgb(77, 75, 75);"
+                        >
+                          <pre>10:00 AM : 10:30 PM</pre>
+                        </div>
+                      </div>
+                      <div
+                        class="row justify-content-center monthlyPopoverCarerTimings"
+                      >
+                        <div class="col-2">
+                          <img
+                            class="monthlyPopoverLocationIcon"
+                            src="../images/icons/location.png"
+                            alt="locationIcon"
+                          />
+                        </div>
+                        <div class="col monthlyPopoverDescription">
+                          <pre>lorem ispum dotor hetre 123XYZ</pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </template>
           </template>

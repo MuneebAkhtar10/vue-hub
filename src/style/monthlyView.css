@@ -15,3 +15,52 @@
   border-right: dashed;
   border-right-color: rgb(186, 186, 189);
 }
+.monthlyPopoverCarerContainer {
+  margin: auto;
+  margin-top: -10%;
+}
+.monthlyPopoverCircularImage {
+}
+.monthlyPopoverCarerImage {
+  width: 80%;
+}
+.monthlyPopoverCarerData {
+  text-align: left;
+}
+.monthlyPopoverCarerName {
+  color: rgba(2, 143, 169, 1);
+  font-size: 20px;
+  font-weight: bolder;
+}
+.monthlyPopoverCarerDesignation {
+  color: rgb(129, 129, 134);
+  font-size: 12px;
+  margin-top: -25px;
+}
+.monthlyPopoverCarerTimings {
+  color: rgb(129, 129, 134);
+  font-size: 12px;
+  margin-top: -4%;
+}
+.monthlyPopoverClockIcon {
+  width: 80%;
+  padding-left: 0%;
+  margin-left: -220%;
+}
+.monthlyPopoverDay {
+  margin-left: -25%;
+  margin-top: -2%;
+  font-weight: bolder;
+  color: rgb(77, 75, 75);
+}
+.monthlyPopoverLocationIcon {
+  width: 70%;
+  padding-left: 0%;
+  margin-left: -50%;
+}
+.monthlyPopoverDescription {
+  margin-left: -10%;
+  margin-top: -2%;
+  font-weight: bolder;
+  color: rgb(77, 75, 75);
+}

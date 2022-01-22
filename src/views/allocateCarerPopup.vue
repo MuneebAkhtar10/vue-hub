@@ -134,11 +134,7 @@
                   <!-- <i class="bi bi-check-circle availabilityIcon"></i> -->
 
                   <!-- cross icon -->
-                  <img
-                    src="../images/icons/Cross.png"
-                    alt="blueMeter"
-                    class="availabilityIcon"
-                  />
+
                 </td>
                 <td
                   class="clientTableData"
