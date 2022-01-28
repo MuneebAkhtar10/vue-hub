@@ -3,7 +3,8 @@
     <sidebar />
 
     <div class="main-content">
-      <navbar />
+      <!-- <navbar /> -->
+      <topBlueHeader />
       <carerHeader />
 
       <div class="inner-content">

@@ -1,0 +1,18 @@
+.headerContainer {
+  background-color: #028fa9;
+}
+
+.midContent {
+  text-align: center;
+}
+.navListStyle {
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+.navListActiveStyle {
+  background-color: white;
+  color: #028fa9;
+  border-radius: 10px;
+  padding: 0px 5px 0px 5px;
+}

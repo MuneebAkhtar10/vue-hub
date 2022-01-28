@@ -10,6 +10,7 @@ import WEEKLY_VIEW_POPUP from "../views/weeklyPopupView.vue";
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import carerHeader from "../components/carerHeader.vue";
+import topBlueHeader from "../components/topBlueHeader.vue";
 import sidebar from "../components/sidebar";
 import "../scss/pages/_dashboard.scss";
 import { startOfWeek, endOfWeek } from "date-fns";
@@ -602,6 +603,7 @@ export default {
     Datepicker,
     navbar: navbar,
     carerHeader: carerHeader,
+    topBlueHeader: topBlueHeader,
     sidebar: sidebar,
   },
   created() {
