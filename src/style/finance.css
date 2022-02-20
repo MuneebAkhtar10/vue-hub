@@ -1,0 +1,119 @@
+body{
+  background-color: white;
+  height: 100%;
+}
+.tableInvoiceContainer{
+  margin-left: 15px;
+  border-left: 1px dashed rgb(197, 196, 196) ;
+  border-right: 1px dashed rgb(197, 196, 196) ;
+  margin-right: 15px;
+  height: 50%;
+}
+.financeTable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  
+}
+
+tr:nth-child(even){background-color: #da1010}
+
+.financeMainTableHeader {
+  font-size: 12px;
+  font-weight: bolder;
+  color: #026475;
+}
+
+.financeClientTableHeader,
+.financeClientTableData {
+  border-right: 1px dashed rgb(221, 221, 221);
+  border-bottom: 1px dashed rgb(221, 221, 221);
+  text-align: center;
+  color: #026475;
+  font-weight: bold;
+  padding: 4px 2px 4px 2px;
+}
+.financeClientTableHeader {
+  text-align-last: justify;
+  padding-top: 0px;
+  padding-bottom: 8px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-right: 1px dashed rgb(221, 221, 221);
+  border-bottom: 1px dashed rgb(221, 221, 221);
+  font-weight: bolder;
+}
+
+.financeDownChivronStyle {
+  
+}
+
+.financeUpChivronStyle {
+  margin-left: 2px;
+}
+.carerIconsFinanceTable{
+  height: 35px;
+  width: 35px;
+}
+
+.flex-container {
+  display: flex;
+  padding: 16px;
+  justify-content: space-between;
+}
+.flex-container-col-2{
+  display: flex;
+}
+.iconsContainer{
+  border: 2px solid rgb(226, 226, 226);
+  width:30px;
+  height:30px;
+  border-radius:5px;
+  text-align: center;
+  margin-top: -5px;
+  margin-right: 5px;
+}
+.financeIconsStyle{
+  width: 15px;
+  height: 15px;
+  align-items: center;
+  margin-top: 6px;
+}
+.invoiceContainer{
+  border: 2px solid rgb(226, 226, 226);
+  border-radius:5px;
+}
+.carehubIconStyle{
+  /* width:50px;
+  height: 50px; */
+}
+.InvoiceTextStyle{
+  font-size: 12px;
+  font-weight: bold;
+  color: #026475;
+}
+
+.invoiceTableHeader, .invoiceTableData {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  
+  font-size: 12px;
+}
+.invoiceTableHeader{
+ background-color:  rgba(67, 218, 159, 1);
+ color: white;
+}
+.createInvoiceButton {
+  background-color: rgba(67, 218, 159, 1);
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
