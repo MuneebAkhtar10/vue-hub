@@ -1,0 +1,42 @@
+.alphabetContainer{
+    border-bottom: 5px solid #f9f9f9;
+}
+.alphabetStyle{
+  margin: 0 0 21px 1px;
+  font-family: ITCAvantGardeStd-Demi;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  /* line-height: 3.18; */
+  letter-spacing: 0.13px;
+  text-align: left;
+  color: #616873;
+  cursor: pointer;
+  width: 25px;
+  text-align: center;
+}
+.alphabetStyle:hover{
+  background-color: #43da9f;
+  border-radius: 25px;
+
+}
+.pagination {
+  display: inline-block;
+}
+
+.pagination2 a {
+  color: #bebebe;
+  float: left;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+
+.pagination2 a.active {
+  color: #028FA9;
+  font-weight: bolder;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
