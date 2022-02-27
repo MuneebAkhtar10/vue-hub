@@ -3,6 +3,7 @@ import jQuery from "jquery";
 import { ref } from "vue";
 import moment from "moment";
 import POPUP_APPOINTMENT from "../views/popupAppointment.vue";
+import EDIT_INVOICE_POPUP from "../views/editInvoicePopup.vue";
 import ALLOCATE_CARER from "../views/allocateCarerPopup.vue";
 import CARER_PROFILE_POPUP from "../views/carerProfilePopup.vue";
 import OPTIONAL_POPUP from "../views/optionalPopup.vue";
@@ -10,6 +11,7 @@ import WEEKLY_VIEW_POPUP from "../views/weeklyPopupView.vue";
 import Datepicker from "vue3-datepicker";
 import navbar from "../components/nav.vue";
 import carerHeader from "../components/carerHeader.vue";
+import searchHeader from "../components/searchHeader.vue";
 import topBlueHeader from "../components/topBlueHeader.vue";
 import sidebar from "../components/sidebar";
 import "../scss/pages/_dashboard.scss";
@@ -547,7 +549,7 @@ export default {
   },
   watch: {
     date: {
-      handler: function(newVal, oldVal) {
+      handler: function (newVal, oldVal) {
         var _this = this;
         if (!_this.firstInitializationOfDate) {
           if (_this.date && _this.date != "") {
@@ -570,7 +572,7 @@ export default {
     },
   },
   computed: {
-    currentTimeSlot: function() {
+    currentTimeSlot: function () {
       var date = new Date();
       date.setHours(date.getHours() + Math.round(date.getMinutes() / 60));
       date.setMinutes(0, 0, 0);
@@ -580,12 +582,12 @@ export default {
         minute: "2-digit",
       });
     },
-    dayExists: function() {
-      return function(dayNumber) {
+    dayExists: function () {
+      return function (dayNumber) {
         return this.weekday.indexOf(dayNumber) > -1;
       };
     },
-    showCover: function() {
+    showCover: function () {
       return (
         this.showAppointmentPopup ||
         this.showAllocatePopup ||
@@ -600,10 +602,12 @@ export default {
     "carer-profile-popup": CARER_PROFILE_POPUP,
     "optional-popup": OPTIONAL_POPUP,
     "weekly-view-popup": WEEKLY_VIEW_POPUP,
+    "edit-invoice-popup": EDIT_INVOICE_POPUP,
     Datepicker,
     navbar: navbar,
     carerHeader: carerHeader,
     topBlueHeader: topBlueHeader,
+    searchHeader: searchHeader,
     sidebar: sidebar,
   },
   created() {
@@ -623,7 +627,7 @@ export default {
     this.calculateMonthDays();
   },
   methods: {
-    createTimeInterval: function() {
+    createTimeInterval: function () {
       let items = [];
       for (var hour = 0; hour < 24; hour++) {
         items.push([hour, 0]);
@@ -644,14 +648,14 @@ export default {
         return formatter.format(date);
       });
     },
-    getTwelveHourTime: function(timeString) {
+    getTwelveHourTime: function (timeString) {
       var H = +timeString.substr(0, 2);
       var h = H % 12 || 12;
       var ampm = H < 12 || H === 24 ? "AM" : "PM";
       timeString = h + timeString.substr(2, 3) + ampm;
       return timeString;
     },
-    dataShaperForTodayView: function() {
+    dataShaperForTodayView: function () {
       var _this = this;
       _.each(_this.appointments, (apt, aptIndex) => {
         var carerIndex = _.findIndex(_this.carers, { id: apt.carer.id });
@@ -672,7 +676,7 @@ export default {
       //   _this.jQueryForCarerSlots(cell, carer.id, colSpan);
       // });
     },
-    jQueryForArea: function(cellNumber, aptId, colSpan) {
+    jQueryForArea: function (cellNumber, aptId, colSpan) {
       var _this = this;
       var isDragging = false;
       var jQueryselected = jQuery("#apt-" + aptId);
@@ -778,7 +782,7 @@ export default {
         }
       }
     },
-    resizingOnMouseDown: function(e, aptId) {
+    resizingOnMouseDown: function (e, aptId) {
       var _this = this;
       var index = _.findIndex(_this.appointments, { id: aptId });
       let currentResizer;
@@ -844,7 +848,81 @@ export default {
         }
       }
     },
-    openAppointmentPopupForExistingAppointment: function(appointmentId) {
+    resizingOnMouseDownFromBack: function (e, aptId) {
+      var _this = this;
+      var index = _.findIndex(_this.appointments, { id: aptId });
+      let currentResizer;
+      currentResizer = e.target;
+      this.isResizing = true;
+      let prevX = e.clientX;
+      const el = document.querySelector("#apt-" + aptId);
+      var oldWidth = parseFloat(el.style.width);
+      var duration = _this.calculateDuration(
+        _this.appointments[index].startTime,
+        _this.appointments[index].endTime
+      );
+      var durationInMinutes = duration[0] * 60 + duration[1];
+      var pxPerMin = oldWidth / durationInMinutes;
+      window.addEventListener("mousemove", mousemove);
+      window.addEventListener("mouseup", mouseup);
+      let original_width = parseFloat(getComputedStyle(el, null).getPropertyValue('width').replace('px', ''));
+      let original_x = el.getBoundingClientRect().left
+      let original_mouse_x = e.pageX;
+
+      function mousemove(e) {
+        const rect = el.getBoundingClientRect();
+        console.log('rect.width,prevX,e.clientX', rect.width, prevX, e.clientX)
+        if (currentResizer.classList.contains("w")) {
+          // el.style.width = rect.width - (prevX - e.clientX) + "px";
+          const width = original_width - (e.pageX - original_mouse_x)
+        }
+        // prevX = e.clientX;
+      }
+
+      function mouseup() {
+        window.removeEventListener("mousemove", mousemove);
+        window.removeEventListener("mouseup", mouseup);
+        _this.isResizing = false;
+        if (prevX > e.clientX) {
+          el.style.width = width + 'px'
+          el.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+          var minsToAdd = parseInt(
+            (parseFloat(el.style.width) - oldWidth) / pxPerMin
+          );
+          var time = _this.appointments[index].endTime;
+          var newTime = new Date(
+            new Date("1970/01/01 " + time).getTime() + minsToAdd * 60000
+          ).toLocaleTimeString("en-UK", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          });
+          console.log(
+            "update arr",
+            (_this.appointments[index].endTime = newTime)
+          );
+        }
+        if (prevX < e.clientX) {
+          el.style.width = width + 'px'
+          el.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+          var minsToAdd =
+            parseInt(oldWidth - parseFloat(el.style.width)) / pxPerMin;
+          var time = _this.appointments[index].endTime;
+          var newTime = new Date(
+            new Date("1970/01/01 " + time).getTime() - minsToAdd * 60000
+          ).toLocaleTimeString("en-UK", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          });
+          console.log(
+            "update arr",
+            (_this.appointments[index].endTime = newTime)
+          );
+        }
+      }
+    },
+    openAppointmentPopupForExistingAppointment: function (appointmentId) {
       var _this = this;
       _this.appointmentForPopup = _.find(_this.appointments, {
         id: appointmentId,
@@ -856,26 +934,26 @@ export default {
       _this.existingAppointment = true;
       _this.showAllocatePopup = true;
     },
-    onCloseAppointmentPopup: function() {
+    onCloseAppointmentPopup: function () {
       var _this = this;
       _this.showAppointmentPopup = false;
       _this.slotStartTime = "";
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};
     },
-    onCloseAllocatePopup: function() {
+    onCloseAllocatePopup: function () {
       var _this = this;
       _this.showAllocatePopup = false;
       _this.slotStartTime = "";
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};
     },
-    deleteAppointmentConfirm: function(event) {
+    deleteAppointmentConfirm: function (event) {
       var _this = this;
       var html = "This will delete the appointment.";
       _this.showSweetAlert(html, _this.deleteAppointment, event);
     },
-    deleteAppointment: function(event) {
+    deleteAppointment: function (event) {
       var _this = this;
       _this.appointmentFixed = false;
       _this.appointmentFixed = true;
@@ -886,12 +964,12 @@ export default {
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};
     },
-    saveAppointmentConfirm: function(event) {
+    saveAppointmentConfirm: function (event) {
       var _this = this;
       var html = "This will save the appointment.";
       _this.showSweetAlert(html, _this.saveAppointment, event);
     },
-    saveAppointment: function(event) {
+    saveAppointment: function (event) {
       var _this = this;
       if (_this.existingAppointment) {
         if (this.date.toDateString() === event.date.toDateString()) {
@@ -952,7 +1030,7 @@ export default {
       _this.slotEndTime = "";
       _this.appointmentForPopup = {};
     },
-    calculateDuration: function(startTime, endTime) {
+    calculateDuration: function (startTime, endTime) {
       var ary1 = startTime;
       ary1 = ary1.split(":");
       var ary2 = endTime;
@@ -971,18 +1049,18 @@ export default {
       duration[1] = parseInt(duration[1]);
       return duration;
     },
-    onChangeDate: function() {
+    onChangeDate: function () {
       var _this = this;
       _this.filterAppointments();
       _this.dataShaperForTodayView();
     },
-    filterAppointments: function() {
+    filterAppointments: function () {
       var _this = this;
-      _this.appointments = _.filter(_this.allAppointments, function(o) {
+      _this.appointments = _.filter(_this.allAppointments, function (o) {
         return o.date.toDateString() === _this.date.toDateString();
       });
     },
-    openAppointmentPopupForNewAppointment: function(
+    openAppointmentPopupForNewAppointment: function (
       time,
       timeIndex,
       carerIndex
@@ -995,7 +1073,7 @@ export default {
       _this.slotCarer = _this.carers[carerIndex];
       _this.showAppointmentPopup = true;
     },
-    filterAppointmentsByCarer: function() {
+    filterAppointmentsByCarer: function () {
       var _this = this;
       if (_this.carerSearchString.length > 3) {
         _this.appointments = [];
@@ -1038,7 +1116,7 @@ export default {
         });
       }
     },
-    addToWeekday: function(day) {
+    addToWeekday: function (day) {
       var _this = this;
       var dayIndex = _this.weekday.indexOf(day);
       if (dayIndex === -1) {
@@ -1048,7 +1126,7 @@ export default {
       }
       // _this.filterAppointmentsBySelectedWeekdays();
     },
-    sortBy: function() {
+    sortBy: function () {
       var _this = this;
       _this.sortCarers = !_this.sortCarers;
       _this.appointments = [];
@@ -1086,11 +1164,11 @@ export default {
         });
       }
     },
-    timelineViewChange: function() {
+    timelineViewChange: function () {
       var _this = this;
       if (_this.view === "week") {
         _this.selectedCarerId = _this.carers[0].id;
-        _this.appointments = _.filter(_this.allAppointments, function(o) {
+        _this.appointments = _.filter(_this.allAppointments, function (o) {
           return (
             o.date.getTime() <= _this.lastWeekday.getTime() &&
             o.date.getTime() >= _this.firstWeekday.getTime() &&
@@ -1110,13 +1188,13 @@ export default {
         _this.filterAppointmentsForMonthlyView();
       }
     },
-    selectCarer: function(carerId) {
+    selectCarer: function (carerId) {
       var _this = this;
       _this.selectedCarerId =
         _this.view === "week" || _this.view === "month" ? carerId : "";
       if (_this.view === "week") {
         // _this.selectedCarerId = carerId;
-        _this.appointments = _.filter(_this.allAppointments, function(o) {
+        _this.appointments = _.filter(_this.allAppointments, function (o) {
           return (
             o.date.getTime() <= _this.lastWeekday.getTime() &&
             o.date.getTime() >= _this.firstWeekday.getTime() &&
@@ -1131,7 +1209,7 @@ export default {
         _this.filterAppointmentsForMonthlyView();
       }
     },
-    viewChange: function(type) {
+    viewChange: function (type) {
       var _this = this;
       if (type == "up") {
         _this.viewsIndex =
@@ -1145,7 +1223,7 @@ export default {
         _this.timelineViewChange();
       }
     },
-    showSweetAlert: function(html, successCallback, event) {
+    showSweetAlert: function (html, successCallback, event) {
       var _this = this;
       _this
         .$swal({
@@ -1157,7 +1235,7 @@ export default {
           cancelButtonColor: "#d33",
           confirmButtonText: "OK",
         })
-        .then(function(result) {
+        .then(function (result) {
           if (result.value) {
             successCallback(event);
           } else if (result.dismiss == "cancel") {
@@ -1165,12 +1243,12 @@ export default {
           }
         });
     },
-    getCurrentWeekDayRange: function() {
+    getCurrentWeekDayRange: function () {
       var curr = new Date(); // get current date
       this.firstWeekday = startOfWeek(curr, { weekStartsOn: 1 });
       this.lastWeekday = endOfWeek(curr, { weekStartsOn: 1 });
     },
-    dateFormatter: function(date) {
+    dateFormatter: function (date) {
       // date = new Date(date);
       if (this.view == "week") {
         if (typeof date == "number") {
@@ -1192,7 +1270,7 @@ export default {
       } else if (this.view == "month") {
       }
     },
-    getPreviousWeekDayRange: function() {
+    getPreviousWeekDayRange: function () {
       var _this = this;
       var date;
       if (typeof _this.firstWeekday == "number") {
@@ -1208,7 +1286,7 @@ export default {
       _this.firstWeekday = new Date(_this.firstWeekday);
       _this.lastWeekday = new Date(_this.lastWeekday);
 
-      _this.appointments = _.filter(_this.allAppointments, function(o) {
+      _this.appointments = _.filter(_this.allAppointments, function (o) {
         return (
           o.date.getTime() <= _this.lastWeekday.getTime() &&
           o.date.getTime() >= _this.firstWeekday.getTime() &&
@@ -1220,7 +1298,7 @@ export default {
         _this.dataShaperForWeekView();
       });
     },
-    getNextWeekDayRange: function() {
+    getNextWeekDayRange: function () {
       var _this = this;
       var date;
       if (typeof _this.firstWeekday == "number") {
@@ -1235,7 +1313,7 @@ export default {
       );
       _this.firstWeekday = startOfWeek(nextweek, { weekStartsOn: 1 });
       _this.lastWeekday = endOfWeek(nextweek, { weekStartsOn: 1 });
-      _this.appointments = _.filter(_this.allAppointments, function(o) {
+      _this.appointments = _.filter(_this.allAppointments, function (o) {
         return (
           o.date.getTime() <= _this.lastWeekday.getTime() &&
           o.date.getTime() >= _this.firstWeekday.getTime() &&
@@ -1247,7 +1325,7 @@ export default {
         _this.dataShaperForWeekView();
       });
     },
-    jQueryForCarerSlots: function(cellNumber, carerId, colSpan) {
+    jQueryForCarerSlots: function (cellNumber, carerId, colSpan) {
       var _this = this;
       var isDragging = false;
       var jQueryselected = jQuery("#timeline-length-" + carerId);
@@ -1263,7 +1341,7 @@ export default {
       // jQueryselected.css("border", "2px solid #e3165b");
       // jQueryselected.css("border-radius", "5px");
     },
-    dataShaperForWeekView: function() {
+    dataShaperForWeekView: function () {
       var _this = this;
       _.each(_this.appointments, (apt, aptIndex) => {
         //Instead of carer index we use day number to get the timeslot
@@ -1276,37 +1354,37 @@ export default {
         _this.jQueryForArea(apt.cell, apt.id, colSpan);
       });
     },
-    calculateKey: function(carerIndex, time) {
+    calculateKey: function (carerIndex, time) {
       var timeCell = time.split(":");
       var cell = carerIndex * 24 + parseInt(timeCell[0]);
       return cell;
     },
-    onShowCarerDetailPopup: function() {
+    onShowCarerDetailPopup: function () {
       var _this = this;
       _this.showCarerDetailPopup = true;
     },
-    onShowOptionsPopup: function() {
+    onShowOptionsPopup: function () {
       var _this = this;
       _this.showOptionsPopup = true;
     },
-    onCloseCarerDetailPopup: function() {
+    onCloseCarerDetailPopup: function () {
       var _this = this;
       _this.showCarerDetailPopup = false;
     },
-    onCloseOptionsPopup: function() {
+    onCloseOptionsPopup: function () {
       var _this = this;
       _this.showOptionsPopup = false;
     },
-    onShowWeeklyViewPopup: function() {
+    onShowWeeklyViewPopup: function () {
       var _this = this;
       _this.slotCarer = _.find(_this.carers, { id: _this.selectedCarerId });
       _this.showWeeklyViewPopup = true;
     },
-    onCloseWeeklyViewPopup: function() {
+    onCloseWeeklyViewPopup: function () {
       var _this = this;
       _this.showWeeklyViewPopup = false;
     },
-    getDay: function(dayNumber) {
+    getDay: function (dayNumber) {
       var weekday = new Array(7);
       weekday[1] = "Monday";
       weekday[2] = "Tuesday";
@@ -1317,7 +1395,7 @@ export default {
       weekday[7] = "Sunday";
       return weekday[dayNumber];
     },
-    calculateMonthDays: function() {
+    calculateMonthDays: function () {
       var _this = this;
       _this.daysForMonthlyView = [];
       var monthNumber = _this.monthNames.indexOf(_this.month) + 1;
@@ -1359,7 +1437,7 @@ export default {
         }
       }
     },
-    getPreviousMonth: function() {
+    getPreviousMonth: function () {
       var _this = this;
       _this.month =
         _this.monthNames[(_this.monthNames.indexOf(_this.month) + 12 - 1) % 12];
@@ -1370,7 +1448,7 @@ export default {
       _this.filterAppointmentsForMonthlyView();
       _this.monthlyViewKey += 1;
     },
-    getNextMonth: function() {
+    getNextMonth: function () {
       var _this = this;
       _this.month =
         _this.monthNames[(_this.monthNames.indexOf(_this.month) + 12 + 1) % 12];
@@ -1381,7 +1459,7 @@ export default {
       _this.filterAppointmentsForMonthlyView();
       _this.monthlyViewKey += 1;
     },
-    getCellRowForMonthView: function(carerIndex) {
+    getCellRowForMonthView: function (carerIndex) {
       var startDayIndex = carerIndex == 0 ? 0 : carerIndex * 6 + carerIndex;
       var endDayIndex = carerIndex == 0 ? 6 : carerIndex * 6 + 6 + carerIndex;
       var daysArray = [];
@@ -1393,7 +1471,7 @@ export default {
       }
       return daysArray;
     },
-    filterAppointmentsForMonthlyView: function() {
+    filterAppointmentsForMonthlyView: function () {
       var _this = this;
       var monthNumber = _this.monthNames.indexOf(_this.month);
       var daysInMonth = new Date(
@@ -1405,7 +1483,7 @@ export default {
         _this.appointmentsForMonthlyView[i] = [];
         _this.appointmentsForMonthlyView[i] = _.filter(
           _this.allAppointments,
-          function(o) {
+          function (o) {
             return (
               o.date.getMonth() === monthNumber &&
               o.date.getDate() === i + 1 &&
@@ -1418,7 +1496,7 @@ export default {
         });
       }
     },
-    dataShaperForMonthlyView: function() {
+    dataShaperForMonthlyView: function () {
       var _this = this;
       _.each(_this.appointmentsForMonthlyView, (apt, aptIndex) => {
         if (!_.isEmpty(apt)) {
@@ -1426,7 +1504,7 @@ export default {
         }
       });
     },
-    jQueryForAreaMonthlyView: function(cellNumber, aptIndex) {
+    jQueryForAreaMonthlyView: function (cellNumber, aptIndex) {
       var _this = this;
       var jQueryselected = jQuery("#monthly-apt-" + aptIndex);
 

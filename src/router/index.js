@@ -71,6 +71,11 @@ const routes = [
     name: "newResourceTimeline",
     component: () => import("../views/newResourceTimeline.vue"),
   },
+  {
+    path: "/finance",
+    name: "finance",
+    component: () => import("../views/financeView.vue"),
+  },
 ];
 
 const router = createRouter({

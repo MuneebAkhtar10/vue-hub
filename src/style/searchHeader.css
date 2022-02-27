@@ -1,0 +1,188 @@
+.calanderMainContainer {
+    display: flex;
+    padding-top: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: ITC Avant Garde Gothic Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgba(97, 104, 115, 1);
+  }
+  .calanderTimelineViewName {
+    display: flex;
+    margin-bottom: 0.5em;
+    line-height: 41px;
+    border-radius: 5px;
+    border: solid 1px #ccc;
+    height: 40px;
+    background-color: #43da9f;
+  }
+  .calandarIconBtn {
+    background: url("../images/icons/Calendar_bc.png");
+    display: block;
+    background-size: contain;
+    margin: 10px 0px 0px 15px;
+    width: 19px;
+    height: 19px;
+    overflow: visible;
+  }
+  .calanderTextBtn {
+    margin-left: 12px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: ITC Avant Garde Gothic Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.06px;
+  }
+
+  .calanderDownIcon {
+    width: 15px;
+    color: white;
+    margin: 4px 2px 0px 28px;
+    font-size: 15px;
+  }
+  
+  .calanderUpIcon {
+    width: 15.788px;
+    height: 9px;
+    color: white;
+    margin: 4px 5px 0px 1px;
+    font-size: 15px;
+  }
+  .weekTimeSelector {
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 30px;
+    border-radius: 5px;
+    border: solid 1px #ccc;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .searchHeaderMoreBtn {
+    height: 40px;
+    background-color: #43da9f;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: ITC Avant Garde Gothic Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    padding: 10px;
+  }
+  .searchHeaderSettingBtn {
+    background-color: #028fa9;
+    margin-left: 10px;
+    height: 40px;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: ITC Avant Garde Gothic Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    padding: 0px 10px 0px 10px ;
+  }
+  
+  .searchHeaderThreeVerticalDots {
+    font-size: 30px;
+    color: #42b983;
+    cursor: pointer;
+  }
+
+  form.example{
+      width: 530px;
+  }
+
+  form.example input[type=text] {
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid rgb(224, 224, 224);
+    float: left;
+    width: 60%;
+    background: #ffffff;
+    border-radius: 5px;
+    color: rgb(206, 205, 205);
+    border-right: none;
+  }
+  
+  form.example .searchBtn {
+    padding: 13px 20px 12px 20px;
+    background: #67d8a5;
+    color: white;
+    font-size: 12px;
+    border: none;
+    border-left: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: -2px;
+  }
+  
+  form.example button:hover {
+    background: #42b983;
+  }
+  
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  .dropbtn {
+    background-color: #ffffff;
+    color: rgb(206, 205, 205);
+    font-size: 12px;
+    border: 1px solid rgb(224, 224, 224);
+    padding: 12px 5px 11px 5px;
+    cursor: pointer;
+    margin-left: -2px;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    /* min-width: 160px; */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 12px;
+    
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: rgb(206, 205, 205);
+    padding: 12px 13px 10px 12px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid rgb(224, 222, 222);
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #028fa9}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {
+    background-color: white;
+  }

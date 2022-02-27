@@ -1,0 +1,167 @@
+  .modal {
+    display: block;
+    position: fixed;
+    z-index: 20;
+    padding-top: 200px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+    border-radius: 20px;
+  }
+
+  .editInvoiceHeader{
+      height: 40px;
+      border-bottom: 5px solid #f9f9f9;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .listContainer{
+    display: flex;
+    justify-content: space-between
+  }
+  .listContainerInputLabel{
+        margin: 14px 14px 20px 0px;
+        font-family: ITCAvantGardeStd-Demi;
+        font-size: 13px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.23;
+        letter-spacing: 0.08px;
+        text-align: left;
+        color: #028fa9;
+  }
+
+  .listContainerInputBox{
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      height: 40px;
+      color: #5d5d5d;
+      padding-left: 12px;
+  }
+  .azBTN{
+    width: 50px;
+    height: 43px;
+    margin: 0 57px 7px 10px;
+    padding: 11px 9px 11px 10px;
+    background-color: #43da9f;
+    border-radius: 5px;
+    width: 36px;
+    font-family: Poppins;
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.53;
+  letter-spacing: 0.09px;
+  text-align: left;
+  color: #fff;
+  }
+  .editInvoiceDropDownChevronIcon {
+    font-size: 20px;
+    display: flex;
+    margin-top: 12px;
+    float: right;
+    margin-left: -25px;
+    position: relative;
+    padding-right: 5px;
+  }
+
+  .containerCheckboxCss {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 1.31;
+    letter-spacing: 0.08px;
+    color: teal;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .containerCheckboxCss input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    background-color: rgb(255, 255, 255);
+    border-radius:8px;
+    border: solid 2px #43da9f
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .containerCheckboxCss:hover input ~ .checkmark {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .containerCheckboxCss input:checked ~ .checkmark {
+    background-color: #21f33d;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .containerCheckboxCss input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .containerCheckboxCss .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }

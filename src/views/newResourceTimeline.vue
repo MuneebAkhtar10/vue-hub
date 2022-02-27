@@ -1,12 +1,11 @@
 <template>
   <div class="home">
     <sidebar />
-
+  
     <div class="main-content">
       <!-- <navbar /> -->
       <topBlueHeader />
       <carerHeader />
-
       <div class="inner-content">
         <div class="calender_container">
           <div class="timelineViewName">
