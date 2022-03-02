@@ -14,8 +14,21 @@
           alt="marchart"
         />
       </div>
-      <div class="ps-2" style="font-size:12px;color:#028fa9;font-weight:bolder">James Smith</div>
-      <i class="bi bi-x-circle" style="margin-top:-45px;margin-right:-20px;cursor:pointer;color:#028fa9"></i>
+      <div
+        class="ps-2"
+        style="font-size: 12px; color: #028fa9; font-weight: bolder"
+      >
+        James Smith
+      </div>
+      <i
+        class="bi bi-x-circle"
+        style="
+          margin-top: -45px;
+          margin-right: -20px;
+          cursor: pointer;
+          color: #028fa9;
+        "
+      ></i>
     </div>
     <div
       class="col-2 mt-4 ms-2 pt-1 closableBtn"
@@ -28,8 +41,21 @@
           alt="marchart"
         />
       </div>
-      <div class="ps-2" style="font-size:12px;color:#028fa9;font-weight:bolder">James Smith</div>
-      <i class="bi bi-x-circle" style="margin-top:-45px;margin-right:-20px;cursor:pointer;color:#028fa9"></i>
+      <div
+        class="ps-2"
+        style="font-size: 12px; color: #028fa9; font-weight: bolder"
+      >
+        James Smith
+      </div>
+      <i
+        class="bi bi-x-circle"
+        style="
+          margin-top: -45px;
+          margin-right: -20px;
+          cursor: pointer;
+          color: #028fa9;
+        "
+      ></i>
     </div>
   </div>
   <div class="row tableInvoiceContainer">
@@ -88,6 +114,13 @@
               <td class="financeClientTableData">
                 <div style="display: flex; justify-content: center">
                   <div>
+                    <label class="containerCheckboxCss mt-2 me-5 ps-0">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                     
+                  </div>
+                  <div style="margin-left:-10px">
                     <img
                       class="carerIconsFinanceTable"
                       src="../images/icons/profileImage.png"
@@ -269,7 +302,31 @@
       </div>
     </div>
   </div>
+
+  <!-- edit invoice popup -->
+  <edit-invoice-popup v-if="showEdit"></edit-invoice-popup>
 </template>
 
-<script src="../js/resourceTimeline.js"></script>
+<script>
+import EDIT_INVOICE_POPUP from "./editInvoicePopup.vue";
+import carerHeader from "../components/carerHeader.vue";
+import searchHeader from "../components/searchHeader.vue";
+import topBlueHeader from "../components/topBlueHeader.vue";
+
+export default {
+  name: "finance-view",
+  components: {
+    "edit-invoice-popup": EDIT_INVOICE_POPUP,
+    carerHeader: carerHeader,
+    topBlueHeader: topBlueHeader,
+    searchHeader: searchHeader,
+  },
+  data() {
+    return {
+      showEdit: false,
+    };
+  },
+};
+</script>
 <style src="../style/finance.css" />
+<style src="../style/styleSheet.css" />
