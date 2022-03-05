@@ -305,10 +305,12 @@
 
   <!-- edit invoice popup -->
   <edit-invoice-popup v-if="showEdit"></edit-invoice-popup>
+  <edit-invoice-popup v-if="true" />
 </template>
 
 <script>
 import EDIT_INVOICE_POPUP from "./editInvoicePopup.vue";
+import INVOICE_PREVIEW_POPUP from "./invoicePreview.vue";
 import carerHeader from "../components/carerHeader.vue";
 import searchHeader from "../components/searchHeader.vue";
 import topBlueHeader from "../components/topBlueHeader.vue";
@@ -317,6 +319,7 @@ export default {
   name: "finance-view",
   components: {
     "edit-invoice-popup": EDIT_INVOICE_POPUP,
+    "edit-invoice-popup":INVOICE_PREVIEW_POPUP,
     carerHeader: carerHeader,
     topBlueHeader: topBlueHeader,
     searchHeader: searchHeader,
